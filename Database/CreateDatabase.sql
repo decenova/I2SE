@@ -44,7 +44,7 @@ create table TableStatus(
 	TableStatus nvarchar(10)
 )
 alter table TableStatus add constraint UN_TABLESTATUS unique (TableStatus)
-create table TableDetail(
+create table [Table](
 	SEQ int primary key identity,
 	Id char(5) not null unique,
 	TableStatusID int,
@@ -63,7 +63,7 @@ create table TableDetail(
 --)
 --drop table Customer
 
-create table OrderDetail(
+create table [Order](
 	SEQ int primary key identity,
 	Id char(5) not null unique,
 	TableID int not null,
@@ -74,7 +74,7 @@ create table OrderDetail(
 	BeginTime datetime not null,
 	BeginEatTime datetime not null,
 	EndTime datetime not null,
-	constraint FK_BILL_TABLE foreign key (TableID) references TableDetail(SEQ),
+	constraint FK_BILL_TABLE foreign key (TableID) references [Table](SEQ),
 	constraint FK_BILL_STAFF_CASHIER foreign key (CashierID) references Staff(SEQ),
 	constraint FK_BILL_STAFF_WAITER foreign key (WaiterID) references Staff(SEQ),
 	--constraint FK_BILL_CUSTOMER foreign key (CustomerID) references Customer(SEQ)
@@ -83,15 +83,15 @@ create table OrderDetail(
 --alter table OrderDetail drop constraint FK_BILL_CUSTOMER
 --alter table OrderDetail drop column CustomerID
 
-create table OrderFood(
+create table OrderDetail(
 	SEQ int primary key identity,
 	OrderID int not null,
 	FoodId int not null,
 	CookID int not null,
 	Quantity int not null,
-	constraint FK_ORDERFOOD_BILL foreign key (OrderID) references OrderDetail(SEQ),
-	constraint FK_ORDERFOOD_FOOD foreign key (FoodId) references Food(SEQ),
-	constraint FK_ORDERFOOD_STAFF foreign key (CookId) references Staff(SEQ)
+	constraint FK_ORDERDETAIL_ORDER foreign key (OrderID) references [Order](SEQ),
+	constraint FK_ORDERDETAIL_FOOD foreign key (FoodId) references Food(SEQ),
+	constraint FK_ORDERDETAIL_STAFF foreign key (CookId) references Staff(SEQ)
 )
 alter table OrderFood add Quantity int not null
 
@@ -110,7 +110,7 @@ create table ChangeStatusTable(
 	StaffID int not null,
 	ChangeTime datetime not null,
 	TableStatusID int not null,
-	constraint FK_CHANGESTATUSTABLE_TABLE foreign key (TableID) references TableDetail(SEQ),
+	constraint FK_CHANGESTATUSTABLE_TABLE foreign key (TableID) references [Table](SEQ),
 	constraint FK_CHANGESTATUSTABLE_STAFF foreign key (StaffID) references Staff(SEQ),
 	constraint FK_CHANGESTATUSTABLE_TABLESTATUS foreign key (TableStatusID) references TableStatus(SEQ)
 )
