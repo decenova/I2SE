@@ -2,6 +2,10 @@ create database RestaurantAuto
 
 use RestaurantAuto
 
+--Update
+alter table Staff add [Password] varchar(30) not null
+--
+
 create table StaffRole(
 	SEQ int primary key identity,
 	StaffRole nvarchar(10) unique
@@ -9,6 +13,7 @@ create table StaffRole(
 create table Staff(
 	SEQ int primary key identity,
 	Id char(5) not null unique,
+	[Password] varchar(30) not null,
 	FristName nvarchar(10),
 	LastName nvarchar(30),
 	DOB date,
@@ -16,7 +21,7 @@ create table Staff(
 	Sex char(1) check (Sex in ('M','F','U')),
 	Salary decimal not null,
 	StaffRoleID int,
-	LeadSEQ int
+	LeadSEQ int,
 	constraint FK_STAFF_STAFFROLE foreign key (StaffRoleID) references StaffRole(SEQ)
 )
 
