@@ -93,7 +93,7 @@ create table OrderDetail(
 	constraint FK_ORDERDETAIL_FOOD foreign key (FoodId) references Food(SEQ),
 	constraint FK_ORDERDETAIL_STAFF foreign key (CookId) references Staff(SEQ)
 )
-alter table OrderFood add Quantity int not null
+--alter table OrderFood add Quantity int not null
 
 --create table Work(
 --	SEQ int primary key identity,
