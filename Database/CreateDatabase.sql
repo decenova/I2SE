@@ -22,7 +22,8 @@ create table Staff(
 	Salary decimal not null,
 	StaffRoleID int,
 	LeadSEQ int,
-	constraint FK_STAFF_STAFFROLE foreign key (StaffRoleID) references StaffRole(SEQ)
+	constraint FK_STAFF_STAFFROLE foreign key (StaffRoleID) references StaffRole(SEQ),
+	constraint FK_STAFF_STAFF foreign key (LeadSEQ) references Staff(SEQ)
 )
 
 
@@ -92,7 +93,8 @@ create table OrderDetail(
 	SEQ int primary key identity,
 	OrderID int not null,
 	FoodId int not null,
-	CookID int not null,
+	CookID int,
+	[Status] bit not null, 
 	Quantity int not null,
 	constraint FK_ORDERDETAIL_ORDER foreign key (OrderID) references [Order](SEQ),
 	constraint FK_ORDERDETAIL_FOOD foreign key (FoodId) references Food(SEQ),
