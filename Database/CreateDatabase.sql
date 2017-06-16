@@ -2,6 +2,10 @@ create database RestaurantAuto
 
 use RestaurantAuto
 
+create table StaffRole(
+	SEQ int primary key identity,
+	StaffRole nvarchar(10) unique
+)
 create table Staff(
 	SEQ int primary key identity,
 	Id char(5) not null unique,
@@ -16,18 +20,14 @@ create table Staff(
 	constraint FK_STAFF_STAFFROLE foreign key (StaffRoleID) references StaffRole(SEQ)
 )
 
-create table StaffRole(
-	SEQ int primary key identity,
-	StaffRole nvarchar(10) unique
-)
+
 --alter table StaffRole add constraint UN_STAFFROLE unique (StaffRole)
 
 create table FoodType(
 	SEQ int primary key identity,
-	FoodType int not null unique
+	FoodType nvarchar(20) not null unique
 )
-alter table FoodType add constraint UN_FOODTYPE unique (FoodType)
-alter table FoodType alter column FoodType nvarchar(20)
+
 create table Food(
 	SEQ int primary key identity,
 	Id char(5) not null unique,
@@ -41,9 +41,9 @@ create table Food(
 
 create table TableStatus(
 	SEQ int primary key identity,
-	TableStatus nvarchar(10)
+	TableStatus nvarchar(10) unique
 )
-alter table TableStatus add constraint UN_TABLESTATUS unique (TableStatus)
+--alter table TableStatus add constraint UN_TABLESTATUS unique (TableStatus)
 create table [Table](
 	SEQ int primary key identity,
 	Id char(5) not null unique,
