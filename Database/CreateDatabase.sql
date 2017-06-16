@@ -2,8 +2,6 @@ create database RestaurantAuto
 
 use RestaurantAuto
 
---Update
-alter table Staff add [Password] varchar(30) not null
 --
 
 create table StaffRole(
