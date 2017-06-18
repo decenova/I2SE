@@ -146,7 +146,7 @@ values ('O0010',10,10,5,2,'2017-06-01 12:30:50.000','2017-06-01 12:33:50.000','2
 insert into [Order](Id,TableID,CashierID,WaiterID,Cost,BeginTime,BeginEatTime,EndTime) 
 values ('O0011',11,10,4,2,'2017-06-01 12:40:00.000','2017-06-01 12:44:00.000','2017-06-01 13:42:00.000')
 insert into [Order](Id,TableID,CashierID,WaiterID,Cost,BeginTime,BeginEatTime,EndTime) 
-values ('O0012',10,12,4,2,'2017-06-01 12:45:00.000','2017-06-01 12:48:00.000','2017-06-01 13:41:00.000')
+values ('O0012',10,10,4,2,'2017-06-01 12:45:00.000','2017-06-01 12:48:00.000','2017-06-01 13:41:00.000')
 
 
 
