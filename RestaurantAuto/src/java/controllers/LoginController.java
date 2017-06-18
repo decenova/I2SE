@@ -34,6 +34,7 @@ public class LoginController extends HttpServlet {
         try {
             String id = request.getParameter("txtId");
             String password = request.getParameter("txtPassword");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

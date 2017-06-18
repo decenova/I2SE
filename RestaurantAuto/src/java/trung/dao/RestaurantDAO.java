@@ -5,6 +5,7 @@
  */
 package trung.dao;
 
+import connection.MyConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,8 @@ public class RestaurantDAO {
     public String checkLogin() {
         String result = "false";
         try {
-            
+            conn = MyConnection.getConnection();
+//            String sql = "Select Role from "
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
