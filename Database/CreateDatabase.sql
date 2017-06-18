@@ -1,4 +1,4 @@
-create database RestaurantAuto
+--create database RestaurantAuto
 
 use RestaurantAuto
 
