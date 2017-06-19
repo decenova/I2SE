@@ -1,6 +1,9 @@
---create database RestaurantAuto
+create database RestaurantAuto;
+go
 
-use RestaurantAuto
+use RestaurantAuto;
+go
+
 
 --
 
@@ -8,6 +11,7 @@ create table StaffRole(
 	SEQ int primary key identity,
 	StaffRole nvarchar(10) unique
 )
+go
 create table Staff(
 	SEQ int primary key identity,
 	Id char(5) not null unique,
@@ -25,14 +29,11 @@ create table Staff(
 	constraint FK_STAFF_STAFF foreign key (LeadSEQ) references Staff(SEQ)
 )
 
-
---alter table StaffRole add constraint UN_STAFFROLE unique (StaffRole)
-
 create table FoodType(
 	SEQ int primary key identity,
 	FoodType nvarchar(20) not null unique
 )
-
+go
 create table Food(
 	SEQ int primary key identity,
 	Id char(5) not null unique,
@@ -42,32 +43,19 @@ create table Food(
 	Available bit not null,
 	constraint FK_FOOD_FOODTYPE foreign key (FoodTypeID) references FoodType(SEQ)
 )
---alter table Food drop column CostID
---alter table Food add Cost decimal
+
 
 create table TableStatus(
 	SEQ int primary key identity,
 	TableStatus nvarchar(10) unique
 )
---alter table TableStatus add constraint UN_TABLESTATUS unique (TableStatus)
+go
 create table [Table](
 	SEQ int primary key identity,
 	Id char(5) not null unique,
 	TableStatusID int,
 	constraint FK_TABLEDETAIL_TABLESTATUS foreign key (TableStatusID) references TableStatus(SEQ)
 )
-
---create table Customer(
---	SEQ int primary key identity,
---	Id char(5) not null unique,
---	FristName nvarchar(10),
---	LastName nvarchar(30),
---	DOB date,
---	Phone varchar(20),
---	Addr nvarchar(100),
---	Sex char(1) check (Sex in ('M','F','U'))
---)
---drop table Customer
 
 create table [Order](
 	SEQ int primary key identity,
@@ -83,12 +71,8 @@ create table [Order](
 	constraint FK_BILL_TABLE foreign key (TableID) references [Table](SEQ),
 	constraint FK_BILL_STAFF_CASHIER foreign key (CashierID) references Staff(SEQ),
 	constraint FK_BILL_STAFF_WAITER foreign key (WaiterID) references Staff(SEQ),
-	--constraint FK_BILL_CUSTOMER foreign key (CustomerID) references Customer(SEQ)
 )
---alter table OrderDetail add Cost decimal
---alter table OrderDetail drop constraint FK_BILL_CUSTOMER
---alter table OrderDetail drop column CustomerID
-
+go
 create table OrderDetail(
 	SEQ int primary key identity,
 	OrderID int not null,
@@ -100,17 +84,7 @@ create table OrderDetail(
 	constraint FK_ORDERDETAIL_FOOD foreign key (FoodId) references Food(SEQ),
 	constraint FK_ORDERDETAIL_STAFF foreign key (CookId) references Staff(SEQ)
 )
---alter table OrderFood add Quantity int not null
-
---create table Work(
---	SEQ int primary key identity,
---	StaffID int not null,
---	WorkTimeBegin datetime not null,
---	WorkTimeEnd datetime not null,
---	constraint FK_WORK_STAFF foreign key (StaffID) references Staff(SEQ)
---)
---drop table Work
-
+go
 create table ChangeStatusTable(
 	SEQ int primary key identity,
 	TableID int not null,
