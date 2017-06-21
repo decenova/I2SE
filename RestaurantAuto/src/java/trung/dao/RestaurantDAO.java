@@ -35,11 +35,16 @@ public class RestaurantDAO {
         }
     }
     
-    public String checkLogin() {
+    public String checkLogin(String id, String password) {
         String result = "false";
         try {
             conn = MyConnection.getConnection();
-//            String sql = "Select Role from "
+            String sql = "Select StaffRole.StaffRole from Staff INNER JOIN StaffRole ON Staff.SEQ=StaffRole.SEQ Where Staff.Id='" + id + "' and Staff.Password='" + password + "'";
+            pre = conn.prepareStatement(sql);
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                result = rs.getString("StaffRole");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

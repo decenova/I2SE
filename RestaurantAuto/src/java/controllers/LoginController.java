@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,12 +32,21 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String url = "index.jsp";
         try {
             String id = request.getParameter("txtId");
             String password = request.getParameter("txtPassword");
             
+            TrungBean bean = new TrungBean();
+            if (!bean.getRole(id, password).equals("false")) {
+                url = "tableStatus.jsp";
+            } else {
+                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

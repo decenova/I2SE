@@ -4,6 +4,7 @@
     Author     : Decen
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,7 @@
             ID: <input type="text" name="txtId" required/><br/>
             Password: <input type="password" name="txtPassword" required/><br/>
             <input type="submit" value="Login" name="action"/>
+            ${ERROR}
         </form>
     </body>
 </html>
