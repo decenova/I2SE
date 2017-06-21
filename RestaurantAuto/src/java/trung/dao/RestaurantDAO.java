@@ -9,6 +9,8 @@ import connection.MyConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import trung.dto.TableDTO;
 
 /**
  *
@@ -51,5 +53,27 @@ public class RestaurantDAO {
             closeConnection();
         }
         return result;
+    }
+    
+    public ArrayList<TableDTO> getTablesStatus() {
+        ArrayList<TableDTO> tableDTO = new ArrayList<TableDTO>();
+        
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "Select * from [Table] INNER JOIN TableStatus ON [Table].SEQ=TableStatus.SEQ";
+            pre = conn.prepareStatement(sql);
+            rs = pre.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String status = rs.getString("TableStatus");
+                tableDTO.add(new TableDTO(id, status));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        
+        return tableDTO;
     }
 }

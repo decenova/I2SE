@@ -17,8 +17,9 @@
         <form action="MainController" method="POST">
             ID: <input type="text" name="txtId" required/><br/>
             Password: <input type="password" name="txtPassword" required/><br/>
+            <font color="red">${ERROR}</font><br/>
             <input type="submit" value="Login" name="action"/>
-            ${ERROR}
+            
         </form>
     </body>
 </html>

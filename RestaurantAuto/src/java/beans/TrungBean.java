@@ -6,7 +6,9 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import trung.dao.RestaurantDAO;
+import trung.dto.TableDTO;
 
 /**
  *
@@ -20,6 +22,10 @@ public class TrungBean implements Serializable{
         return dao.checkLogin(id, password);
     }
     
+    public ArrayList<TableDTO> getTablesStatus() {
+        RestaurantDAO dao = new RestaurantDAO();
+        return dao.getTablesStatus();
+    }
     
     public TrungBean() {
     }
