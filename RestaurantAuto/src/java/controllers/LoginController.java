@@ -40,6 +40,7 @@ public class LoginController extends HttpServlet {
             TrungBean bean = new TrungBean();
             if (!bean.getRole(id, password).equals("false")) {
                 url = "TableStatus";
+                request.getSession().setAttribute("ROLE", bean.getRole(id, password));
             } else {
                 request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
             }

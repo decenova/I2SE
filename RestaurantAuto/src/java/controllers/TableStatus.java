@@ -35,14 +35,17 @@ public class TableStatus extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = "tableStatus.jsp";
+        TrungBean bean = new TrungBean();
         try {
-            TrungBean bean = new TrungBean();
+            String action = request.getParameter("action");
+            if (!action.equals("Login")) {
+                String tableId = request.getParameter("tableId");
+                int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
+                bean.changeTableStatus(tableId, tableStatusId);
+            }
+            
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
             arr = bean.getTablesStatus();
-            for (TableDTO dto : arr) {
-                System.out.println(dto.getId());
-            }
-            System.out.println("done");
             
             request.setAttribute("TABLES", arr);
         } catch (Exception e) {

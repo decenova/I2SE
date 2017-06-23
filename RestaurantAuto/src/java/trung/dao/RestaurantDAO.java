@@ -77,16 +77,18 @@ public class RestaurantDAO {
         return tableDTO;
     }
     
-//    public void changeTableStatus(String tableId, int tableStatusId) {
-//        try {
-//            conn = MyConnection.getConnection();
-//            tableStatusId++;
-//            if (tableStatusId > )
-//            String sql = "UPDATE Table SET StaffRoleID="
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            closeConnection();
-//        }
-//    }
+    public void changeTableStatus(String tableId, int tableStatusId) {
+        try {
+            conn = MyConnection.getConnection();
+            tableStatusId++;
+            if (tableStatusId > 4) tableStatusId = 1;
+            String sql = "UPDATE [Table] SET TableStatusID='" + tableStatusId + "' WHERE Id='" + tableId + "'";
+            pre = conn.prepareStatement(sql);
+            pre.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
 }

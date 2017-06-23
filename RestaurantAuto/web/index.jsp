@@ -15,8 +15,8 @@
     <body>
         <h1>Login Page</h1>
         <form action="MainController" method="POST">
-            ID: <input type="text" name="txtId" value="MA001" required/><br/>
-            Password: <input type="password" name="txtPassword" value="admin" required/><br/>
+            ID: <input type="text" name="txtId" value="HO001" required/><br/>
+            Password: <input type="password" name="txtPassword" value="staff" required/><br/>
             <font color="red">${ERROR}</font><br/>
             <input type="submit" value="Login" name="action"/>
             
