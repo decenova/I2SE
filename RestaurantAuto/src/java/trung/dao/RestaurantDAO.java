@@ -60,7 +60,7 @@ public class RestaurantDAO {
         
         try {
             conn = MyConnection.getConnection();
-            String sql = "Select * from [Table] INNER JOIN TableStatus ON [Table].SEQ=TableStatus.SEQ";
+            String sql = "Select * from [Table] INNER JOIN TableStatus ON [Table].TableStatusID=TableStatus.SEQ";
             pre = conn.prepareStatement(sql);
             rs = pre.executeQuery();
             while (rs.next()) {
@@ -76,4 +76,17 @@ public class RestaurantDAO {
         
         return tableDTO;
     }
+    
+//    public void changeTableStatus(String tableId, int tableStatusId) {
+//        try {
+//            conn = MyConnection.getConnection();
+//            tableStatusId++;
+//            if (tableStatusId > )
+//            String sql = "UPDATE Table SET StaffRoleID="
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            closeConnection();
+//        }
+//    }
 }
