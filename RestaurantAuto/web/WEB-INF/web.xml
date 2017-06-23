@@ -8,6 +8,10 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TableStatus</servlet-name>
+        <servlet-class>controllers.TableStatus</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TableStatus</servlet-name>
+        <url-pattern>/TableStatus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

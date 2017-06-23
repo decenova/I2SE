@@ -4,6 +4,7 @@
     Author     : Duc Trung
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +14,21 @@
     </head>
     <body>
         <h1>Table status</h1>
-    </body>
+        <table>
+            <thead>
+            <th>Table</th>
+            <th>Status</th>
+            <th>Change Status</th>
+        </thead>
+        <c:forEach var="table" items="${TABLES}">
+            <tr>
+                <td>${table.id}</td>
+                <td>${table.tableStatus}</td>
+                <td></td>
+            </tr>
+        </c:forEach>
+
+
+    </table>
+</body>
 </html>

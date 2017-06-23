@@ -8,16 +8,18 @@ package controllers;
 import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import trung.dto.TableDTO;
 
 /**
  *
  * @author Duc Trung
  */
-public class LoginController extends HttpServlet {
+public class TableStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +34,17 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "index.jsp";
+        String url = "tableStatus.jsp";
         try {
-            String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-            
             TrungBean bean = new TrungBean();
-            if (!bean.getRole(id, password).equals("false")) {
-                url = "TableStatus";
-            } else {
-                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
+            ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
+            arr = bean.getTablesStatus();
+            for (TableDTO dto : arr) {
+                System.out.println(dto.getId());
             }
+            System.out.println("done");
+            
+            request.setAttribute("TABLES", arr);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
