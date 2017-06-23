@@ -41,7 +41,7 @@ public class RestaurantDAO {
         String result = "false";
         try {
             conn = MyConnection.getConnection();
-            String sql = "Select StaffRole.StaffRole from Staff INNER JOIN StaffRole ON Staff.SEQ=StaffRole.SEQ Where Staff.Id='" + id + "' and Staff.Password='" + password + "'";
+            String sql = "Select StaffRole.StaffRole from Staff INNER JOIN StaffRole ON Staff.StaffRoleID=StaffRole.SEQ Where Staff.Id='" + id + "' and Staff.Password='" + password + "'";
             pre = conn.prepareStatement(sql);
             rs = pre.executeQuery();
             if (rs.next()) {
