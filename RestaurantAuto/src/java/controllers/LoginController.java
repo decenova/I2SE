@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
                 url = "TableStatus";
                 
                 //lưu role vs staffId trong session cho dễ sử dụng sau này
-                request.getSession().setAttribute("ROLE", bean.getRole(id, password));
+                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
                 request.getSession().setAttribute("STAFFID", id);
             } else {
                 request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
