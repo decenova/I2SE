@@ -88,8 +88,7 @@ public class RestaurantDAO {
             pre.execute();
             
             Timestamp time = new Timestamp(System.currentTimeMillis());
-            sql = "INSERT INTO ChangeStatusTable (TableID,StaffID,ChangeTime,TableStatusID) VALUES "
-                    + "('" + tableId + "','" + staffId + "','" + time + "','" + (--tableStatusId) + "')";
+            sql = "INSERT INTO ChangeStatusTable (TableID, StaffID, ChangeTime, TableStatusID) VALUES ((SELECT SEQ FROM [table] where Id = '" + tableId + "'), (SELECT SEQ FROM Staff where Id = '" + staffId + "'), '" + time + "', " + tableStatusId + ")";
             pre = conn.prepareStatement(sql);
             pre.execute();
         } catch (Exception e) {
