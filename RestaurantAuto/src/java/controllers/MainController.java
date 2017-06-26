@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ public class MainController extends HttpServlet {
 
     private final String error = "error.jsp";
     private final String login = "LoginController";
+    private final String order = "order.jsp";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,6 +41,10 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if (action.equals("Login")) {
                 url = login;
+            } else if (action.equals("Create order as Waiter")) {
+                TrungBean bean = new TrungBean();
+                bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
+                url = order;
             }
         } catch (Exception e) {
             e.printStackTrace();

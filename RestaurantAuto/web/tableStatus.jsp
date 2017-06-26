@@ -42,10 +42,10 @@
                             </form>
                         </c:when>
                         <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Waiting'}">
-                            <form action="TableStatus" method="GET">
+                            <form action="MainController" method="GET">
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="2"/>
-                                <input type="submit" name="action" value="Change as Waiter"/>
+                                <input type="submit" name="action" value="Create order as Waiter"/>
                             </form>
                         </c:when>
                         <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Eating'}">
