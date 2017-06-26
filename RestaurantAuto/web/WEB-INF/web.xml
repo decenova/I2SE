@@ -26,7 +26,7 @@
     </servlet-mapping>
         <servlet-mapping>
         <servlet-name>SubmitOrderController</servlet-name>
-        <url-pattern>/controllers.SubmitOrderController</url-pattern>
+        <url-pattern>/SubmitOrderController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
