@@ -27,9 +27,9 @@ public class TrungBean implements Serializable{
         return dao.getTablesStatus();
     }
     
-    public void changeTableStatus (String tableId, int tableStatusId) {
+    public void changeTableStatus (String tableId, int tableStatusId, String staffId) {
         RestaurantDAO dao = new RestaurantDAO();
-        dao.changeTableStatus(tableId, tableStatusId);
+        dao.changeTableStatus(tableId, tableStatusId, staffId);
     }
     
     public TrungBean() {

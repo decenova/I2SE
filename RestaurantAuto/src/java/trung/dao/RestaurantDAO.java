@@ -9,6 +9,7 @@ import connection.MyConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import trung.dto.TableDTO;
 
@@ -77,12 +78,18 @@ public class RestaurantDAO {
         return tableDTO;
     }
     
-    public void changeTableStatus(String tableId, int tableStatusId) {
+    public void changeTableStatus(String tableId, int tableStatusId, String staffId) {
         try {
             conn = MyConnection.getConnection();
             tableStatusId++;
             if (tableStatusId > 4) tableStatusId = 1;
             String sql = "UPDATE [Table] SET TableStatusID='" + tableStatusId + "' WHERE Id='" + tableId + "'";
+            pre = conn.prepareStatement(sql);
+            pre.execute();
+            
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            sql = "INSERT INTO ChangeStatusTable (TableID,StaffID,ChangeTime,TableStatusID) VALUES "
+                    + "('" + tableId + "','" + staffId + "','" + time + "','" + (--tableStatusId) + "')";
             pre = conn.prepareStatement(sql);
             pre.execute();
         } catch (Exception e) {

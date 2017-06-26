@@ -41,7 +41,8 @@ public class TableStatus extends HttpServlet {
             if (!action.equals("Login")) {
                 String tableId = request.getParameter("tableId");
                 int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
-                bean.changeTableStatus(tableId, tableStatusId);
+                String staffId = request.getSession().getAttribute("STAFFID").toString();
+                bean.changeTableStatus(tableId, tableStatusId, staffId);
             }
             
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
