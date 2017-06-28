@@ -32,13 +32,13 @@
                     <tbody>
 
                         <c:forEach items="${MENU}" var="dto" varStatus="counter">
-                        <form action="SubmitOrderController" method="POST">
+                        <form action="MainController" method="POST">
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>${dto.foodID}</td>
                                 <td>${dto.foodName}</td>
                                 <td>
-                                    <input type="number" name="txtQuantity" value="0" min="0" />
+                                    <input type="number" name="txtQuantity" value="1" min="0" />
                                 </td>
                                 <td>
                                     <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
@@ -56,7 +56,7 @@
         </div>
 
         <div style="width:50%; float: left">
-            <form action="SubmitOrderController" method="POST">
+            <form action="MainController" method="POST">
                 <c:if test="${not empty ORDER}">
                     <table border="1">
                         <caption>Order Submit</caption>
@@ -79,7 +79,7 @@
                             </c:forEach>
                         </tbody>                   
                     </table>
-                    <input type="submit" name="action" value="Submit order" />
+                    <input type="submit" name="action" value="Submit order" />                   
                 </c:if>
             </form>
         </div>

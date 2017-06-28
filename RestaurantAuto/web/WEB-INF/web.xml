@@ -8,11 +8,11 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>SubmitOrderController</servlet-name>
         <servlet-class>controllers.SubmitOrderController</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>TableStatus</servlet-name>
         <servlet-class>controllers.TableStatus</servlet-class>
     </servlet>
@@ -20,11 +20,15 @@
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controllers.OrderController</servlet-class>
     </servlet>
-        <servlet-mapping>
+    <servlet>
+        <servlet-name>CreateOrderController</servlet-name>
+        <servlet-class>controllers.CreateOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SubmitOrderController</servlet-name>
         <url-pattern>/SubmitOrderController</url-pattern>
     </servlet-mapping>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>TableStatus</servlet-name>
         <url-pattern>/TableStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateOrderController</servlet-name>
+        <url-pattern>/CreateOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

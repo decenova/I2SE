@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import connection.MyConnection;
+import java.sql.Timestamp;
 import tung.dto.OrderDTO;
 
 /**
@@ -61,5 +62,28 @@ public class OrderDAO {
             closeConnection();
         }
         return result;
+    }
+    public boolean addOrderFirst(int seqTable, int seqWaiter, Timestamp begin) {
+        boolean check = false;
+        try {
+            String sql = "insert into Order (TableID, WaiterID, BeginTime) values (?, ?, ?)";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, seqTable);
+            preStm.setInt(2, seqWaiter);
+            preStm.setTimestamp(3, begin);
+            if(preStm.executeUpdate()> 0)
+                check = true;
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
+       public boolean addOrderSecond(int seqOrder, String id,
+               String cashierID, double cost, Timestamp beginEat, Timestamp end) {
+        return false;
     }
 }

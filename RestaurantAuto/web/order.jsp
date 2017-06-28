@@ -14,12 +14,13 @@
     </head>
     <body>
         <h1>Order</h1>
-        <p>Table No: 1</p>
-        <p>Waiter ID: 1</p>
+        <p>Table No: ${tableID}</p>
+        <p>Waiter ID: ${STAFFID}</p>
+        <p>Date: ${DATE}</p>
         <c:if test="${empty ORDER}">
             <a href="OrderController?action=Show menu">Show menu</a>
         </c:if>
-        <form action="SubmitOrderController" method="POST">
+        <form action="MainController" method="POST">
             <c:if test="${not empty ORDER}">
                 <table border="1">
                     <caption>Order Submit</caption>

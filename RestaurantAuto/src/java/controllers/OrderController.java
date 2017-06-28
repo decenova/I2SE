@@ -41,6 +41,7 @@ public class OrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = errorP;
         String action = request.getParameter("action");
+        String tableID = request.getParameter("tableID");
         try {
             HttpSession session = request.getSession();
             if (action.equals("Show menu")) {

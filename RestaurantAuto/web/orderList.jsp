@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,6 +14,31 @@
     </head>
     <body>
         <h1>View order</h1>
-        <input type="submit" value="" />
+        <form action="MainController" method="POST">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Table ID</th>
+                        <th>Order ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="" var="dto" varStatus="counter">
+                    <tr>
+                        <td>${counter.count}</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Show" name="action" />
+                        </td>
+                    </tr>
+                </tbody>
+                </c:forEach>
+            </table>
+
+        </form>
+        
     </body>
 </html>

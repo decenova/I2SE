@@ -46,30 +46,35 @@ public class SubmitOrderController extends HttpServlet {
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
             List<OrderDTO> result = (List<OrderDTO>) session.getAttribute("ORDER");
+            String tableID = request.getParameter("tableID");
             if (action.equals("Add")) {
                 String id = request.getParameter("txtFoodID");
                 String name = request.getParameter("txtFoodName");
                 String txtQuantity = request.getParameter("txtQuantity");
-                System.out.println(id);
-                System.out.println(name);
                 int quantity = 0;
                 if (result == null) {
                     result = new ArrayList<OrderDTO>();
                 }
+                int tmp = 0;
                 if (txtQuantity.length() != 0) {
                     quantity = Integer.parseInt(txtQuantity);
-                    OrderDTO dto = new OrderDTO(id, name, quantity);
-                    result.add(dto);
+                    for (int i = 0; i < result.size(); i++) {
+                        if (result.get(i).getFoodID().equalsIgnoreCase(id)) {
+                            result.get(i).setQuantity(result.get(i).getQuantity() + quantity);
+                            tmp++;
+                        }
+                    }
+                    if (tmp == 0) {
+                        OrderDTO dto = new OrderDTO(id, name, quantity);
+                        result.add(dto);
+                    }
                     session.setAttribute("ORDER", result);
                     url = menuP;
                 }
 
-            }
-            else if (action.equals("Submit order")) {
-                Date now = new Date();
+            } else if (action.equals("Submit order")) {
                 url = orderP;
-            }
-            else if (action.equals("Add order")) {
+            } else if (action.equals("Add order")) {
                 url = orderListP;
             }
         } catch (Exception e) {

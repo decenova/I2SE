@@ -10,23 +10,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class MainController extends HttpServlet {
-
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
-    
+public class CreateOrderController extends HttpServlet {
+        private final String errorP = "error.jsp";
+        private final String orderP = "order.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,19 +39,21 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
+        String url = errorP;
+        String action = request.getParameter("action");
+        String tableID = request.getParameter("tableID");
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-            }
-            
+            HttpSession session = request.getSession();
+                TrungBean bean = new TrungBean();
+                bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
+                session.setAttribute("tableID", tableID);
+                Date time = new Date(System.currentTimeMillis());
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
+                String now = sdf.format(time);
+                request.setAttribute("DATE", now);
+                url = orderP;
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at CreateOrderController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

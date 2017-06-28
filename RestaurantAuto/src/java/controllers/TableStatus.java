@@ -40,6 +40,7 @@ public class TableStatus extends HttpServlet {
             String action = request.getParameter("action");
             if (!action.equals("Login")) {
                 String tableId = request.getParameter("tableId");
+//                request.setAttribute("", tableId);
                 int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
                 String staffId = request.getSession().getAttribute("STAFFID").toString();
                 bean.changeTableStatus(tableId, tableStatusId, staffId);
