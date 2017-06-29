@@ -34,14 +34,10 @@ public class ChangeTableStatusController extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             TrungBean bean = new TrungBean();
-//            String action = request.getParameter("action");
-//            if (!action.equals("Login")) {
                 String tableId = request.getParameter("tableId");
-//                request.setAttribute("", tableId);
                 int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
                 String staffId = request.getSession().getAttribute("STAFFID").toString();
                 bean.changeTableStatus(tableId, tableStatusId, staffId);
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

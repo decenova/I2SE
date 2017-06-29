@@ -37,12 +37,9 @@ public class ShowTableStatusController extends HttpServlet {
         String url = "tableStatus.jsp";
         TrungBean bean = new TrungBean();
         try {
-            
-            
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
             arr = bean.getTablesStatus();
-            
-            request.setAttribute("TABLES", arr);
+            request.setAttribute("TABLES", arr); //luu mang table vao request
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
