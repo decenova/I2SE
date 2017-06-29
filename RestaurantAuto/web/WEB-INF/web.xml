@@ -13,8 +13,8 @@
         <servlet-class>controllers.SubmitOrderController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TableStatus</servlet-name>
-        <servlet-class>controllers.TableStatus</servlet-class>
+        <servlet-name>ShowTableStatusController</servlet-name>
+        <servlet-class>controllers.ShowTableStatusController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>OrderController</servlet-name>
@@ -23,6 +23,10 @@
     <servlet>
         <servlet-name>CreateOrderController</servlet-name>
         <servlet-class>controllers.CreateOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeTableStatusController</servlet-name>
+        <servlet-class>controllers.ChangeTableStatusController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
@@ -41,12 +45,16 @@
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TableStatus</servlet-name>
-        <url-pattern>/TableStatus</url-pattern>
+        <servlet-name>ShowTableStatusController</servlet-name>
+        <url-pattern>/ShowTableStatusController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateOrderController</servlet-name>
         <url-pattern>/CreateOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeTableStatusController</servlet-name>
+        <url-pattern>/ChangeTableStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

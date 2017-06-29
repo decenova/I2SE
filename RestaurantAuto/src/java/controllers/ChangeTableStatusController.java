@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Duc Trung
  */
-public class LoginController extends HttpServlet {
+public class ChangeTableStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +32,20 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "index.jsp";
         try {
-            String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-            
             TrungBean bean = new TrungBean();
-            if (!bean.getRole(id, password).equals("false")) {
-                url = "ShowTableStatusController";
-                
-                //lưu role vs staffId trong session cho dễ sử dụng sau này
-                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                request.getSession().setAttribute("STAFFID", id);
-            } else {
-                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
-            }
+//            String action = request.getParameter("action");
+//            if (!action.equals("Login")) {
+                String tableId = request.getParameter("tableId");
+//                request.setAttribute("", tableId);
+                int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
+                String staffId = request.getSession().getAttribute("STAFFID").toString();
+                bean.changeTableStatus(tableId, tableStatusId, staffId);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("ShowTableStatusController").forward(request, response);
         }
     }
 

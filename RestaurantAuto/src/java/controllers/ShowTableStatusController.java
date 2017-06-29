@@ -19,7 +19,7 @@ import trung.dto.TableDTO;
  *
  * @author Duc Trung
  */
-public class TableStatus extends HttpServlet {
+public class ShowTableStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,14 +37,7 @@ public class TableStatus extends HttpServlet {
         String url = "tableStatus.jsp";
         TrungBean bean = new TrungBean();
         try {
-            String action = request.getParameter("action");
-            if (!action.equals("Login")) {
-                String tableId = request.getParameter("tableId");
-//                request.setAttribute("", tableId);
-                int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
-                String staffId = request.getSession().getAttribute("STAFFID").toString();
-                bean.changeTableStatus(tableId, tableStatusId, staffId);
-            }
+            
             
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
             arr = bean.getTablesStatus();
