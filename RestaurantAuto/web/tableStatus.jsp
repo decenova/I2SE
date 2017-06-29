@@ -69,5 +69,9 @@
 
 
     </table>
+        
+        <form action="MainController" method="GET">
+            <input type="submit" name="action" value="Logout"/>
+        </form>
 </body>
 </html>
