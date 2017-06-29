@@ -44,7 +44,6 @@ public class MainController extends HttpServlet {
                 url = login;
             } else if (action.equals("Create order as Waiter")) {
                 url = createOrder;
-                System.out.println("ha");
             } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
                 url = submitOrder;
             } else if (action.endsWith("Logout")) {
