@@ -13,6 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <h1>Staff ID: ${STAFFID}</h1>
         <h1>Table status</h1>
         <p>Role: ${ROLE}</p>
         <table style="border: 1px black solid">
@@ -28,7 +29,7 @@
                 <td>
                     <c:choose>
                         <c:when test="${ROLE eq 'Host' && table.tableStatus eq 'Clean'}">
-                            <form action="TableStatus" method="GET">
+                            <form action="TableStatus" method="GET">                               
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="1"/>
                                 <input type="submit" name="action" value="Change as Host"/>
@@ -43,6 +44,7 @@
                         </c:when>
                         <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Waiting'}">
                             <form action="MainController" method="GET">
+                                <input type="hidden" name="staffId" value="${STAFFID}"/>
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="2"/>
                                 <input type="submit" name="action" value="Create order as Waiter"/>

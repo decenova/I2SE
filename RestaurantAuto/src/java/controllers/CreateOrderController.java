@@ -8,6 +8,7 @@ package controllers;
 import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tung.bean.OrderBean;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -24,8 +26,10 @@ import tung.dto.OrderDTO;
  * @author hoanh
  */
 public class CreateOrderController extends HttpServlet {
-        private final String errorP = "error.jsp";
-        private final String orderP = "order.jsp";
+
+    private final String errorP = "error.jsp";
+    private final String orderP = "order.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,18 +44,33 @@ public class CreateOrderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = errorP;
-        String action = request.getParameter("action");
-        String tableID = request.getParameter("tableID");
         try {
             HttpSession session = request.getSession();
-                TrungBean bean = new TrungBean();
-                bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
-                session.setAttribute("tableID", tableID);
-                Date time = new Date(System.currentTimeMillis());
-                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
-                String now = sdf.format(time);
-                request.setAttribute("DATE", now);
+            String tableID = request.getParameter("tableId");
+            TrungBean bean = new TrungBean();
+            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
+            session.setAttribute("tableID", tableID);
+            String staffId = request.getParameter("staffId");
+            System.out.println(staffId);
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+            String now = sdf.format(time);
+            request.setAttribute("DATE", now);
+            OrderBean orderBean = new OrderBean();
+            orderBean.setStaffID(staffId);
+            orderBean.setTableID(tableID);
+            int seqStaff = orderBean.getSeqStaff();
+            int seqTable = orderBean.getSeqTable();
+            System.out.println(seqStaff);
+            System.out.println(seqTable);
+            orderBean.setSeqTable(seqTable);
+            orderBean.setSeqWaiter(seqStaff);
+            Timestamp date = new Timestamp(time.getTime());
+            orderBean.setBeginTime(date);
+            if (orderBean.addOrderFirst())            
                 url = orderP;
+            else 
+                url = errorP;
         } catch (Exception e) {
             log("ERROR at CreateOrderController: " + e.getMessage());
         } finally {

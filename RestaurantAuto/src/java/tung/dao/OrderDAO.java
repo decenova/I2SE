@@ -63,18 +63,58 @@ public class OrderDAO {
         }
         return result;
     }
+
+    public int getSEQTableById(String id) {
+        int seq = 0;
+        try {
+            String sql = "select SEQ from [Table] where Id = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, id);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                seq = rs.getInt("SEQ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return seq;
+    }
+
+    public int getSEQStaffById(String id) {
+        int seq = 0;
+        try {
+            String sql = "select SEQ from Staff where Id = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, id);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                seq = rs.getInt("SEQ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return seq;
+    }
+
     public boolean addOrderFirst(int seqTable, int seqWaiter, Timestamp begin) {
         boolean check = false;
         try {
-            String sql = "insert into Order (TableID, WaiterID, BeginTime) values (?, ?, ?)";
+            String sql = "insert into [Order] (TableID, WaiterID, BeginTime) values (?, ?, ?)";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqTable);
             preStm.setInt(2, seqWaiter);
             preStm.setTimestamp(3, begin);
-            if(preStm.executeUpdate()> 0)
+            if (preStm.executeUpdate() > 0) {
                 check = true;
-                
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -82,8 +122,9 @@ public class OrderDAO {
         }
         return check;
     }
-       public boolean addOrderSecond(int seqOrder, String id,
-               String cashierID, double cost, Timestamp beginEat, Timestamp end) {
+
+    public boolean addOrderSecond(int seqOrder, String id,
+            String cashierID, double cost, Timestamp beginEat, Timestamp end) {
         return false;
     }
 }
