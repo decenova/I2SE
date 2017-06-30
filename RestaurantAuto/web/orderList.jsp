@@ -14,31 +14,34 @@
     </head>
     <body>
         <h1>View order</h1>
-        <form action="MainController" method="POST">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Table ID</th>
-                        <th>Order ID</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="" var="dto" varStatus="counter">
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Order ID</th>
+                    <th>Table ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${ORDERS}" var="dto" varStatus="counter">
+                <form action="MainController" method="POST">
                     <tr>
                         <td>${counter.count}</td>
-                        <td></td>
-                        <td></td>
+                        <td>${dto.seq}</td>
+                        <td>${dto.tableID}</td>
                         <td>
-                            <input type="submit" value="Show" name="action" />
+                            <input type="hidden" name="seqOrder" value="${dto.seq}"/>
+                            <input type="submit" value="Show Order" name="action" />
                         </td>
                     </tr>
-                </tbody>
-                </c:forEach>
-            </table>
+                </form>
+            </tbody>
+        </c:forEach>
+    </table>
 
-        </form>
-        
-    </body>
+
+
+</body>
 </html>

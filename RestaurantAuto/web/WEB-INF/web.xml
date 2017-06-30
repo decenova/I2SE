@@ -24,6 +24,10 @@
         <servlet-name>CreateOrderController</servlet-name>
         <servlet-class>controllers.CreateOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowOrderController</servlet-name>
+        <servlet-class>controllers.ShowOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>CreateOrderController</servlet-name>
         <url-pattern>/CreateOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowOrderController</servlet-name>
+        <url-pattern>/ShowOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -30,7 +30,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <c:forEach items="${MENU}" var="dto" varStatus="counter">
                         <form action="MainController" method="POST">
                             <tr>
@@ -38,7 +37,7 @@
                                 <td>${dto.foodID}</td>
                                 <td>${dto.foodName}</td>
                                 <td>
-                                    <input type="number" name="txtQuantity" value="1" min="0" />
+                                    <input type="number" name="txtQuantity" value="1" min="1" required />
                                 </td>
                                 <td>
                                     <input type="hidden" name="txtFoodID" value="${dto.foodID}" />

@@ -51,25 +51,24 @@ public class CreateOrderController extends HttpServlet {
             bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
             session.setAttribute("tableID", tableID);
             String staffId = request.getParameter("staffId");
-            System.out.println(staffId);
             Date time = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
             String now = sdf.format(time);
-            request.setAttribute("DATE", now);
+            session.setAttribute("DATE", now);
             OrderBean orderBean = new OrderBean();
             orderBean.setStaffID(staffId);
             orderBean.setTableID(tableID);
             int seqStaff = orderBean.getSeqStaff();
             int seqTable = orderBean.getSeqTable();
-            System.out.println(seqStaff);
-            System.out.println(seqTable);
             orderBean.setSeqTable(seqTable);
             orderBean.setSeqWaiter(seqStaff);
             Timestamp date = new Timestamp(time.getTime());
             orderBean.setBeginTime(date);
-            if (orderBean.addOrderFirst())            
+            if (orderBean.addOrderFirst()) {
+                int seqOrder = orderBean.getSEQOrder();
+                session.setAttribute("orderSeq", seqOrder);
                 url = orderP;
-            else 
+            } else 
                 url = errorP;
         } catch (Exception e) {
             log("ERROR at CreateOrderController: " + e.getMessage());

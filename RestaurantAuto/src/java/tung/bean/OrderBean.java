@@ -6,7 +6,9 @@
 package tung.bean;
 
 import java.sql.Timestamp;
+import java.util.List;
 import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
@@ -14,9 +16,10 @@ import tung.dao.OrderDAO;
  */
 public class OrderBean {
 
-    private int seqTable, seqWaiter;
+    private int seqTable, seqWaiter, seqOrder, seqFood;
     private Timestamp beginTime;
-    private String tableID, staffID;
+    private String tableID, staffID, foodID;
+    int quantity;
 
     public OrderBean() {
     }
@@ -31,9 +34,61 @@ public class OrderBean {
         return dao.getSEQStaffById(staffID);
     }
 
+    public int getSEQOrder() {
+        OrderDAO dao = new OrderDAO();
+        return dao.getMaxSEQOrder();
+    }
+
+    public int getSEQFood() {
+        OrderDAO dao = new OrderDAO();
+        return dao.getSEQFoodById(foodID);
+    }
+
+    public boolean addOrderDetail() {
+        OrderDAO dao = new OrderDAO();
+        return dao.addOrderDetailById(seqOrder, seqFood, quantity);
+    }
+
     public boolean addOrderFirst() {
         OrderDAO dao = new OrderDAO();
         return dao.addOrderFirst(seqTable, seqWaiter, beginTime);
+    }
+
+    public List<OrderDTO> loadOrders() {
+        OrderDAO dao = new OrderDAO();
+        return dao.loadOrders();
+    }
+
+    public int getSeqOrder() {
+        return seqOrder;
+    }
+
+    public void setSeqOrder(int seqOrder) {
+        this.seqOrder = seqOrder;
+    }
+
+    public int getSeqFood() {
+        return seqFood;
+    }
+
+    public void setSeqFood(int seqFood) {
+        this.seqFood = seqFood;
+    }
+
+    public String getFoodID() {
+        return foodID;
+    }
+
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getTableID() {
@@ -51,7 +106,6 @@ public class OrderBean {
     public void setStaffID(String staffID) {
         this.staffID = staffID;
     }
-    
 
     public void setSeqTable(int seqTable) {
         this.seqTable = seqTable;
