@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
             
             TrungBean bean = new TrungBean();
             if (!bean.getRole(id, password).equals("false")) {
-                url = "TableStatus";
+                url = "ShowTableStatusController";
                 
                 //lưu role vs staffId trong session cho dễ sử dụng sau này
                 request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));

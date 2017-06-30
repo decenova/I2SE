@@ -8,18 +8,16 @@ package controllers;
 import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import trung.dto.TableDTO;
 
 /**
  *
  * @author Duc Trung
  */
-public class TableStatus extends HttpServlet {
+public class ChangeTableStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,26 +32,16 @@ public class TableStatus extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "tableStatus.jsp";
-        TrungBean bean = new TrungBean();
         try {
-            String action = request.getParameter("action");
-            if (!action.equals("Login")) {
+            TrungBean bean = new TrungBean();
                 String tableId = request.getParameter("tableId");
-//                request.setAttribute("", tableId);
                 int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
                 String staffId = request.getSession().getAttribute("STAFFID").toString();
                 bean.changeTableStatus(tableId, tableStatusId, staffId);
-            }
-            
-            ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
-            arr = bean.getTablesStatus();
-            
-            request.setAttribute("TABLES", arr);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("ShowTableStatusController").forward(request, response);
         }
     }
 

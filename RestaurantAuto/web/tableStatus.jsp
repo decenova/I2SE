@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Table Status Page</title>
     </head>
     <body>
         <h1>Staff ID: ${STAFFID}</h1>
@@ -29,14 +29,14 @@
                 <td>
                     <c:choose>
                         <c:when test="${ROLE eq 'Host' && table.tableStatus eq 'Clean'}">
-                            <form action="TableStatus" method="GET">                               
+                            <form action="ChangeTableStatusController" method="GET">                               
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="1"/>
                                 <input type="submit" name="action" value="Change as Host"/>
                             </form>
                         </c:when>
                         <c:when test="${ROLE eq 'Busboy' && table.tableStatus eq 'Dirty'}">
-                            <form action="TableStatus" method="GET">
+                            <form action="ChangeTableStatusController" method="GET">
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="4"/>
                                 <input type="submit" name="action" value="Change as Busboy"/>
@@ -51,7 +51,7 @@
                             </form>
                         </c:when>
                         <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Eating'}">
-                            <form action="TableStatus" method="GET">
+                            <form action="ChangeTableStatusController" method="GET">
                                 <input type="hidden" name="tableId" value="${table.id}"/>
                                 <input type="hidden" name="tableStatusId" value="3"/>
                                 <input type="submit" name="action" value="Change as Waiter"/>
@@ -69,5 +69,9 @@
 
 
     </table>
+        
+        <form action="MainController" method="GET">
+            <input type="submit" name="action" value="Logout"/>
+        </form>
 </body>
 </html>

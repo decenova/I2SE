@@ -5,29 +5,22 @@
  */
 package controllers;
 
+import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import trung.dto.TableDTO;
 
 /**
  *
  * @author Duc Trung
  */
-public class MainController extends HttpServlet {
+public class ShowTableStatusController extends HttpServlet {
 
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
-
-    private final String showOrder = "ShowOrderController";
-
-    private final String logout = "LogoutController";
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,23 +34,12 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
+        String url = "tableStatus.jsp";
+        TrungBean bean = new TrungBean();
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-
-            } else if (action.equals("Show Order")) {
-                url = showOrder;         
-
-            } else if (action.endsWith("Logout")) {
-                url = logout;
-            }
-            
+            ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
+            arr = bean.getTablesStatus();
+            request.setAttribute("TABLES", arr); //luu mang table vao request
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
