@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,13 +8,13 @@ package controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tung.bean.OrderBean;
 import tung.dto.OrderDTO;
 
 /**
@@ -46,7 +46,7 @@ public class SubmitOrderController extends HttpServlet {
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
             List<OrderDTO> result = (List<OrderDTO>) session.getAttribute("ORDER");
-            String tableID = request.getParameter("tableID");
+            
             if (action.equals("Add")) {
                 String id = request.getParameter("txtFoodID");
                 String name = request.getParameter("txtFoodName");
@@ -71,11 +71,31 @@ public class SubmitOrderController extends HttpServlet {
                     session.setAttribute("ORDER", result);
                     url = menuP;
                 }
-
             } else if (action.equals("Submit order")) {
                 url = orderP;
             } else if (action.equals("Add order")) {
-                url = orderListP;
+                OrderBean bean = new OrderBean();
+                String txtSeqOrder = request.getParameter("txtSEQOrder");
+                int seqOrder = Integer.parseInt(txtSeqOrder);
+                bean.setSeqOrder(seqOrder);
+                for (int i = 0; i < result.size(); i++) {
+                    bean.setFoodID(result.get(i).getFoodID());
+                    int seqFood = bean.getSEQFood();
+                    bean.setSeqFood(seqFood);
+                    bean.setQuantity(result.get(i).getQuantity());
+                    bean.addOrderDetail();
+                }
+                List<OrderDTO> dto = bean.loadOrders();
+                if (!dto.isEmpty()) {
+                    request.setAttribute("ORDERS", dto);
+                    session.removeAttribute("ORDER");
+                    session.removeAttribute("orderSeq");
+                    session.removeAttribute("DATE");
+                    session.removeAttribute("STAFFID");
+                    session.removeAttribute("tableID");
+                    url = orderListP;
+                }
+                
             }
         } catch (Exception e) {
             log("ERROR at SubmitOrderController: " + e.getMessage());

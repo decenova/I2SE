@@ -16,6 +16,7 @@
         <h1>Order</h1>
         <p>Table No: ${tableID}</p>
         <p>Waiter ID: ${STAFFID}</p>
+        <p>Order No: ${orderSeq}</p>
         <p>Date: ${DATE}</p>
         <c:if test="${empty ORDER}">
             <a href="OrderController?action=Show menu">Show menu</a>
@@ -43,6 +44,7 @@
                         </c:forEach>
                     </tbody>                   
                 </table>
+                <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
                 <input type="submit" value="Add order" name="action" />
             </c:if>
         </form>
