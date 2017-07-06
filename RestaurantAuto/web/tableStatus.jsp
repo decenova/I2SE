@@ -11,11 +11,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Table Status Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>Staff ID: ${STAFFID}</h1>
         <h1>Table status</h1>
-        <p>Role: ${ROLE}</p>
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Staff ID: ${STAFFID}</h4>
+                <p class="card-text">
+                    Role: ${ROLE}
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">
+                    Some quick example text to build on the card title
+                    and make up the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
         <table style="border: 1px black solid">
             <thead>
             <th>Table</th>
@@ -69,9 +89,9 @@
 
 
     </table>
-        
-        <form action="MainController" method="GET">
-            <input type="submit" name="action" value="Logout"/>
-        </form>
+
+    <form action="MainController" method="GET">
+        <input type="submit" name="action" value="Logout"/>
+    </form>
 </body>
 </html>
