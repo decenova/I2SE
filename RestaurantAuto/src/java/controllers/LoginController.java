@@ -35,14 +35,14 @@ public class LoginController extends HttpServlet {
         String url = "index.jsp";
         try {
             String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-            
+            String password = request.getParameter("txtPassword");            
             TrungBean bean = new TrungBean();
             String role = bean.getRole(id, password);
             if (role.equals("Manager")){
                 url = "ManagerController";
             }else if (role.equals("2")) {
-                url = "tableStatus.jsp";           
+                url = "tableStatus.jsp";  
+            }
             if (!bean.getRole(id, password).equals("false")) {
                 url = "ShowTableStatusController";
                 

@@ -24,6 +24,7 @@
         <servlet-name>InsertController</servlet-name>
         <servlet-class>controllers.InsertController</servlet-class>
     </servlet>
+    <servlet>
         <servlet-name>SubmitOrderController</servlet-name>
         <servlet-class>controllers.SubmitOrderController</servlet-class>
     </servlet>

@@ -50,7 +50,6 @@ public class ManagerController extends HttpServlet {
             
             List<TableDTO> table = dao.getTableList();
             request.setAttribute("TABLE", table);
-            
             url = "manager.jsp";
             
         } catch (Exception e) {
