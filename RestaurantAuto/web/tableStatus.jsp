@@ -15,11 +15,16 @@
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
         <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>
         <style>
+            .card-deck {
+                padding: 0px;
+            }
             .card-deck div.card {
                 border: 1px solid #000;
+                height: 120px;
                 border-radius: 10px; 
                 margin: 1% 4%;
                 position: relative;
+                overflow: hidden;
             }
             .card-deck form {
                 z-index: 10;
@@ -67,8 +72,8 @@
                 <div class="card text-center col-lg-2">
                     <div class="card-block">
                         <h4 class="card-title">${table.id}</h4>
-                        <p class="card-text">${table.tableStatus}
-                            <c:choose>
+                        <p class="card-text">${table.tableStatus}</p>
+                        <c:choose>
                                 <c:when test="${table.tableStatus eq 'Clean'}">
                                 <div class="backgroundDiv backgroundDiv-clean"></div>
                             </c:when>
@@ -81,27 +86,24 @@
                             <c:when test="${table.tableStatus eq 'Eating'}">
                                 <div class="backgroundDiv backgroundDiv-eating"></div>
                             </c:when>
-                            <c:otherwise>
-                                <div class="backgroundDiv"></div>
-                            </c:otherwise>
                         </c:choose>
                         <c:choose>
                             <c:when test="${ROLE eq 'Host' && table.tableStatus eq 'Clean'}">
-                                <form action="ChangeTableStatusController" method="GET">                               
+                                <form action="ChangeTableStatusController" method="post">                               
                                     <input type="hidden" name="tableId" value="${table.id}"/>
                                     <input type="hidden" name="tableStatusId" value="1"/>
                                     <input class="btn btn-success" type="submit" name="action" value="Change as Host"/>
                                 </form>
                             </c:when>
                             <c:when test="${ROLE eq 'Busboy' && table.tableStatus eq 'Dirty'}">
-                                <form action="ChangeTableStatusController" method="GET">
+                                <form action="ChangeTableStatusController" method="post">
                                     <input type="hidden" name="tableId" value="${table.id}"/>
                                     <input type="hidden" name="tableStatusId" value="4"/>
                                     <input class="btn btn-success"  type="submit" name="action" value="Change as Busboy"/>
                                 </form>
                             </c:when>
                             <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Waiting'}">
-                                <form action="MainController" method="GET">
+                                <form action="MainController" method="post">
                                     <input type="hidden" name="staffId" value="${STAFFID}"/>
                                     <input type="hidden" name="tableId" value="${table.id}"/>
                                     <input type="hidden" name="tableStatusId" value="2"/>
@@ -109,20 +111,19 @@
                                 </form>
                             </c:when>
                             <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Eating'}">
-                                <form action="ChangeTableStatusController" method="GET">
+                                <form action="ChangeTableStatusController" method="post">
                                     <input type="hidden" name="tableId" value="${table.id}"/>
                                     <input type="hidden" name="tableStatusId" value="3"/>
                                     <input class="btn btn-success"  type="submit" name="action" value="Change as Waiter"/>
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <form action="TableStatus" method="GET">
+                                <form action="TableStatus" method="post">
                                     <input class="btn btn-block"  type="submit" name="action" value="Just for seen" disabled="true"/>
                                 </form>
                             </c:otherwise>
                         </c:choose>
-
-                        </p>
+                        <p></p>
                     </div>
                 </div>
             </c:forEach>
