@@ -234,7 +234,9 @@ public class OrderDAO {
         public List<OrderDTO> showOrderDetail(int seqOrder) {
         List<OrderDTO> result = null;
         try {
-            String sql = "select f.ID, f.Name, o.Quantity from OrderDetail o, Food f where o.FoodID = f.SEQ and o.OrderID = ?";
+            String sql = "select f.ID, f.Name, o.Quantity"
+                    + " from OrderDetail o, Food f"
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is null";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
@@ -254,5 +256,26 @@ public class OrderDAO {
         }
         return result;
     }
+        
+        public boolean insertChefID(int orderSEQ, String foodID, int chefID) {
+            boolean check = false;
+            try {
+                String sql = "update OrderDetail set cookID = ?"
+                        + " where OrderID = ? and FoodID = (select SEQ from Food where Id = ?)";
+                conn = MyConnection.getConnection();
+                preStm = conn.prepareStatement(sql);
+                preStm.setInt(1, chefID);
+                preStm.setInt(2, orderSEQ);
+                preStm.setString(3, foodID);
+                if (preStm.executeUpdate() > 0)
+                    check = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+            return check;
+        }
+
 
 }

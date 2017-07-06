@@ -74,6 +74,9 @@
                                     <td>${dto.foodID}</td>
                                     <td>${dto.foodName}</td>
                                     <td>${dto.quantity}</td>
+                                    <td>
+                                        <a href="SubmitOrderController?action=Remove&FoodNo=${counter.count}">Remove</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>                   

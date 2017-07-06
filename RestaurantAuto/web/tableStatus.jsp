@@ -13,6 +13,7 @@
         <title>Table Status Page</title>
     </head>
     <body>
+        <a href="LoadFoodsController">View food</a>
         <h1>Staff ID: ${STAFFID}</h1>
         <h1>Table status</h1>
         <p>Role: ${ROLE}</p>
