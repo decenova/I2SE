@@ -9,6 +9,21 @@
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManagerController</servlet-name>
+        <servlet-class>controllers.ManagerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchController</servlet-name>
+        <servlet-class>controllers.SearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateController</servlet-name>
+        <servlet-class>controllers.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertController</servlet-name>
+        <servlet-class>controllers.InsertController</servlet-class>
+    </servlet>
         <servlet-name>SubmitOrderController</servlet-name>
         <servlet-class>controllers.SubmitOrderController</servlet-class>
     </servlet>
@@ -65,6 +80,20 @@
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ManagerController</servlet-name>
+        <url-pattern>/ManagerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchController</servlet-name>
+        <url-pattern>/SearchController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateController</servlet-name>
+        <url-pattern>/UpdateController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertController</servlet-name>
+        <url-pattern>/InsertController</url-pattern>
         <servlet-name>ShowTableStatusController</servlet-name>
         <url-pattern>/ShowTableStatusController</url-pattern>
     </servlet-mapping>
