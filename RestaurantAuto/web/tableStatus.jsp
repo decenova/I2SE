@@ -17,6 +17,7 @@
     </head>
     <body>
         <h1>Table status</h1>
+        <p>Role: ${ROLE}</p>
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Staff ID: ${STAFFID}</h4>

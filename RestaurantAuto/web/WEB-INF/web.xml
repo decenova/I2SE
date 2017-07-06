@@ -28,13 +28,21 @@
         <servlet-name>ShowOrderController</servlet-name>
         <servlet-class>controllers.ShowOrderController</servlet-class>
     </servlet>
-    <servlet> 
+    <servlet>
         <servlet-name>ChangeTableStatusController</servlet-name>
         <servlet-class>controllers.ChangeTableStatusController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controllers.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChooseFoodController</servlet-name>
+        <servlet-class>controllers.ChooseFoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadFoodsController</servlet-name>
+        <servlet-class>controllers.LoadFoodsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChooseFoodController</servlet-name>
+        <url-pattern>/ChooseFoodController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadFoodsController</servlet-name>
+        <url-pattern>/LoadFoodsController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

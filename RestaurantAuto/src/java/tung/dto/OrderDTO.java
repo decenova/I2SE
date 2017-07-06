@@ -7,6 +7,7 @@ package tung.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,7 @@ public class OrderDTO implements Serializable {
     private int seq, seqWaiter, seqTable;
     private String tableID, waiterID;
     Timestamp beginTime;
-
+    private List<OrderDTO> foodDetails;
     public OrderDTO() {
     }
 
@@ -35,6 +36,15 @@ public class OrderDTO implements Serializable {
         this.seq = seq;
         this.tableID = tableID;
     }
+
+    public List<OrderDTO> getFoodDetails() {
+        return foodDetails;
+    }
+
+    public void setFoodDetails(List<OrderDTO> foodDetails) {
+        this.foodDetails = foodDetails;
+    }
+    
 
     public OrderDTO(String foodID, String foodName) {
         this.foodID = foodID;

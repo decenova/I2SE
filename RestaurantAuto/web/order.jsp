@@ -45,7 +45,9 @@
                     </tbody>                   
                 </table>
                 <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
+                <c:if test="${ACTION eq 'Submit order'}">
                 <input type="submit" value="Add order" name="action" />
+                </c:if>
             </c:if>
         </form>
     </body>
