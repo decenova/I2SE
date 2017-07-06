@@ -5,36 +5,31 @@
  */
 package controllers;
 
+import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import tung.bean.OrderBean;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class MainController extends HttpServlet {
+public class CreateOrderController extends HttpServlet {
 
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String staffManager = "staffManager.jsp";
-    private final String foodManager = "foodManager.jsp";
-    private final String tableManager = "tableManager.jsp";
-    private final String insertPage = "insert.jsp";
-    private final String search = "SearchController";
-    private final String update = "UpdateController";
-    private final String insert = "InsertController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
+    private final String errorP = "error.jsp";
+    private final String orderP = "order.jsp";
 
-    private final String showOrder = "ShowOrderController";
-
-    private final String logout = "LogoutController";
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,41 +43,35 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
+        String url = errorP;
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Update Staff")){ 
-                url = staffManager;
-            } else if(action.equals("Update Food")){
-                url = foodManager;
-            } else if(action.equals("Update Table")){
-                url = tableManager;
-            } else if (action.equals("Search")){
-                url = search;
-            } else if (action.equals("Update") || action.equals("Edit")){
-                url = update;
-            } else if (action.equals("Insert")){
-                url = insert;
-            } else if (action.equals("InsertPage")){
-                String flag = request.getParameter("txtFlag");
-                request.setAttribute("txtFlag", flag);
-                url = insertPage;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-
-            } else if (action.equals("Show Order")) {
-                url = showOrder;         
-
-            } else if (action.endsWith("Logout")) {
-                url = logout;
-            }
-            
+            HttpSession session = request.getSession();
+            String tableID = request.getParameter("tableId");
+            TrungBean bean = new TrungBean();
+            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
+            session.setAttribute("tableID", tableID);
+            String staffId = request.getParameter("staffId");
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+            String now = sdf.format(time);
+            session.setAttribute("DATE", now);
+            OrderBean orderBean = new OrderBean();
+            orderBean.setStaffID(staffId);
+            orderBean.setTableID(tableID);
+            int seqStaff = orderBean.getSeqStaff();
+            int seqTable = orderBean.getSeqTable();
+            orderBean.setSeqTable(seqTable);
+            orderBean.setSeqWaiter(seqStaff);
+            Timestamp date = new Timestamp(time.getTime());
+            orderBean.setBeginTime(date);
+            if (orderBean.addOrderFirst()) {
+                int seqOrder = orderBean.getSEQOrder();
+                session.setAttribute("orderSeq", seqOrder);
+                url = orderP;
+            } else 
+                url = errorP;
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at CreateOrderController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

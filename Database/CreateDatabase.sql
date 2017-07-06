@@ -59,7 +59,6 @@ create table [Table](
 
 create table [Order](
 	SEQ int primary key identity,
-	Id char(5) not null unique,
 	TableID int not null,
 	CashierID int,
 	WaiterID int,

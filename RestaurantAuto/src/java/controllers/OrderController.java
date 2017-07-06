@@ -1,40 +1,31 @@
+package controllers;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class MainController extends HttpServlet {
+public class OrderController extends HttpServlet {
 
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String staffManager = "staffManager.jsp";
-    private final String foodManager = "foodManager.jsp";
-    private final String tableManager = "tableManager.jsp";
-    private final String insertPage = "insert.jsp";
-    private final String search = "SearchController";
-    private final String update = "UpdateController";
-    private final String insert = "InsertController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
+    private static final String errorP = "error.jsp";
+    private static final String orderP = "order.jsp";
+    private static final String menuP = "menu.jsp";
 
-    private final String showOrder = "ShowOrderController";
-
-    private final String logout = "LogoutController";
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,41 +39,18 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
+        String url = errorP;
+        String action = request.getParameter("action");
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Update Staff")){ 
-                url = staffManager;
-            } else if(action.equals("Update Food")){
-                url = foodManager;
-            } else if(action.equals("Update Table")){
-                url = tableManager;
-            } else if (action.equals("Search")){
-                url = search;
-            } else if (action.equals("Update") || action.equals("Edit")){
-                url = update;
-            } else if (action.equals("Insert")){
-                url = insert;
-            } else if (action.equals("InsertPage")){
-                String flag = request.getParameter("txtFlag");
-                request.setAttribute("txtFlag", flag);
-                url = insertPage;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-
-            } else if (action.equals("Show Order")) {
-                url = showOrder;         
-
-            } else if (action.endsWith("Logout")) {
-                url = logout;
+            HttpSession session = request.getSession();
+            if (action.equals("Show menu")) {
+                OrderDAO dao = new OrderDAO();
+                List<OrderDTO> dto = dao.loadMenu();
+                session.setAttribute("MENU", dto);
+                url = menuP;
             }
-            
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at OrderController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -24,6 +24,49 @@
         <servlet-name>InsertController</servlet-name>
         <servlet-class>controllers.InsertController</servlet-class>
     </servlet>
+        <servlet-name>SubmitOrderController</servlet-name>
+        <servlet-class>controllers.SubmitOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowTableStatusController</servlet-name>
+        <servlet-class>controllers.ShowTableStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>controllers.OrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateOrderController</servlet-name>
+        <servlet-class>controllers.CreateOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowOrderController</servlet-name>
+        <servlet-class>controllers.ShowOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeTableStatusController</servlet-name>
+        <servlet-class>controllers.ChangeTableStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controllers.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChooseFoodController</servlet-name>
+        <servlet-class>controllers.ChooseFoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadFoodsController</servlet-name>
+        <servlet-class>controllers.LoadFoodsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/OrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitOrderController</servlet-name>
+        <url-pattern>/SubmitOrderController</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -47,6 +90,32 @@
     <servlet-mapping>
         <servlet-name>InsertController</servlet-name>
         <url-pattern>/InsertController</url-pattern>
+        <servlet-name>ShowTableStatusController</servlet-name>
+        <url-pattern>/ShowTableStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateOrderController</servlet-name>
+        <url-pattern>/CreateOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowOrderController</servlet-name>
+        <url-pattern>/ShowOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeTableStatusController</servlet-name>
+        <url-pattern>/ChangeTableStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChooseFoodController</servlet-name>
+        <url-pattern>/ChooseFoodController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadFoodsController</servlet-name>
+        <url-pattern>/LoadFoodsController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

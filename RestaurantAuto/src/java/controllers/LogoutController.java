@@ -16,25 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Duc Trung
  */
-public class MainController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String staffManager = "staffManager.jsp";
-    private final String foodManager = "foodManager.jsp";
-    private final String tableManager = "tableManager.jsp";
-    private final String insertPage = "insert.jsp";
-    private final String search = "SearchController";
-    private final String update = "UpdateController";
-    private final String insert = "InsertController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
-
-    private final String showOrder = "ShowOrderController";
-
-    private final String logout = "LogoutController";
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,43 +31,12 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Update Staff")){ 
-                url = staffManager;
-            } else if(action.equals("Update Food")){
-                url = foodManager;
-            } else if(action.equals("Update Table")){
-                url = tableManager;
-            } else if (action.equals("Search")){
-                url = search;
-            } else if (action.equals("Update") || action.equals("Edit")){
-                url = update;
-            } else if (action.equals("Insert")){
-                url = insert;
-            } else if (action.equals("InsertPage")){
-                String flag = request.getParameter("txtFlag");
-                request.setAttribute("txtFlag", flag);
-                url = insertPage;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-
-            } else if (action.equals("Show Order")) {
-                url = showOrder;         
-
-            } else if (action.endsWith("Logout")) {
-                url = logout;
-            }
-            
+            request.getSession(true).invalidate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect("index.jsp");
         }
     }
 

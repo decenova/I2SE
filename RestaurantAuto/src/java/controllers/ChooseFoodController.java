@@ -7,34 +7,23 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class MainController extends HttpServlet {
+public class ChooseFoodController extends HttpServlet {
 
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String staffManager = "staffManager.jsp";
-    private final String foodManager = "foodManager.jsp";
-    private final String tableManager = "tableManager.jsp";
-    private final String insertPage = "insert.jsp";
-    private final String search = "SearchController";
-    private final String update = "UpdateController";
-    private final String insert = "InsertController";
-    private final String createOrder = "CreateOrderController";
-    private final String submitOrder = "SubmitOrderController";
+    private final String viewFood = "viewFoods.jsp";
 
-    private final String showOrder = "ShowOrderController";
-
-    private final String logout = "LogoutController";
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,42 +36,44 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = error;
+        String url = "";
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Update Staff")){ 
-                url = staffManager;
-            } else if(action.equals("Update Food")){
-                url = foodManager;
-            } else if(action.equals("Update Table")){
-                url = tableManager;
-            } else if (action.equals("Search")){
-                url = search;
-            } else if (action.equals("Update") || action.equals("Edit")){
-                url = update;
-            } else if (action.equals("Insert")){
-                url = insert;
-            } else if (action.equals("InsertPage")){
-                String flag = request.getParameter("txtFlag");
-                request.setAttribute("txtFlag", flag);
-                url = insertPage;
-            } else if (action.equals("Create order as Waiter")) {
-                url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
-                url = submitOrder;
-
-            } else if (action.equals("Show Order")) {
-                url = showOrder;         
-
-            } else if (action.endsWith("Logout")) {
-                url = logout;
+            OrderDAO dao = new OrderDAO();
+            List<OrderDTO> listOrder = dao.loadOrders();
+            int orderSEQ = 0;
+            String foodID = "";
+            System.out.println(listOrder.size());
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodDetails(list);
             }
             
+            List<OrderDTO> checkedFood = new ArrayList<OrderDTO>();
+            for (int i = 0; i < listOrder.size(); i++) {
+                for (int j = 0; j < listOrder.get(i).getFoodDetails().size(); j++) {
+                    orderSEQ = listOrder.get(i).getSeq();
+                    foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
+
+                    System.out.println(request.getParameter(orderSEQ + foodID));
+                    if (!request.getParameter(orderSEQ + foodID).isEmpty()
+                            && request.getParameter(orderSEQ + foodID).equalsIgnoreCase("True")) {
+                        OrderDTO dto = new OrderDTO();
+                        dto.setFoodID(foodID);
+                        dto.setSeq(orderSEQ);
+                        checkedFood.add(dto);
+                        if (dao.insertChefID(orderSEQ, foodID, 8)) {
+                            System.out.println("success");
+                        } else {
+                            System.out.println("false");
+                        }
+                    }
+                }
+
+            }
+            request.setAttribute("checkedFood", checkedFood);
+            url = viewFood;
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

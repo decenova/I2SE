@@ -10,16 +10,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>
+        <style>
+
+        </style>
     </head>
     <body>
         <h1>Login Page</h1>
         <form action="MainController" method="POST">
-            ID: <input type="text" name="txtId" required/><br/>
-            Password: <input type="password" name="txtPassword" required/><br/>
-            <font color="red">${ERROR}</font><br/>
-            <input type="submit" value="Login" name="action"/>
-            
+            <c:if test="${not (ERROR eq null)}">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10 alert alert-danger">
+                    ${ERROR}
+                </div>
+                <div class="col-lg-1"></div>
+            </c:if>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="txtId">ID:</label>
+                    <input  name="txtId"  type="text" class="form-control" id="txtId">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input name="txtPassword" type="password" class="form-control" id="pwd">
+                </div>
+                <input type="submit" class="btn btn-success" value="Login" name="action"/>
+            </div>
         </form>
     </body>
 </html>

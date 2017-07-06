@@ -5,20 +5,22 @@
  */
 package controllers;
 
-import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class LoginController extends HttpServlet {
-
+public class LoadFoodsController extends HttpServlet {
+    private final String viewFood = "viewFoods.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,31 +33,21 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = "index.jsp";
+         PrintWriter out = response.getWriter();
+         String url = "";
         try {
-            String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-            
-            TrungBean bean = new TrungBean();
-            String role = bean.getRole(id, password);
-            if (role.equals("Manager")){
-                url = "ManagerController";
-            }else if (role.equals("2")) {
-                url = "tableStatus.jsp";           
-            if (!bean.getRole(id, password).equals("false")) {
-                url = "ShowTableStatusController";
-                
-                //lưu role vs staffId trong session cho dễ sử dụng sau này
-                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                request.getSession().setAttribute("STAFFID", id);
-            } else {
-                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            OrderDAO dao = new OrderDAO();
+            List<OrderDTO> listOrder = dao.loadOrders();
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodDetails(list);
+            }            
+            request.setAttribute("orderList", listOrder);
+           url = viewFood;
+        } catch(Exception e) {
+            log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+           request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
