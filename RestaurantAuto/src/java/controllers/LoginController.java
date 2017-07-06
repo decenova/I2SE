@@ -38,8 +38,11 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             
             TrungBean bean = new TrungBean();
-            if (!bean.getRole(id, password).equals("false")) {
-                url = "tableStatus.jsp";
+            String role = bean.getRole(id, password);
+            if (role.equals("Manager")){
+                url = "ManagerController";
+            }else if (role.equals("2")) {
+                url = "tableStatus.jsp";           
             } else {
                 request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
             }

@@ -7,27 +7,24 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import minhnh.dao.MinhRestaurantDAO;
+import minhnh.dto.FoodDTO;
+import minhnh.dto.StaffDTO;
+import trung.dto.TableDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author kubin
  */
-public class MainController extends HttpServlet {
-
-    private final String error = "error.jsp";
-    private final String login = "LoginController";
-    private final String staffManager = "staffManager.jsp";
-    private final String foodManager = "foodManager.jsp";
-    private final String tableManager = "tableManager.jsp";
-    private final String insertPage = "insert.jsp";
-    private final String search = "SearchController";
-    private final String update = "UpdateController";
-    private final String insert = "InsertController";
-    
+public class SearchController extends HttpServlet {
+    private final static String staffManager = "staffManager.jsp";
+    private final static String foodManager = "foodManager.jsp";
+    private final static String tableManager = "tableManager.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,30 +38,29 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = error;
+        String url = "error.jsp";
         try {
-            String action = request.getParameter("action");
-            if (action.equals("Login")) {
-                url = login;
-            } else if (action.equals("Update Staff")){ 
+            String searchValue = request.getParameter("txtSearch");
+            String flag = request.getParameter("txtFlag");
+            MinhRestaurantDAO dao = new MinhRestaurantDAO();
+            if (flag.equals("Staff")){
+                List<StaffDTO> dto = dao.findStaffByName(searchValue);
+                request.setAttribute("STAFFINFO", dto);
+                request.setAttribute("lastSearchValue", searchValue);
                 url = staffManager;
-            } else if(action.equals("Update Food")){
+            } else if (flag.equals("Food")){
+                List<FoodDTO> dto = dao.findFoodByName(searchValue);
+                request.setAttribute("FOODINFO", dto);
+                request.setAttribute("lastSearchValue", searchValue);
                 url = foodManager;
-            } else if(action.equals("Update Table")){
+            } else if (flag.equals("Table")){
+                List<TableDTO> dto = dao.findTableByStatus(searchValue);
+                request.setAttribute("TABLEINFO", dto);
+                request.setAttribute("lastSearchValue", searchValue);
                 url = tableManager;
-            } else if (action.equals("Search")){
-                url = search;
-            } else if (action.equals("Update") || action.equals("Edit")){
-                url = update;
-            } else if (action.equals("Insert")){
-                url = insert;
-            } else if (action.equals("InsertPage")){
-                String flag = request.getParameter("txtFlag");
-                request.setAttribute("txtFlag", flag);
-                url = insertPage;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at SearchController" + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
