@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
             String role = bean.getRole(id, password);
             if (role.equals("Manager")) {
                 url = "ManagerController";
-            } else if (role.equals("2")) {
+            } else if (!role.equals("false")) {
                 url = "tableStatus.jsp";
                 if (!bean.getRole(id, password).equals("false")) {
                     url = "ShowTableStatusController";
