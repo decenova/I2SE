@@ -190,7 +190,7 @@ public class OrderDAO {
     public List<OrderDTO> loadOrders() {
         List<OrderDTO> result = null;
         try {
-            String sql = "select SEQ, TableID from [Order] where EndTime is null";
+            String sql = "select SEQ, TableID from [Order] where EndTime is null and BeginEatTime is null";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             rs = preStm.executeQuery();
@@ -256,6 +256,33 @@ public class OrderDAO {
         }
         return result;
     }
+    public List<OrderDTO> showChooseFood(int seqOrder, int seqStaff) {
+        List<OrderDTO> result = null;
+        try {
+            String sql = "select f.ID, f.Name, o.Quantity"
+                    + " from OrderDetail o, Food f"
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, seqOrder);
+            preStm.setInt(2, seqStaff);
+            rs = preStm.executeQuery();
+            result = new ArrayList<OrderDTO>();
+            while (rs.next()) {
+                String foodID = rs.getString("ID");
+                String foodName = rs.getString("Name");
+                int quantity = rs.getInt("Quantity");
+                result.add(new OrderDTO(foodID, foodName, quantity));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
+        
         
         public boolean insertChefID(int orderSEQ, String foodID, int chefID) {
             boolean check = false;

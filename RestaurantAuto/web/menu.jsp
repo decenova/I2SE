@@ -31,7 +31,7 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${MENU}" var="dto" varStatus="counter">
-                        <form action="MainController" method="POST">
+                        <form action="MainController" method="POST"  accept-charset="ISO-8859-1">
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>${dto.foodID}</td>
@@ -42,7 +42,7 @@
                                 <td>
                                     <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
                                     <input type="hidden" name="txtFoodName" value="${dto.foodName}" />
-                                    <input type="submit" value="Add" name="action" />
+                                    <input type="submit" value="Add" name="action"  />
                                 </td>
                             </tr>
                         </form>
@@ -55,7 +55,7 @@
         </div>
 
         <div style="width:50%; float: left">
-            <form action="MainController" method="POST">
+            <form action="MainController" method="POST" accept-charset="ISO-8859-1">
                 <c:if test="${not empty ORDER}">
                     <table border="1">
                         <caption>Order Submit</caption>
@@ -65,6 +65,7 @@
                                 <th>Food ID</th>
                                 <th>Food Name</th>
                                 <th>Quantity</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

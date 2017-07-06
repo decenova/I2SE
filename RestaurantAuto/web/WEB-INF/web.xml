@@ -44,6 +44,10 @@
         <servlet-name>LoadFoodsController</servlet-name>
         <servlet-class>controllers.LoadFoodsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewCookFoodController</servlet-name>
+        <servlet-class>controllers.ViewCookFoodController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>LoadFoodsController</servlet-name>
         <url-pattern>/LoadFoodsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewCookFoodController</servlet-name>
+        <url-pattern>/ViewCookFoodController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
