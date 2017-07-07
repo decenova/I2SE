@@ -1,6 +1,6 @@
 <%-- 
-    Document   : cookFood
-    Created on : Jul 6, 2017, 12:35:34 AM
+    Document   : viewWaitingFood
+    Created on : Jul 6, 2017, 9:46:19 PM
     Author     : hoanh
 --%>
 
@@ -13,14 +13,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Cooking Foods</h1>
-        <a href="LoadFoodsController">Back to Foods by Order</a>
-        <h4>Hi, ${STAFFID}</h4>
-        <form action="SubmitCookingFoodController" method="POST">
-            <input type="hidden" name="staffID" value="${STAFFID}" />
-            <input type="submit" value="Submit Food" /> <br/> <br/>
-            <c:forEach items="${listChooseFood}" var="dto">
-                <c:if test="${not empty dto.foodChoice}">
+        <h1>Foods need to bring to customers</h1>
+        <c:forEach items="${foodWaitingList}" var="dto">
+                <c:if test="${not empty dto.foodWaiting}">
                     <table border=1 style="width:25%; float: left">
                         <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
 
@@ -33,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${dto.foodChoice}" var="food" varStatus="counter">
+                            <c:forEach items="${dto.foodWaiting}" var="food" varStatus="counter">
 
                                 <tr>
                                     <td>${counter.count}</td>
@@ -50,6 +45,5 @@
                     </table>
                 </c:if>
             </c:forEach>
-        </form>
     </body>
 </html>
