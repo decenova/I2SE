@@ -1,10 +1,10 @@
-package controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package tung.controllers;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -20,11 +19,7 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class OrderController extends HttpServlet {
-
-    private static final String errorP = "error.jsp";
-    private static final String orderP = "order.jsp";
-    private static final String menuP = "menu.jsp";
+public class LoadWaitingFoodController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +34,18 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = errorP;
-        String action = request.getParameter("action");
+        String url = "";
         try {
-            HttpSession session = request.getSession();
-            if (action.equals("Show menu")) {
-                OrderDAO dao = new OrderDAO();
-                List<OrderDTO> dto = dao.loadMenu();
-                session.setAttribute("MENU", dto);
-                url = menuP;
+            OrderDAO dao = new OrderDAO();
+            List<OrderDTO> listOrder = dao.loadOrders();
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodWaiting(list);
             }
+            request.setAttribute("foodWaitingList", listOrder);
+           url = "viewWaitingFood.jsp";
         } catch (Exception e) {
-            log("ERROR at OrderController: " + e.getMessage());
+            log("ERROR at LoadWaitingFoodController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

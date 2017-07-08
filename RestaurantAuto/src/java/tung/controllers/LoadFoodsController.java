@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,12 +19,8 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class ChooseFoodController extends HttpServlet {
-
+public class LoadFoodsController extends HttpServlet {
     private final String viewFood = "viewFoods.jsp";
-    private final String cookFood = "cookFood.jsp";
-    private final String viewCookFood = "ViewCookFoodController";
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,43 +33,21 @@ public class ChooseFoodController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "";
+         PrintWriter out = response.getWriter();
+         String url = "";
         try {
-            String chefID = request.getParameter("staffID");
             OrderDAO dao = new OrderDAO();
             List<OrderDTO> listOrder = dao.loadOrders();
-            int orderSEQ = 0;
-            String foodID = "";
             for (int i = 0; i < listOrder.size(); i++) {
                 List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
                 listOrder.get(i).setFoodDetails(list);
-            }
-            int seqStaff = 0;
-            for (int i = 0; i < listOrder.size(); i++) {
-                for (int j = 0; j < listOrder.get(i).getFoodDetails().size(); j++) {
-                    orderSEQ = listOrder.get(i).getSeq();
-                    foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
-                    String choice = orderSEQ + foodID;
-                    try {
-                        if (!request.getParameter(choice).equals(null)) {
-                            seqStaff = dao.getSEQStaffById(chefID);
-                            System.out.println("tung: " + seqStaff);
-                            if (dao.insertChefID(orderSEQ, foodID, seqStaff)) {
-                                System.out.println("success");
-                            } else {
-                                System.out.println("false");
-                            }
-                        }
-                            
-                    } catch (Exception e) {
-                    }
-                }
-            }     
-            url = viewCookFood;
-        } catch (Exception e) {
+            }            
+            request.setAttribute("orderList", listOrder);
+           url = viewFood;
+        } catch(Exception e) {
             log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+           request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
