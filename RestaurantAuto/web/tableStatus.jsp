@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Table Status Page</title>
+        <meta name="viewport" content="width=device-width"/>
         <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
         <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>
@@ -70,7 +71,7 @@
         </div>
         <div class="card-deck col-lg-12">
             <c:forEach var="table" items="${TABLES}">
-                <div class="card text-center col-lg-2">
+                <div class="card text-center col-xs-11 col-sm-5 col-md-3 col-lg-2">
                     <div class="card-block">
                         <h4 class="card-title">${table.id}</h4>
                         <p class="card-text">${table.tableStatus}</p>
