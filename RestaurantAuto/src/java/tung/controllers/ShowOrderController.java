@@ -22,7 +22,9 @@ import tung.dto.OrderDTO;
  * @author hoanh
  */
 public class ShowOrderController extends HttpServlet {
+
     private final String orderP = "order.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,8 +40,8 @@ public class ShowOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "";
         try {
+            String action = request.getParameter("action");
             String txtSeq = request.getParameter("seqOrder");
-
             OrderDAO dao = new OrderDAO();
             OrderDTO dto = dao.loadOrderInfo(Integer.parseInt(txtSeq));
             request.setAttribute("tableID", dto.getTableID());
@@ -48,10 +50,10 @@ public class ShowOrderController extends HttpServlet {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             String date = sdf.format(dto.getBeginTime().getTime());
             request.setAttribute("DATE", date);
-            
-            List<OrderDTO> list = dao.showOrderDetail(dto.getSeq());
 
+            List<OrderDTO> list = dao.showOrderDetail(dto.getSeq());
             request.setAttribute("ORDER", list);
+            request.setAttribute("ACTION", action);
             url = orderP;
         } catch (Exception e) {
             log("ERROR at ShowOrderController: " + e.getMessage());

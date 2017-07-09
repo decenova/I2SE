@@ -69,14 +69,15 @@ public class SubmitOrderController extends HttpServlet {
                         result.add(dto);
                     }
                     session.setAttribute("ORDER", result);
-                    url = menuP;
+                    request.setAttribute("ACTION", action);
+                    url = orderP;
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
                 System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
                 session.setAttribute("ORDER", result);
-                url = menuP;
+                url = orderP;
             }
             else if (action.equals("Submit order")) {
                 request.setAttribute("ACTION", action);

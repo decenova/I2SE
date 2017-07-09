@@ -29,6 +29,7 @@ public class CreateOrderController extends HttpServlet {
 
     private final String errorP = "error.jsp";
     private final String orderP = "order.jsp";
+    private final String order = "OrderController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,6 +46,7 @@ public class CreateOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = errorP;
         try {
+            String action = request.getParameter("action");
             HttpSession session = request.getSession();
             String tableID = request.getParameter("tableId");
             TrungBean bean = new TrungBean();
@@ -65,8 +67,12 @@ public class CreateOrderController extends HttpServlet {
             Timestamp date = new Timestamp(time.getTime());
             orderBean.setBeginTime(date);
             if (orderBean.addOrderFirst()) {
+                request.setAttribute("ACTION", action);
                 int seqOrder = orderBean.getSEQOrder();
                 session.setAttribute("orderSeq", seqOrder);
+                OrderDAO dao = new OrderDAO();
+                List<OrderDTO> dto = dao.loadMenu();
+                session.setAttribute("MENU", dto);
                 url = orderP;
             } else 
                 url = errorP;
