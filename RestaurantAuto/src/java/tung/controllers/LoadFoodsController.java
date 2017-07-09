@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +19,8 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class ViewCookFoodController extends HttpServlet {
-       private final String cookFood = "cookFood.jsp";
+public class LoadFoodsController extends HttpServlet {
+    private final String viewFood = "viewFoods.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,24 +33,19 @@ public class ViewCookFoodController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = "";
+         PrintWriter out = response.getWriter();
+         String url = "";
         try {
-            String chefID = request.getParameter("staffID");
             OrderDAO dao = new OrderDAO();
-            int seqStaff = 0;
-            List<OrderDTO> listFoodChoice = dao.loadOrders();
-            System.out.println(listFoodChoice.size());
-            for (int i = 0; i < listFoodChoice.size(); i++) {
-                seqStaff = dao.getSEQStaffById(chefID);
-                List<OrderDTO> list1 = dao.showChooseFood(listFoodChoice.get(i).getSeq(), seqStaff);
-                System.out.println(list1.size());
-                listFoodChoice.get(i).setFoodChoice(list1);
-            }
-            request.setAttribute("listChooseFood", listFoodChoice);
-            url = cookFood;
-        } catch (Exception e) {
-
+            List<OrderDTO> listOrder = dao.loadOrders();
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodDetails(list);
+            }            
+            request.setAttribute("orderList", listOrder);
+           url = viewFood;
+        } catch(Exception e) {
+            log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
            request.getRequestDispatcher(url).forward(request, response);
         }

@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
-import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import tung.bean.OrderBean;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -25,10 +20,11 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class CreateOrderController extends HttpServlet {
+public class ChooseFoodController extends HttpServlet {
 
-    private final String errorP = "error.jsp";
-    private final String orderP = "order.jsp";
+    private final String viewFood = "viewFoods.jsp";
+    private final String cookFood = "cookFood.jsp";
+    private final String viewCookFood = "ViewCookFoodController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,36 +38,35 @@ public class CreateOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = errorP;
+        String url = "";
         try {
-            HttpSession session = request.getSession();
-            String tableID = request.getParameter("tableId");
-            TrungBean bean = new TrungBean();
-            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
-            session.setAttribute("tableID", tableID);
-            String staffId = request.getParameter("staffId");
-            Date time = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
-            String now = sdf.format(time);
-            session.setAttribute("DATE", now);
-            OrderBean orderBean = new OrderBean();
-            orderBean.setStaffID(staffId);
-            orderBean.setTableID(tableID);
-            int seqStaff = orderBean.getSeqStaff();
-            int seqTable = orderBean.getSeqTable();
-            orderBean.setSeqTable(seqTable);
-            orderBean.setSeqWaiter(seqStaff);
-            Timestamp date = new Timestamp(time.getTime());
-            orderBean.setBeginTime(date);
-            if (orderBean.addOrderFirst()) {
-                int seqOrder = orderBean.getSEQOrder();
-                session.setAttribute("orderSeq", seqOrder);
-                url = orderP;
-            } else 
-                url = errorP;
+            String chefID = request.getParameter("staffID");
+            OrderDAO dao = new OrderDAO();
+            List<OrderDTO> listOrder = dao.loadOrders();
+            int orderSEQ = 0;
+            String foodID = "";
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodDetails(list);
+            }
+            int seqStaff = 0;
+            for (int i = 0; i < listOrder.size(); i++) {
+                for (int j = 0; j < listOrder.get(i).getFoodDetails().size(); j++) {
+                    orderSEQ = listOrder.get(i).getSeq();
+                    foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
+                    String choice = orderSEQ + foodID;
+                    try {
+                        if (!request.getParameter(choice).equals(null)) {
+                            seqStaff = dao.getSEQStaffById(chefID);
+                            dao.insertChefID(orderSEQ, foodID, seqStaff);
+                        }     
+                    } catch (Exception e) {
+                    }
+                }
+            }     
+            url = viewCookFood;
         } catch (Exception e) {
-            log("ERROR at CreateOrderController: " + e.getMessage());
+            log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

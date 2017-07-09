@@ -12,6 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>      
         <h1>Update Staff Page!</h1>
@@ -22,9 +26,12 @@
                 <minhnh:param name="action" value="InsertPage"/>
             </minhnh:url>
         <h4><a href="${insert}">Insert new Staff</a></h4>
-        <form action="MainController" method="POST">
-            Search <input type="text" name="txtSearch" value="${lastSearchValue}"/> <br/>
+        <form action="MainController" method="POST" class="form-inline">
             <input type="hidden" name="txtFlag" value="Staff"/>
+            <div class="form-group">            
+                <label for="txtSearch">Search</label> 
+                <input type="text" id="txtSearch" name="txtSearch" value="${lastSearchValue}"/>
+            </div>
             <input type="submit" name="action" value="Search"/>
         </form>
         <minhnh:if test="${not empty requestScope.STAFFINFO}">

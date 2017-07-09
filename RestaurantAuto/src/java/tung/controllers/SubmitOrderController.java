@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -69,14 +69,15 @@ public class SubmitOrderController extends HttpServlet {
                         result.add(dto);
                     }
                     session.setAttribute("ORDER", result);
-                    url = menuP;
+                    request.setAttribute("ACTION", action);
+                    url = orderP;
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
                 System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
                 session.setAttribute("ORDER", result);
-                url = menuP;
+                url = orderP;
             }
             else if (action.equals("Submit order")) {
                 request.setAttribute("ACTION", action);
@@ -99,7 +100,6 @@ public class SubmitOrderController extends HttpServlet {
                     session.removeAttribute("ORDER");
                     session.removeAttribute("orderSeq");
                     session.removeAttribute("DATE");
-                    session.removeAttribute("STAFFID");
                     session.removeAttribute("tableID");
                     url = orderListP;
                 }

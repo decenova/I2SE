@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>SubmitOrderController</servlet-name>
-        <servlet-class>controllers.SubmitOrderController</servlet-class>
+        <servlet-class>tung.controllers.SubmitOrderController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowTableStatusController</servlet-name>
@@ -34,15 +34,15 @@
     </servlet>
     <servlet>
         <servlet-name>OrderController</servlet-name>
-        <servlet-class>controllers.OrderController</servlet-class>
+        <servlet-class>tung.controllers.OrderController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateOrderController</servlet-name>
-        <servlet-class>controllers.CreateOrderController</servlet-class>
+        <servlet-class>tung.controllers.CreateOrderController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowOrderController</servlet-name>
-        <servlet-class>controllers.ShowOrderController</servlet-class>
+        <servlet-class>tung.controllers.ShowOrderController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangeTableStatusController</servlet-name>
@@ -54,15 +54,23 @@
     </servlet>
     <servlet>
         <servlet-name>ChooseFoodController</servlet-name>
-        <servlet-class>controllers.ChooseFoodController</servlet-class>
+        <servlet-class>tung.controllers.ChooseFoodController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoadFoodsController</servlet-name>
-        <servlet-class>controllers.LoadFoodsController</servlet-class>
+        <servlet-class>tung.controllers.LoadFoodsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewCookFoodController</servlet-name>
-        <servlet-class>controllers.ViewCookFoodController</servlet-class>
+        <servlet-class>tung.controllers.ViewCookFoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitCookingFoodController</servlet-name>
+        <servlet-class>tung.controllers.SubmitCookingFoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadWaitingFoodController</servlet-name>
+        <servlet-class>tung.controllers.LoadWaitingFoodController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
@@ -95,6 +103,8 @@
     <servlet-mapping>
         <servlet-name>InsertController</servlet-name>
         <url-pattern>/InsertController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ShowTableStatusController</servlet-name>
         <url-pattern>/ShowTableStatusController</url-pattern>
     </servlet-mapping>
@@ -125,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ViewCookFoodController</servlet-name>
         <url-pattern>/ViewCookFoodController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitCookingFoodController</servlet-name>
+        <url-pattern>/SubmitCookingFoodController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadWaitingFoodController</servlet-name>
+        <url-pattern>/LoadWaitingFoodController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
