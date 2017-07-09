@@ -47,20 +47,6 @@ public class LoginController extends HttpServlet {
                 } else {
                     url = "ShowTableStatusController";
                 }
-                if (role.equals("Manager")) {
-                    url = "ManagerController";
-                } else if (role.equals("2")) {
-                    url = "tableStatus.jsp";
-                    if (!bean.getRole(id, password).equals("false")) {
-                        url = "ShowTableStatusController";
-
-                        //lưu role vs staffId trong session cho dễ sử dụng sau này
-                        request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                        request.getSession().setAttribute("STAFFID", id);
-                    } else {
-                        request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
-                    }
-                }
                 //lưu role vs staffId trong session cho dễ sử dụng sau này
                 request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
                 request.getSession().setAttribute("STAFFID", id);
