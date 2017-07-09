@@ -51,6 +51,7 @@ public class MainController extends HttpServlet {
         String url = error;
         try {
             String action = request.getParameter("action");
+            System.out.println(action);
             if (action.equals("Login")) {
                 url = login;
             } else if (action.equals("Update Staff")){ 

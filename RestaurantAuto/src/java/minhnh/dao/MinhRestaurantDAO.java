@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import minhnh.dto.FoodDTO;
 import minhnh.dto.StaffDTO;
-import trung.dto.TableDTO;
+import minhnh.dto.TableDTO;
 
 public class MinhRestaurantDAO {
 
