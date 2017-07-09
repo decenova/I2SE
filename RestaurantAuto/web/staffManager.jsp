@@ -32,10 +32,10 @@
                 <label for="txtSearch">Search</label> 
                 <input type="text" id="txtSearch" name="txtSearch" value="${lastSearchValue}"/>
             </div>
-            <input type="submit" name="action" value="Search"/>
+            <input type="submit" name="action" value="Search"  class="btn btn-success"/>
         </form>
         <minhnh:if test="${not empty requestScope.STAFFINFO}">
-            <table border="1">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -75,75 +75,55 @@
         </table>
     </minhnh:if>
     <minhnh:if test="${not empty STAFFVALUE}">
-        <form action="MainController" method="POST">
-            <table>
-                <tr>
-                    <td>Staff Id </td>
-                    <td><input type="text" value="${STAFFVALUE.staffID}" name="txtStaffId" readonly/> </td>
-                </tr>
-                <tr>
-                    <td>Password </td>
-                    <td><input type="password" value="${STAFFVALUE.password}" name="txtPassword"/> </td>
-                </tr>
-                <tr>
-                    <td>First Name </td>
-                    <td><input type="text" value="${STAFFVALUE.firstName}" name="txtFirstName"/> </td>
-                </tr>
-                <tr>
-                    <td>Last Name</td>
-                    <td><input type="text" value="${STAFFVALUE.lastName}" name="txtLastName"/>  </td>
-                </tr>
-                <tr>
-                    <td>DOB</td>
-                    <td>
-                        <fmt:formatDate value="${STAFFVALUE.DOB}" type="date" var="dob" pattern="yyyy-MM-dd"/>
-                        <input type="date" value="${dob}" name="dateDOB"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sex</td>
-                    <td>
-                        <input type="radio" name="ckGender" value="MALE"
-                               <minhnh:if test="${STAFFVALUE.gender eq 'M'}">checked</minhnh:if>/> Male
-                               <input type="radio" name="ckGender" value="FEMALE"
-                               <minhnh:if test="${STAFFVALUE.gender eq 'F'}">checked</minhnh:if>/> Female
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Address </td>
-                        <td><input type="text" value="${STAFFVALUE.address}" name="txtAddress"/> </td>
-                </tr>
-                <tr>
-                    <td>Salary </td>
-                    <td><input type="number" value="${STAFFVALUE.salary}" name="txtSalary"/> </td>
-                </tr>
-                <tr>
-                    <td>Available</td>
-                    <td>
-                        <input type="checkbox" name="ckAvailable" checked/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Role </td>
-                    <td>
-                        <select name="roleList">
-                            <option value="1" <minhnh:if test="${STAFFVALUE.role == 'Manager'}">selected</minhnh:if>>Manager</option>
-                            <option value="2" <minhnh:if test="${STAFFVALUE.role == 'Host'}">selected</minhnh:if>>Host</option>
-                            <option value="3" <minhnh:if test="${STAFFVALUE.role == 'Waiter'}">selected</minhnh:if>>Waiter</option>
-                            <option value="4" <minhnh:if test="${STAFFVALUE.role == 'Busboy'}">selected</minhnh:if>>Busboy</option>
-                            <option value="5" <minhnh:if test="${STAFFVALUE.role == 'Cook'}">selected</minhnh:if>>Cook</option>
-                            <option value="6" <minhnh:if test="${STAFFVALUE.role == 'Casher'}">selected</minhnh:if>>Casher</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="hidden" value="Staff" name="txtFlag"/>
-                            <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
-                        <input type="submit" value="Edit" name="action"/> 
-                    </td>
-                </tr>
-            </table>
+        <div class="col-md-2 col-lg-3"></div>
+        <form class="col-xs-12 col-md-8 col-lg-6" method="POST" action="MainController" accept-charset="ISO-8859-1">
+            <div class="form-group">
+                <label for="StaffID">StaffID</label>
+                <input type="text" name="txtStaffId" value="${STAFFVALUE.staffID}" readonly class="form-control" id="StaffID">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" name="txtPassword" value="${STAFFVALUE.password}" class="form-control" id="pwd">
+            </div>
+            <div class="form-group">
+                <label for="FirstName">First Name</label>
+                <input type="text" name="txtFirstName" value="${STAFFVALUE.firstName}" class="form-control" id="FirstName">
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last Name</label>
+                <input type="text" name="txtLastName" value="${STAFFVALUE.lastName}" class="form-control" id="LastName">
+            </div>
+            <div class="form-group">
+                <fmt:formatDate value="${STAFFVALUE.DOB}" type="date" var="dob" pattern="yyyy-MM-dd"/>
+                <label for="Date">Date Of Birth</label>
+                <input type="date" name="dateDOB" value="${dob}" class="form-control" id="Date">
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input type="text" name="txtAddress" value="${STAFFVALUE.address}" class="form-control" id="Address">
+            </div>
+            <div class="form-group">
+                <label class="radio-inline"><input type="radio" name="cbSex" value="M" <minhnh:if test="${STAFFVALUE.gender eq 'M'}">checked</minhnh:if> >Male</label>
+                <label class="radio-inline"><input type="radio" name="cbSex" value="F" <minhnh:if test="${STAFFVALUE.gender eq 'F'}">checked</minhnh:if>>Female</label>
+                </div>
+                <div class="form-group">
+                    <label for="Salary">Salary</label>
+                    <input type="text" name="txtSalary" value="${STAFFVALUE.salary}" class="form-control" id="Salary">
+            </div>
+            <div class="form-group">
+                <label for="roleList">Role</label>
+                <select class="form-control" name="roleList" id="roleList">
+                    <option value="1" <minhnh:if test="${STAFFVALUE.role == 'Manager'}">selected</minhnh:if>>Manager</option>
+                    <option value="2" <minhnh:if test="${STAFFVALUE.role == 'Host'}">selected</minhnh:if>>Host</option>
+                    <option value="3" <minhnh:if test="${STAFFVALUE.role == 'Waiter'}">selected</minhnh:if>>Waiter</option>
+                    <option value="4" <minhnh:if test="${STAFFVALUE.role == 'Busboy'}">selected</minhnh:if>>Busboy</option>
+                    <option value="5" <minhnh:if test="${STAFFVALUE.role == 'Cook'}">selected</minhnh:if>>Cook</option>
+                    <option value="6" <minhnh:if test="${STAFFVALUE.role == 'Casher'}">selected</minhnh:if>>Casher</option>
+                    </select>
+                </div>
+                <input type="hidden" value="Staff" name="txtFlag"/>
+                <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
+            <input type="submit" value="Edit" name="action" class="btn btn-success"/> 
         </form>
     </minhnh:if>
 </body>
