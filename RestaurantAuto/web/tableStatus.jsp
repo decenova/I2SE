@@ -61,6 +61,7 @@
                 <h4 class="card-title">Staff ID: ${STAFFID}</h4>
                 <p class="card-text">
                     Role: ${ROLE}
+                    <a href="LoadWaitingFoodController">View waiting food</a>
                 <form action="MainController" method="GET">
                     <input class="btn btn-default" type="submit" name="action" value="Logout"/>
                 </form>
@@ -74,7 +75,7 @@
                         <h4 class="card-title">${table.id}</h4>
                         <p class="card-text">${table.tableStatus}</p>
                         <c:choose>
-                                <c:when test="${table.tableStatus eq 'Clean'}">
+                            <c:when test="${table.tableStatus eq 'Clean'}">
                                 <div class="backgroundDiv backgroundDiv-clean"></div>
                             </c:when>
                             <c:when test="${table.tableStatus eq 'Dirty'}">

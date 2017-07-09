@@ -1,23 +1,30 @@
+package tung.controllers;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
-
-import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import tung.dao.OrderDAO;
+import tung.dto.OrderDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author hoanh
  */
-public class LoginController extends HttpServlet {
+public class OrderController extends HttpServlet {
+
+    private static final String errorP = "error.jsp";
+    private static final String orderP = "order.jsp";
+    private static final String menuP = "menu.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,44 +39,18 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "index.jsp";
+        String url = errorP;
+        String action = request.getParameter("action");
         try {
-            String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-
-            TrungBean bean = new TrungBean();
-            String role = bean.getRole(id, password);
-            if (!role.equals("false")) {
-                if (role.equals("Cook")) {
-                    url = "LoadFoodsController";
-                } else if (role.equals("Manager")) {
-                    url = "ManagerController";
-                } else {
-                    url = "ShowTableStatusController";
-                }
-                if (role.equals("Manager")) {
-                    url = "ManagerController";
-                } else if (role.equals("2")) {
-                    url = "tableStatus.jsp";
-                    if (!bean.getRole(id, password).equals("false")) {
-                        url = "ShowTableStatusController";
-
-                        //lưu role vs staffId trong session cho dễ sử dụng sau này
-                        request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                        request.getSession().setAttribute("STAFFID", id);
-                    } else {
-                        request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
-                    }
-                }
-                //lưu role vs staffId trong session cho dễ sử dụng sau này
-                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                request.getSession().setAttribute("STAFFID", id);
-            } else {
-                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
+            HttpSession session = request.getSession();
+            if (action.equals("Show menu")) {
+                OrderDAO dao = new OrderDAO();
+                List<OrderDTO> dto = dao.loadMenu();
+                session.setAttribute("MENU", dto);
+                url = menuP;
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at OrderController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

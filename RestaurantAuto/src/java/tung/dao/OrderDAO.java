@@ -173,7 +173,7 @@ public class OrderDAO {
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
             preStm.setInt(2, seqFood);
-            preStm.setBoolean(3, true);
+            preStm.setBoolean(3, false);
             preStm.setInt(4, quantity);
             if (preStm.executeUpdate() > 0) {
                 check = true;
@@ -186,8 +186,8 @@ public class OrderDAO {
         }
         return check;
     }
-    
-    public List<OrderDTO> loadOrders() {
+
+    public List<OrderDTO> loadOrders() { //lay tat ca order dang hoat dong
         List<OrderDTO> result = null;
         try {
             String sql = "select SEQ, TableID from [Order] where EndTime is null and BeginEatTime is null";
@@ -208,7 +208,8 @@ public class OrderDAO {
         }
         return result;
     }
-    public OrderDTO loadOrderInfo(int seq) {    
+
+    public OrderDTO loadOrderInfo(int seq) {
         OrderDTO dto = null;
         try {
             String sql = "select s.Id as 'WaiterID', t.Id as 'TableID', o.BeginTime"
@@ -231,15 +232,17 @@ public class OrderDAO {
         }
         return dto;
     }
-        public List<OrderDTO> showOrderDetail(int seqOrder) {
+
+    public List<OrderDTO> showOrderDetail(int seqOrder) { //show order detail cho moi order
         List<OrderDTO> result = null;
         try {
             String sql = "select f.ID, f.Name, o.Quantity"
                     + " from OrderDetail o, Food f"
-                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is null";
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is null and o.Status = ?";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
+            preStm.setBoolean(2, false);
             rs = preStm.executeQuery();
             result = new ArrayList<OrderDTO>();
             while (rs.next()) {
@@ -256,16 +259,18 @@ public class OrderDAO {
         }
         return result;
     }
-    public List<OrderDTO> showChooseFood(int seqOrder, int seqStaff) {
+
+    public List<OrderDTO> showChooseFood(int seqOrder, int seqStaff) { //thang chef chon mon nau
         List<OrderDTO> result = null;
         try {
             String sql = "select f.ID, f.Name, o.Quantity"
                     + " from OrderDetail o, Food f"
-                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID = ?";
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID = ? and o.Status = ?";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
             preStm.setInt(2, seqStaff);
+            preStm.setBoolean(3, false);
             rs = preStm.executeQuery();
             result = new ArrayList<OrderDTO>();
             while (rs.next()) {
@@ -282,27 +287,74 @@ public class OrderDAO {
         }
         return result;
     }
-        
-        
-        public boolean insertChefID(int orderSEQ, String foodID, int chefID) {
-            boolean check = false;
-            try {
-                String sql = "update OrderDetail set cookID = ?"
-                        + " where OrderID = ? and FoodID = (select SEQ from Food where Id = ?)";
-                conn = MyConnection.getConnection();
-                preStm = conn.prepareStatement(sql);
-                preStm.setInt(1, chefID);
-                preStm.setInt(2, orderSEQ);
-                preStm.setString(3, foodID);
-                if (preStm.executeUpdate() > 0)
-                    check = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-            return check;
-        }
 
+    public boolean insertChefID(int orderSEQ, String foodID, int chefID) {
+        boolean check = false;
+        try {
+            String sql = "update OrderDetail set cookID = ?"
+                    + " where OrderID = ? and FoodID = (select SEQ from Food where Id = ?)";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, chefID);
+            preStm.setInt(2, orderSEQ);
+            preStm.setString(3, foodID);
+            if (preStm.executeUpdate() > 0) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
+
+    public boolean checkFoodDone(int seqOrder, String foodID) { //thang chef chon mon nau xong
+        boolean check = false;
+        try {
+            String sql = "update OrderDetail set Status = ?"
+                    + " where OrderID = ? and FoodID = (select SEQ from Food where Id = ?)";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setBoolean(1, true);
+            preStm.setInt(2, seqOrder);
+            preStm.setString(3, foodID);
+            if (preStm.executeUpdate() > 0) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
+
+    public List<OrderDTO> loadWaitingFood(int seqOrder) { //bang mon an cho don len cho khach
+        List<OrderDTO> result = null;
+        try {
+            String sql = "select f.ID, f.Name, o.Quantity"
+                    + " from OrderDetail o, Food f"
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.Status = ? and o.CookID is not null";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, seqOrder);
+            preStm.setBoolean(2, true);
+            rs = preStm.executeQuery();
+            result = new ArrayList<OrderDTO>();
+            while (rs.next()) {
+                String foodID = rs.getString("ID");
+                String foodName = rs.getString("Name");
+                int quantity = rs.getInt("Quantity");
+                result.add(new OrderDTO(foodID, foodName, quantity));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
 
 }

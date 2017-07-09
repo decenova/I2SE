@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -99,7 +99,6 @@ public class SubmitOrderController extends HttpServlet {
                     session.removeAttribute("ORDER");
                     session.removeAttribute("orderSeq");
                     session.removeAttribute("DATE");
-                    session.removeAttribute("STAFFID");
                     session.removeAttribute("tableID");
                     url = orderListP;
                 }

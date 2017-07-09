@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tung.bean.OrderBean;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -21,8 +19,10 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class ShowOrderController extends HttpServlet {
-    private final String orderP = "order.jsp";
+public class SubmitCookingFoodController extends HttpServlet {
+
+    private final String cookFood = "cookFood.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,23 +38,43 @@ public class ShowOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "";
         try {
-            String txtSeq = request.getParameter("seqOrder");
-
+            String chefID = request.getParameter("staffID");
             OrderDAO dao = new OrderDAO();
-            OrderDTO dto = dao.loadOrderInfo(Integer.parseInt(txtSeq));
-            request.setAttribute("tableID", dto.getTableID());
-            request.setAttribute("STAFFID", dto.getWaiterID());
-            request.setAttribute("orderSeq", dto.getSeq());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            String date = sdf.format(dto.getBeginTime().getTime());
-            request.setAttribute("DATE", date);
-            
-            List<OrderDTO> list = dao.showOrderDetail(dto.getSeq());
+            int seqStaff = dao.getSEQStaffById(chefID);
+            List<OrderDTO> listFoodChoice = dao.loadOrders();
+            int orderSEQ = 0;
+            String foodID = "";
+            for (int i = 0; i < listFoodChoice.size(); i++) {
+                List<OrderDTO> list1 = dao.showChooseFood(listFoodChoice.get(i).getSeq(), seqStaff);
+                listFoodChoice.get(i).setFoodChoice(list1);
 
-            request.setAttribute("ORDER", list);
-            url = orderP;
+            }
+            for (int i = 0; i < listFoodChoice.size(); i++) {
+                for (int j = 0; j < listFoodChoice.get(i).getFoodChoice().size(); j++) {
+                    orderSEQ = listFoodChoice.get(i).getSeq();
+                    foodID = listFoodChoice.get(i).getFoodChoice().get(j).getFoodID();
+                    String choice = orderSEQ + foodID;
+                    System.out.println("asdas: " + choice);
+                    try {
+                        if (!request.getParameter(choice).equals(null)) {
+                            dao.checkFoodDone(orderSEQ, foodID);
+                            System.out.println("aaaaa");
+                        } else {
+                            System.out.println("hehehehehhe");
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            }
+            for (int i = 0; i < listFoodChoice.size(); i++) {
+                List<OrderDTO> list1 = dao.showChooseFood(listFoodChoice.get(i).getSeq(), seqStaff);
+                listFoodChoice.get(i).setFoodChoice(list1);
+
+            }
+            request.setAttribute("listChooseFood", listFoodChoice);
+            url = cookFood;
         } catch (Exception e) {
-            log("ERROR at ShowOrderController: " + e.getMessage());
+            log("ERROR at SubmitCookingFoodController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

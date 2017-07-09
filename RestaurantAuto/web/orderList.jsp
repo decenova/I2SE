@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>View order</h1>
-
+        <a href="ShowTableStatusController">Back to Table Status</a>
         <table border="1">
             <thead>
                 <tr>
