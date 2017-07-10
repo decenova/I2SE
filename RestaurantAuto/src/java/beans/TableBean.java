@@ -8,7 +8,7 @@ package beans;
 import java.io.Serializable;
 import java.util.List;
 import minhnh.dao.MinhRestaurantDAO;
-import trung.dto.TableDTO;
+import minhnh.dto.TableDTO;
 
 /**
  *

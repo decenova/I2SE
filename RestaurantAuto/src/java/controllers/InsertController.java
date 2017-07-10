@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import minhnh.dao.MinhRestaurantDAO;
 import minhnh.dto.FoodDTO;
 import minhnh.dto.FoodErrorObj;
+import minhnh.dto.TableDTO;
 import minhnh.dto.TableErrorObj;
-import trung.dto.TableDTO;
 
 /**
  *

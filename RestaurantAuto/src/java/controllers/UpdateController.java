@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import minhnh.dao.MinhRestaurantDAO;
 import minhnh.dto.FoodDTO;
 import minhnh.dto.StaffDTO;
-import trung.dto.TableDTO;
+import minhnh.dto.TableDTO;
 
 /**
  *

@@ -15,9 +15,10 @@
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-        
+
     </head>
     <body>
+        <h4>Hi, ${MANAME} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Insert</h1>
         <div class="col-md-2 col-lg-3"></div>
         <form class="col-xs-12 col-md-8 col-lg-6" method="POST" action="MainController" accept-charset="ISO-8859-1">
@@ -66,7 +67,8 @@
                     </select>
                 </div>
                 <input type="hidden" value="${txtFlag}" name="txtFlag"/>
-                <input type="submit" name="action" value="Insert"  class="btn btn-default"/> 
+                <input type="submit" name="action" value="Insert"  class="btn btn-default"/>                
+                <input type="submit" name="action" value="Cancel"  class="btn btn-default"/>                
             </minhnh:if>
             <minhnh:if test="${txtFlag eq 'Food'}">
                 <div class="form-group">
@@ -101,6 +103,7 @@
                 </div>
                 <input type="hidden" value="${txtFlag}" name="txtFlag"/>
                 <input type="submit" name="action" value="Insert"  class="btn btn-default"/> 
+                <input type="submit" name="action" value="Cancel"  class="btn btn-default"/>    
             </minhnh:if>
             <minhnh:if test="${txtFlag eq 'Table'}">
                 <div class="form-group">
@@ -121,6 +124,7 @@
                 </div>
                 <input type="hidden" value="${txtFlag}" name="txtFlag"/>
                 <input type="submit" name="action" value="Insert"  class="btn btn-default"/> 
+                <input type="submit" name="action" value="Cancel"  class="btn btn-default"/>    
             </minhnh:if>
         </form>
     </body>
