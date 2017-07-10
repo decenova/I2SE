@@ -86,7 +86,7 @@ having count(tb.SEQ) >= ALL (select count(tb.SEQ)
 --where o.CookID = s.SEQ
 --group by s.SEQ, s.FristName, s.LastName
 
-select s.SEQ, s.FristName, s.LastName, count(o.SEQ)
+select s.SEQ, s.FristName, s.LastName, count(o.SEQ) as 'Dish'
 from [Order],OrderDetail o, Staff s
 where [Order].SEQ = o.OrderID and o.CookID = s.SEQ
 	and ([Order].BeginTime between '2017-06-01 00:00:00.000' and '2017-06-07 23:59:00.000')
