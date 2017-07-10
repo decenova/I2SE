@@ -79,6 +79,7 @@ create table OrderDetail(
 	CookID int,
 	[Status] bit not null, 
 	Quantity int not null,
+	Delivered bit not null,
 	constraint FK_ORDERDETAIL_ORDER foreign key (OrderID) references [Order](SEQ),
 	constraint FK_ORDERDETAIL_FOOD foreign key (FoodId) references Food(SEQ),
 	constraint FK_ORDERDETAIL_STAFF foreign key (CookId) references Staff(SEQ)

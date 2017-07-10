@@ -71,7 +71,7 @@ public class MainController extends HttpServlet {
                 url = insertPage;
             } else if (action.equals("Create order as Waiter")) {
                 url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
+            } else if (action.equals("Add") || action.equals("Submit order")) {
                 url = submitOrder;
 
             } else if (action.equals("Show Order")) {

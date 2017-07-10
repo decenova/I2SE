@@ -72,6 +72,10 @@
         <servlet-name>LoadWaitingFoodController</servlet-name>
         <servlet-class>tung.controllers.LoadWaitingFoodController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FoodDeliveredController</servlet-name>
+        <servlet-class>tung.controllers.FoodDeliveredController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>LoadWaitingFoodController</servlet-name>
         <url-pattern>/LoadWaitingFoodController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FoodDeliveredController</servlet-name>
+        <url-pattern>/FoodDeliveredController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

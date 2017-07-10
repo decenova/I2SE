@@ -7,13 +7,11 @@ package tung.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tung.bean.OrderBean;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -21,9 +19,9 @@ import tung.dto.OrderDTO;
  *
  * @author hoanh
  */
-public class ShowOrderController extends HttpServlet {
+public class FoodDeliveredController extends HttpServlet {
 
-    private final String orderP = "order.jsp";
+    private final String viewWaitingFood = "viewWaitingFood.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,23 +38,42 @@ public class ShowOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "";
         try {
-            String action = request.getParameter("action");
-            String txtSeq = request.getParameter("seqOrder");
+            System.out.println("kjashdkjashdjk");
+            int orderSEQ = 0;
+            String foodID = "";
             OrderDAO dao = new OrderDAO();
-            OrderDTO dto = dao.loadOrderInfo(Integer.parseInt(txtSeq));
-            request.setAttribute("tableID", dto.getTableID());
-            request.setAttribute("STAFFID", dto.getWaiterID());
-            request.setAttribute("orderSeq", dto.getSeq());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            String date = sdf.format(dto.getBeginTime().getTime());
-            request.setAttribute("DATE", date);
+            List<OrderDTO> listOrder = dao.loadOrders();
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodWaiting(list);
+            }
+            for (int i = 0; i < listOrder.size(); i++) {
+                for (int j = 0; j < listOrder.get(i).getFoodWaiting().size(); j++) {
+                    orderSEQ = listOrder.get(i).getSeq();
+                    System.out.println("aaaaaaaa" + orderSEQ);
+                    foodID = listOrder.get(i).getFoodWaiting().get(j).getFoodID();
+                    System.out.println("bbbbbbb" + foodID);
+                    String choice = orderSEQ + foodID;
+                    System.out.println(choice);
+                    System.out.println(listOrder.get(i).getFoodWaiting().size());
+                    try {
+                        if (!request.getParameter(choice).equals(null)) {
+                            dao.insertDelivered(orderSEQ, foodID);
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            }
+            for (int i = 0; i < listOrder.size(); i++) {
+                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
+                listOrder.get(i).setFoodWaiting(list);
+            }
+//            listOrder = dao.loadOrders();
+            request.setAttribute("foodWaitingList", listOrder);
+            url = viewWaitingFood;
 
-            List<OrderDTO> list = dao.showOrderDetail(dto.getSeq());
-            request.setAttribute("ORDER", list);
-            request.setAttribute("ACTION", action);
-            url = orderP;
         } catch (Exception e) {
-            log("ERROR at ShowOrderController: " + e.getMessage());
+            log("ERROR at FoodDeliveredController: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
