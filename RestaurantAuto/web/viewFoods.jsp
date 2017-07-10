@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
@@ -21,7 +25,7 @@
             <input type="submit" value="Submit Food" /> <br/> <br/>
         <c:forEach items="${orderList}" var="dto">
             <c:if test="${not empty dto.foodDetails}">
-            <table border=1 style="width:25%; float: left">
+                <table class="table table-hover col-md-8 col-lg-6">
                 <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
                 <thead>
                     <tr>

@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <h1>Cooking Foods</h1>
@@ -21,27 +25,27 @@
             <input type="submit" value="Submit Food" /> <br/> <br/>
             <c:forEach items="${listChooseFood}" var="dto">
                 <c:if test="${not empty dto.foodChoice}">
-                    <table border=1 style="width:25%; float: left">
+                    <table class="table table-hover">
                         <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
 
                         <thead>
                             <tr>
+                                <th>Done</th>
                                 <th>Food No</th>
                                 <th>Food Name</th>
                                 <th>Quantity</th>
-                                <th>Done</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${dto.foodChoice}" var="food" varStatus="counter">
 
                                 <tr>
-                                    <td>${counter.count}</td>
-                                    <td>${food.foodName}</td>
-                                    <td>${food.quantity}</td>
                                     <td>
                                         <input type="checkbox" name="${dto.seq}${food.foodID}" value="" />
                                     </td>
+                                    <td>${counter.count}</td>
+                                    <td>${food.foodName}</td>
+                                    <td>${food.quantity}</td>
                                 </tr>    
 
                             </c:forEach>
