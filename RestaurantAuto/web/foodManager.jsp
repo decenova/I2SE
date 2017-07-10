@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <h1>Update Food Page!</h1>
@@ -21,13 +25,16 @@
                 <minhnh:param name="action" value="InsertPage"/>
             </minhnh:url>
         <h4><a href="${insert}">Insert new Food</a></h4>
-        <form action="MainController" method="POST">
-            Search <input type="text" name="txtSearch" value="${lastSearchValue}"/> <br/>
+        <form action="MainController" method="POST" class="form-inline">
+            <div class="form-group">            
+                <label for="txtSearch">Search</label> 
+                <input type="text" id="txtSearch" name="txtSearch" value="${lastSearchValue}"/>
+            </div>
             <input type="hidden" name="txtFlag" value="Food"/>
-            <input type="submit" name="action" value="Search"/>
+            <input type="submit" name="action" value="Search"  class="btn btn-success"/>
         </form>
         <minhnh:if test="${not empty requestScope.FOODINFO}">
-            <table border="1">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -66,48 +73,41 @@
         </table>
     </minhnh:if>
     <minhnh:if test="${not empty FOODVALUE}">
-        <form action="MainController" method="POST">
-            <table>
-                <tr>
-                    <td>Food Id </td>
-                    <td><input type="text" value="${FOODVALUE.foodId}" name="txtFoodId" readonly/> </td>
-                </tr>
-                <tr>
-                    <td>Food Name </td>
-                    <td><input type="text" value="${FOODVALUE.foodName}" name="txtFoodName"/> </td>
-                </tr>
-                <tr>
-                    <td>Cost </td>
-                    <td><input type="number" value="${FOODVALUE.cost}" name="txtCost"/> </td>
-                </tr>
-                <tr>
-                    <td>Available</td>
-                    <td>
-                        <input type="checkbox" name="ckAvailable" 
-                               <minhnh:if test="${FOODVALUE.available eq 'True'}">checked</minhnh:if> />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Type </td>
-                        <td>
-                            <select name="typeList">
-                                <option value="1" <minhnh:if test="${FOODVALUE.foodType == 'Khai vị'}">selected</minhnh:if>>Khai vị</option>
-                            <option value="2" <minhnh:if test="${FOODVALUE.foodType == 'Chính'}">selected</minhnh:if>>Chính</option>
-                            <option value="3" <minhnh:if test="${FOODVALUE.foodType == 'Tráng miệng'}">selected</minhnh:if>>Tráng miệng</option>
-                            <option value="4" <minhnh:if test="${FOODVALUE.foodType == 'Nước giải khát'}">selected</minhnh:if>>Nước giải khát</option>
-                            <option value="5" <minhnh:if test="${FOODVALUE.foodType == 'Rượu'}">selected</minhnh:if>>Rượu</option>
-                            <option value="6" <minhnh:if test="${FOODVALUE.foodType == 'Bia'}">selected</minhnh:if>>Bia</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="hidden" value="Food" name="txtFlag"/>
-                            <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
-                        <input type="submit" value="Edit" name="action"/> 
-                    </td>
-                </tr>
-            </table>
+        <div class="col-md-2 col-lg-3"></div>
+        <form class="col-xs-12 col-md-8 col-lg-6" method="POST" action="MainController" accept-charset="ISO-8859-1">
+            <div class="form-group">
+                <label for="FoodID">FoodID</label>
+                <input type="text" name="txtFoodId" value="${FOODVALUE.foodId}" readonly class="form-control" id="FoodID">
+            </div>
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" name="txtFoodName" value="${FOODVALUE.foodName}" class="form-control" id="Name">
+                <font color="red">${ERROR.foodNameErr}</font>
+            </div>
+            <div class="form-group">
+                <label for="Cost">Cost</label>
+                <input type="number" name="txtCost" value="${FOODVALUE.cost}" class="form-control" id="Cost">
+                <font color="red">${ERROR.costErr}</font>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="ckAvailable" <minhnh:if test="${FOODVALUE.available eq 'True'}">checked</minhnh:if> />Available
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="typeList">Type</label>
+                    <select class="form-control" name="typeList" id="typeList">
+                        <option value="1" <minhnh:if test="${FOODVALUE.foodType == 'Khai vị'}">selected</minhnh:if> >Khai vị</option>
+                    <option value="2" <minhnh:if test="${FOODVALUE.foodType == 'Chính'}">selected</minhnh:if> >Chính</option>
+                    <option value="3" <minhnh:if test="${FOODVALUE.foodType == 'Tráng miệng'}">selected</minhnh:if> >Tráng miệng</option>
+                    <option value="4" <minhnh:if test="${FOODVALUE.foodType == 'Nước giải khát'}">selected</minhnh:if> >Nước giải khát</option>
+                    <option value="5" <minhnh:if test="${FOODVALUE.foodType == 'Rượu'}">selected</minhnh:if> >Rượu</option>
+                    <option value="6" <minhnh:if test="${FOODVALUE.foodType == 'Bia'}">selected</minhnh:if> >Bia</option>
+                    </select>
+                </div>
+                <input type="hidden" value="Food" name="txtFlag"/>
+                <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
+            <input type="submit" name="action" value="Edit"  class="btn btn-default"/> 
         </form>
     </minhnh:if>
 </body>

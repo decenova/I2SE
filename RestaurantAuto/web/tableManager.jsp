@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <h1>Update Table Page!</h1>
@@ -22,18 +26,21 @@
             </minhnh:url>
         <h4><a href="${insert}">Insert new Table</a></h4>
         <form action="MainController" method="POST">
-            Search <select name="txtSearch">
-                <option value="1" <minhnh:if test="${lastSearchValue eq '1'}">selected</minhnh:if>>Clean</option>
-                <option value="2" <minhnh:if test="${lastSearchValue eq '2'}">selected</minhnh:if>>Waiting</option>
-                <option value="3" <minhnh:if test="${lastSearchValue eq '3'}">selected</minhnh:if>>Eating</option>
-                <option value="4" <minhnh:if test="${lastSearchValue eq '4'}">selected</minhnh:if>>Dirty</option>
-                <option value="5" <minhnh:if test="${lastSearchValue eq '5'}">selected</minhnh:if>>Disable</option>
-                </select> <br/>
+            <div class="form-group">            
+                <label for="txtSearch">Search</label> 
+                <select name="txtSearch" id="txtSearch">
+                    <option value="1" <minhnh:if test="${lastSearchValue eq '1'}">selected</minhnh:if>>Clean</option>
+                    <option value="2" <minhnh:if test="${lastSearchValue eq '2'}">selected</minhnh:if>>Waiting</option>
+                    <option value="3" <minhnh:if test="${lastSearchValue eq '3'}">selected</minhnh:if>>Eating</option>
+                    <option value="4" <minhnh:if test="${lastSearchValue eq '4'}">selected</minhnh:if>>Dirty</option>
+                    <option value="5" <minhnh:if test="${lastSearchValue eq '5'}">selected</minhnh:if>>Disable</option>
+                    </select>
+                </div>
                 <input type="hidden" name="txtFlag" value="Table"/>
-                <input type="submit" name="action" value="Search"/>
+                <input type="submit" name="action" value="Search" class="btn btn-success"/>
             </form>
         <minhnh:if test="${not empty requestScope.TABLEINFO}">
-            <table border="1">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -63,32 +70,25 @@
         </table>
     </minhnh:if>
     <minhnh:if test="${not empty TABLEVALUE}">
-        <form action="MainController" method="POST">
-            <table>
-                <tr>
-                    <td>Table Id </td>
-                    <td><input type="text" value="${TABLEVALUE.id}" name="txtTableId" readonly/> </td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>
-                        <select name="statusList">
-                            <option value="1" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Clean'}">selected</minhnh:if>>Clean</option>
-                            <option value="2" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Waiting'}">selected</minhnh:if>>Waiting</option>
-                            <option value="3" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Eating'}">selected</minhnh:if>>Eating</option>
-                            <option value="4" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Dirty'}">selected</minhnh:if>>Dirty</option>
-                            <option value="5" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Disable'}">selected</minhnh:if>>Disable</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="hidden" value="Table" name="txtFlag"/>
-                            <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
-                        <input type="submit" value="Edit" name="action"/> 
-                    </td>
-                </tr>
-            </table>
+        <div class="col-md-2 col-lg-3"></div>
+        <form class="col-xs-12 col-md-8 col-lg-6" method="POST" action="MainController" accept-charset="ISO-8859-1">
+            <div class="form-group">
+                <label for="TableID">TableID</label>
+                <input type="text" name="txtTableId" value="${TABLEVALUE.id}" readonly class="form-control" id="TableID">
+            </div>
+            <div class="form-group">
+                <label for="statusList">Status</label>
+                <select class="form-control" name="statusList" id="statusList">
+                    <option value="1" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Clean'}">selected</minhnh:if>>Clean</option>
+                    <option value="2" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Waiting'}">selected</minhnh:if>>Waiting</option>
+                    <option value="3" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Eating'}">selected</minhnh:if>>Eating</option>
+                    <option value="4" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Dirty'}">selected</minhnh:if>>Dirty</option>
+                    <option value="5" <minhnh:if test="${TABLEVALUE.tableStatus eq 'Disable'}">selected</minhnh:if>>Disable</option>
+                    </select>
+                </div>
+                <input type="hidden" value="Table" name="txtFlag"/>
+                <input type="hidden" value="${lastSearchValue}" name="txtSearch"/>
+            <input type="submit" name="action" value="Edit"  class="btn btn-default"/> 
         </form>
     </minhnh:if>
 </body>

@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order</title>
+        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <h1>Order</h1>
@@ -18,9 +22,9 @@
         <p>Waiter ID: ${STAFFID}</p>
         <p>Order No: ${orderSeq}</p>
         <p>Date: ${DATE}</p>
-        <div style="width:50%; float: left">
+        <div class="col-lg-6">
             <c:if test="${(ACTION eq 'Create order as Waiter') or (ACTION eq 'Add') or (not ACTION eq 'Submit order')}">
-                <table border="1">
+                <table class="table table-hover">
                     <caption>Menu</caption>
                     <thead>
                         <tr>
@@ -44,7 +48,7 @@
                                 <td>
                                     <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
                                     <input type="hidden" name="txtFoodName" value="${dto.foodName}" />
-                                    <input type="submit" value="Add" name="action"  />
+                                    <input type="submit" value="Add" name="action"  class="btn btn-default"/>
                                 </td>
                             </tr>
                         </form>
@@ -54,10 +58,10 @@
                 </table>
 
             </div>
-            <div style="width:50%; float: left">
+            <div class="col-lg-6">
                 <form action="MainController" method="POST" accept-charset="ISO-8859-1">
                     <c:if test="${not empty ORDER}">
-                        <table border="1">
+                        <table class="table table-hover">
                             <caption>Order Submit</caption>
                             <thead>
                                 <tr>
@@ -113,7 +117,7 @@
                     </table>
                     <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
                     <c:if test="${ACTION eq 'Submit order'}">
-                    <input type="submit" value="Add order" name="action" />
+                        <input type="submit" value="Add order" name="action" />
                     </c:if>
                 </c:if>
             </c:if>
