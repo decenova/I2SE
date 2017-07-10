@@ -61,7 +61,6 @@ public class LoginController extends HttpServlet {
                     url = "LoadFoodsController";
                 } else if (role.equals("Manager")) {
                     url = "ManagerController";
-
                 } else {
                     url = "ShowTableStatusController";
                 }

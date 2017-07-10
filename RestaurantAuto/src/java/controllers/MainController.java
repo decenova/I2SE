@@ -29,6 +29,7 @@ public class MainController extends HttpServlet {
     private final String insert = "InsertController";
     private final String createOrder = "CreateOrderController";
     private final String submitOrder = "SubmitOrderController";
+    private final String manager = "ManagerController";
 
     private final String showOrder = "ShowOrderController";
 
@@ -77,7 +78,8 @@ public class MainController extends HttpServlet {
 
             } else if (action.equals("Show Order")) {
                 url = showOrder;         
-
+            } else if (action.equals("Cancel")){
+                url = manager;
             } else if (action.endsWith("Logout")) {
                 url = logout;
             }

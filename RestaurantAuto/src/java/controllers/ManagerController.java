@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import minhnh.dao.MinhRestaurantDAO;
 import minhnh.dto.FoodDTO;
 import minhnh.dto.StaffDTO;
@@ -42,6 +43,10 @@ public class ManagerController extends HttpServlet {
         String url = "error.jsp";
         try {
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
+            String id = request.getParameter("txtId");
+            HttpSession session = request.getSession();
+            String name = dao.findNameByPk(id);
+            session.setAttribute("MANAME", name);
             List<StaffDTO> staff = dao.getStaffAvailable();
             request.setAttribute("STAFF", staff);
             
