@@ -18,6 +18,7 @@
     </head>
     <body>
         <h1>Manager Page!</h1>
+        <a href="analyze.jsp">Analyze</a>
         <form action="MainController" method="POST" accept-charset="ISO-8859-1">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#Staff">Staff</a></li>
