@@ -132,8 +132,11 @@
                 </div>
             </c:forEach>
         </div>
-
-
-
+        <script>
+            function reload() {
+                location.reload();
+            }
+            setTimeout(reload, 1000);
+        </script>
     </body>
 </html>
