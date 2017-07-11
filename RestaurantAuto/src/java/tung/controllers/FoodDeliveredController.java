@@ -38,7 +38,6 @@ public class FoodDeliveredController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "";
         try {
-            System.out.println("kjashdkjashdjk");
             int orderSEQ = 0;
             String foodID = "";
             OrderDAO dao = new OrderDAO();
@@ -50,9 +49,7 @@ public class FoodDeliveredController extends HttpServlet {
             for (int i = 0; i < listOrder.size(); i++) {
                 for (int j = 0; j < listOrder.get(i).getFoodWaiting().size(); j++) {
                     orderSEQ = listOrder.get(i).getSeq();
-                    System.out.println("aaaaaaaa" + orderSEQ);
                     foodID = listOrder.get(i).getFoodWaiting().get(j).getFoodID();
-                    System.out.println("bbbbbbb" + foodID);
                     String choice = orderSEQ + foodID;
                     System.out.println(choice);
                     System.out.println(listOrder.get(i).getFoodWaiting().size());
