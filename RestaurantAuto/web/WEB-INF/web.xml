@@ -75,8 +75,14 @@
     <servlet>
         <servlet-name>analyzeStaffController</servlet-name>
         <servlet-class>thang.controller.analyzeStaffController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FoodDeliveredController</servlet-name>
         <servlet-class>tung.controllers.FoodDeliveredController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillController</servlet-name>
+        <servlet-class>controllers.BillController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
@@ -153,8 +159,14 @@
     <servlet-mapping>
         <servlet-name>analyzeStaffController</servlet-name>
         <url-pattern>/analyzeStaffController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FoodDeliveredController</servlet-name>
         <url-pattern>/FoodDeliveredController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillController</servlet-name>
+        <url-pattern>/BillController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
