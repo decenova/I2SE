@@ -86,41 +86,12 @@
                                 </c:forEach>
                             </tbody>                   
                         </table>
+                        <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
                         <input type="submit" name="action" value="Submit order" />                   
                     </c:if>
                 </form>
             </div>
-        </c:if>
-        <c:if test="${(ACTION eq 'Submit order') or (ACTION eq 'Show Order')}">
-            <form action="MainController" method="POST">
-                <c:if test="${not empty ORDER}">
-                    <table border="1">
-                        <caption>Order Submit</caption>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Food ID</th>
-                                <th>Food Name</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${ORDER}" var="o" varStatus="counter">
-                                <tr>
-                                    <td>${counter.count}</td>
-                                    <td>${o.foodID}</td>
-                                    <td>${o.foodName}</td>
-                                    <td>${o.quantity}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>                   
-                    </table>
-                    <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
-                    <c:if test="${ACTION eq 'Submit order'}">
-                        <input type="submit" value="Add order" name="action" />
-                    </c:if>
-                </c:if>
-            </c:if>
+        </c:if>                      
         </form>
     </body>
 </html>

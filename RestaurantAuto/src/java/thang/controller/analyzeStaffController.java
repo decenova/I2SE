@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tung.controllers;
+package thang.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tung.dao.OrderDAO;
-import tung.dto.OrderDTO;
+import thang.dao.AnalyzeDAO;
 
 /**
  *
- * @author hoanh
+ * @author Decen
  */
-public class LoadWaitingFoodController extends HttpServlet {
+public class analyzeStaffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,22 +34,26 @@ public class LoadWaitingFoodController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = "";
         try {
-            OrderDAO dao = new OrderDAO();
-            List<OrderDTO> listOrder = dao.loadOrders();
-            for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
-                listOrder.get(i).setFoodWaiting(list);
-            }
-            request.setAttribute("foodWaitingList", listOrder);
-            url = "viewWaitingFood.jsp";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date from = new Date(sdf.parse(request.getParameter("fromDate")).getTime());
+            Date to = new Date(sdf.parse(request.getParameter("toDate")).getTime());
+            AnalyzeDAO dao = new AnalyzeDAO();
+            int revenue = dao.revenue(from, to);
+            request.setAttribute("REVENUE", revenue);
+            ArrayList<ArrayList> listFood = dao.foodAnalyze(from, to);
+            request.setAttribute("FOOD", listFood);
+            ArrayList<ArrayList> listWaiter = dao.waiterAnalyze(from, to);
+            request.setAttribute("WAITER", listWaiter);
+            ArrayList<ArrayList> listCook = dao.cookAnalyze(from, to);
+            request.setAttribute("COOK", listCook);
+            ArrayList<ArrayList> listBusboy = dao.busboyAnalyze(from, to);
+            request.setAttribute("BUSBOY", listBusboy);
+            ArrayList<ArrayList> listHost = dao.hostAnalyze(from, to);
+            request.setAttribute("HOST", listHost);
         } catch (Exception e) {
-            log("ERROR at LoadWaitingFoodController: " + e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
+        request.getRequestDispatcher("analyze.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -168,13 +168,14 @@ public class OrderDAO {
     public boolean addOrderDetailById(int seqOrder, int seqFood, int quantity) {
         boolean check = false;
         try {
-            String sql = "insert into OrderDetail (OrderID, FoodID, Status, Quantity) values (?, ?, ?, ?)";
+            String sql = "insert into OrderDetail (OrderID, FoodID, Status, Quantity, Delivered) values (?, ?, ?, ?, ?)";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
             preStm.setInt(2, seqFood);
             preStm.setBoolean(3, false);
             preStm.setInt(4, quantity);
+            preStm.setBoolean(5, false);
             if (preStm.executeUpdate() > 0) {
                 check = true;
             }
@@ -335,11 +336,12 @@ public class OrderDAO {
         try {
             String sql = "select f.ID, f.Name, o.Quantity"
                     + " from OrderDetail o, Food f"
-                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.Status = ? and o.CookID is not null";
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.Status = ? and o.CookID is not null and o.Delivered = ?";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
             preStm.setBoolean(2, true);
+            preStm.setBoolean(3, false);
             rs = preStm.executeQuery();
             result = new ArrayList<OrderDTO>();
             while (rs.next()) {
@@ -355,6 +357,28 @@ public class OrderDAO {
             closeConnection();
         }
         return result;
+    }
+    
+    public boolean insertDelivered(int seqOrder, String foodID) {
+         boolean check = false;
+        try {
+            String sql = "update OrderDetail set Delivered = ?"
+                    + " where OrderID = ? and FoodID = (select SEQ from Food where Id = ?)";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setBoolean(1, true);
+            preStm.setInt(2, seqOrder);
+            preStm.setString(3, foodID);
+            if (preStm.executeUpdate() > 0) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+        
     }
 
 }

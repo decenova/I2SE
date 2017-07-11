@@ -50,7 +50,7 @@ public class ChooseFoodController extends HttpServlet {
                 listOrder.get(i).setFoodDetails(list);
             }
             int seqStaff = 0;
-            for (int i = 0; i < listOrder.size(); i++) {
+             for (int i = 0; i < listOrder.size(); i++) {
                 for (int j = 0; j < listOrder.get(i).getFoodDetails().size(); j++) {
                     orderSEQ = listOrder.get(i).getSeq();
                     foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
