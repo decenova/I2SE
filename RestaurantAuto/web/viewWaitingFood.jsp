@@ -17,6 +17,7 @@
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
         <form action="FoodDeliveredController" method="POST">
             <input type="submit" value="Submit" />
