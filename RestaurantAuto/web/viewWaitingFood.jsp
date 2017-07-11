@@ -18,7 +18,9 @@
     </head>
     <body>
         <h1>Foods need to bring to customers</h1>
-        <c:forEach items="${foodWaitingList}" var="dto">
+        <form action="FoodDeliveredController" method="POST">
+            <input type="submit" value="Submit" />
+            <c:forEach items="${foodWaitingList}" var="dto">
                 <c:if test="${not empty dto.foodWaiting}">
                     <table class="table table-hover">
                         <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
@@ -49,5 +51,6 @@
                     </table>
                 </c:if>
             </c:forEach>
+        </form>
     </body>
 </html>

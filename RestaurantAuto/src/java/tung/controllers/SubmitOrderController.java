@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -27,6 +27,7 @@ public class SubmitOrderController extends HttpServlet {
     private static final String errorP = "error.jsp";
     private static final String orderP = "order.jsp";
     private static final String orderListP = "orderList.jsp";
+    private static final String showTableStatus = "ShowTableStatusController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -78,13 +79,10 @@ public class SubmitOrderController extends HttpServlet {
                 result.remove(Integer.parseInt(foodNo) - 1);
                 session.setAttribute("ORDER", result);
                 url = orderP;
-            }
-            else if (action.equals("Submit order")) {
-                request.setAttribute("ACTION", action);
-                url = orderP;
-            } else if (action.equals("Add order")) {
+            } else if (action.equals("Submit order")) {
                 OrderBean bean = new OrderBean();
                 String txtSeqOrder = request.getParameter("txtSEQOrder");
+                System.out.println(txtSeqOrder);
                 int seqOrder = Integer.parseInt(txtSeqOrder);
                 bean.setSeqOrder(seqOrder);
                 for (int i = 0; i < result.size(); i++) {
@@ -94,17 +92,13 @@ public class SubmitOrderController extends HttpServlet {
                     bean.setQuantity(result.get(i).getQuantity());
                     bean.addOrderDetail();
                 }
-                List<OrderDTO> dto = bean.loadOrders();
-                if (!dto.isEmpty()) {
-                    request.setAttribute("ORDERS", dto);
-                    session.removeAttribute("ORDER");
-                    session.removeAttribute("orderSeq");
-                    session.removeAttribute("DATE");
-                    session.removeAttribute("tableID");
-                    url = orderListP;
-                }
-                
+                session.removeAttribute("ORDER");
+                session.removeAttribute("orderSeq");
+                session.removeAttribute("DATE");
+                session.removeAttribute("tableID");
+                url = showTableStatus;
             }
+
         } catch (Exception e) {
             log("ERROR at SubmitOrderController: " + e.getMessage());
         } finally {

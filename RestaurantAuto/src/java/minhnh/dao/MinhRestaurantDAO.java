@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import minhnh.dto.FoodDTO;
 import minhnh.dto.StaffDTO;
-import trung.dto.TableDTO;
+import minhnh.dto.TableDTO;
 
 public class MinhRestaurantDAO {
 
@@ -33,6 +33,25 @@ public class MinhRestaurantDAO {
         }
     }
 
+    public String findNameByPk(String pk){
+        String name = "";
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select LastName from Staff where Id=?";
+            pre = conn.prepareStatement(sql);
+            pre.setString(1, pk);
+            rs = pre.executeQuery();
+            if (rs.next()){
+                name = rs.getString("LastName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return name;
+    }
+    
     //Table 
     public boolean insertTable(String tableID,int statusId) {
         boolean result = false;

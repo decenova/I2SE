@@ -17,6 +17,7 @@
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <h4>Hi, ${MANAME} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Manager Page!</h1>
         <a href="analyze.jsp">Analyze</a>
         <form action="MainController" method="POST" accept-charset="ISO-8859-1">

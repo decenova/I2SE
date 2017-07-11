@@ -29,6 +29,7 @@ public class MainController extends HttpServlet {
     private final String insert = "InsertController";
     private final String createOrder = "CreateOrderController";
     private final String submitOrder = "SubmitOrderController";
+    private final String manager = "ManagerController";
 
     private final String showOrder = "ShowOrderController";
 
@@ -51,6 +52,7 @@ public class MainController extends HttpServlet {
         String url = error;
         try {
             String action = request.getParameter("action");
+            System.out.println(action);
             if (action.equals("Login")) {
                 url = login;
             } else if (action.equals("Update Staff")){ 
@@ -71,12 +73,13 @@ public class MainController extends HttpServlet {
                 url = insertPage;
             } else if (action.equals("Create order as Waiter")) {
                 url = createOrder;
-            } else if (action.equals("Add") || action.equals("Submit order") || action.equals("Add order")) {
+            } else if (action.equals("Add") || action.equals("Submit order")) {
                 url = submitOrder;
 
             } else if (action.equals("Show Order")) {
                 url = showOrder;         
-
+            } else if (action.equals("Cancel")){
+                url = manager;
             } else if (action.endsWith("Logout")) {
                 url = logout;
             }

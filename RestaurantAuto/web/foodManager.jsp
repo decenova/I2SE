@@ -17,6 +17,8 @@
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <h4>Hi, ${MANAME} [<a href="LogoutController">Logout</a>]</h4>
+        <a href="ManagerController">Manager Page</a>
         <h1>Update Food Page!</h1>
         <font color="green"><h2>${SUCCESS}</h2></font> 
         <font color="red"><h2>${FAIL}</h2></font>

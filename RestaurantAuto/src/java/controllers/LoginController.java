@@ -35,10 +35,27 @@ public class LoginController extends HttpServlet {
         String url = "index.jsp";
         try {
             String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-
+            String password = request.getParameter("txtPassword");            
             TrungBean bean = new TrungBean();
             String role = bean.getRole(id, password);
+            
+            if (role.equals("Manager")) {
+                url = "ManagerController";
+            } else if (!bean.getRole(id, password).equals("false")) {
+                url = "ShowTableStatusController";
+                
+                //lưu role vs staffId trong session cho dễ sử dụng sau này
+                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
+                request.getSession().setAttribute("STAFFID", id);
+            } else if (!role.equals("false")) {
+                url = "tableStatus.jsp";
+                if (!bean.getRole(id, password).equals("false")) {
+                    url = "ShowTableStatusController";
+
+                    //lưu role vs staffId trong session cho dễ sử dụng sau này
+                    request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
+                    request.getSession().setAttribute("STAFFID", id);
+
             if (!role.equals("false")) {
                 if (role.equals("Cook")) {
                     url = "LoadFoodsController";
@@ -47,13 +64,16 @@ public class LoginController extends HttpServlet {
                 } else {
                     url = "ShowTableStatusController";
                 }
+
                 //lưu role vs staffId trong session cho dễ sử dụng sau này
                 request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
                 request.getSession().setAttribute("STAFFID", id);
+
             } else {
                 request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
             }
-
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

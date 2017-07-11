@@ -43,7 +43,7 @@ public class LoadWaitingFoodController extends HttpServlet {
                 listOrder.get(i).setFoodWaiting(list);
             }
             request.setAttribute("foodWaitingList", listOrder);
-           url = "viewWaitingFood.jsp";
+            url = "viewWaitingFood.jsp";
         } catch (Exception e) {
             log("ERROR at LoadWaitingFoodController: " + e.getMessage());
         } finally {
