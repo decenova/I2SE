@@ -134,7 +134,7 @@
         </div>
         <script>
             function reload() {
-                location.reload();
+                window.location.href = 'ShowTableStatusController';
             }
             setTimeout(reload, 1000);
         </script>
