@@ -61,6 +61,7 @@
             <div class="card-block">
                 <h4 class="card-title">Staff ID: ${STAFFID}</h4>
                 <p class="card-text">
+                    Role: ${ROLE}
                     <c:if test="${ROLE eq 'Waiter'}">
                         <a href="LoadWaitingFoodController">View waiting food</a>
                     </c:if>

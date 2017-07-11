@@ -73,6 +73,8 @@
         <servlet-class>tung.controllers.LoadWaitingFoodController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>analyzeStaffController</servlet-name>
+        <servlet-class>thang.controller.analyzeStaffController</servlet-class>
         <servlet-name>FoodDeliveredController</servlet-name>
         <servlet-class>tung.controllers.FoodDeliveredController</servlet-class>
     </servlet>
@@ -149,6 +151,8 @@
         <url-pattern>/LoadWaitingFoodController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>analyzeStaffController</servlet-name>
+        <url-pattern>/analyzeStaffController</url-pattern>
         <servlet-name>FoodDeliveredController</servlet-name>
         <url-pattern>/FoodDeliveredController</url-pattern>
     </servlet-mapping>
