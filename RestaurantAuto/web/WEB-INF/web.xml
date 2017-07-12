@@ -84,6 +84,14 @@
         <servlet-name>BillController</servlet-name>
         <servlet-class>controllers.BillController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BillDetailController</servlet-name>
+        <servlet-class>controllers.BillDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrintBillController</servlet-name>
+        <servlet-class>controllers.PrintBillController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -167,6 +175,14 @@
     <servlet-mapping>
         <servlet-name>BillController</servlet-name>
         <url-pattern>/BillController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDetailController</servlet-name>
+        <url-pattern>/BillDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrintBillController</servlet-name>
+        <url-pattern>/PrintBillController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

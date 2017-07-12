@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import minhnh.dao.MinhRestaurantDAO;
-import minhnh.dto.OrderDTO;
+import minhnh.dto.OrderDetailDTO;
 
 /**
  *
  * @author kubin
  */
-public class BillController extends HttpServlet {
+public class BillDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +36,16 @@ public class BillController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "error.jsp";
         try {
+            String orderID = request.getParameter("orderId");
+            int id = Integer.parseInt(orderID);
+            String total = request.getParameter("cost");
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
-            List<OrderDTO> dto = dao.viewAllBill();
-            request.setAttribute("ViewBill", dto);
-            url = "allBill.jsp";
+            List<OrderDetailDTO> dto = dao.viewDetailBill(id);
+            request.setAttribute("DetaiBill", dto);
+            System.out.println(dto);
+            request.setAttribute("Total", total);
+            request.setAttribute("OrderId", orderID);
+            url = "detailBill.jsp";
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());
         } finally {

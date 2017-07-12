@@ -7,19 +7,19 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import minhnh.dao.MinhRestaurantDAO;
-import minhnh.dto.OrderDTO;
 
 /**
  *
  * @author kubin
  */
-public class BillController extends HttpServlet {
+public class PrintBillController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,9 +37,13 @@ public class BillController extends HttpServlet {
         String url = "error.jsp";
         try {
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
-            List<OrderDTO> dto = dao.viewAllBill();
-            request.setAttribute("ViewBill", dto);
-            url = "allBill.jsp";
+            Date date = new Date();
+            Timestamp endDate = new Timestamp(date.getTime());
+            int id = Integer.parseInt(request.getParameter("pk"));
+            boolean result = dao.printBill(endDate, id);
+            if (result){
+                url = "BillController";
+            }
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());
         } finally {

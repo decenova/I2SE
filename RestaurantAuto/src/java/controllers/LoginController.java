@@ -38,7 +38,6 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             TrungBean bean = new TrungBean();
             String role = bean.getRole(id, password);
-<<<<<<< HEAD
             
 //            if (role.equals("Manager")) {
 //                url = "ManagerController";
@@ -59,8 +58,6 @@ public class LoginController extends HttpServlet {
 //                    request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
 //                    request.getSession().setAttribute("STAFFID", id);
 
-=======
->>>>>>> 310d3c83574baa68148683bb75c1ea91d70d4306
             if (!role.equals("false")) {
                 if (role.equals("Cook")) {
                     url = "LoadFoodsController";
@@ -79,12 +76,9 @@ public class LoginController extends HttpServlet {
             } else {
                 request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
             }
-<<<<<<< HEAD
 //                }
 //            }
-=======
 
->>>>>>> 310d3c83574baa68148683bb75c1ea91d70d4306
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
