@@ -46,7 +46,7 @@ public class ChooseFoodController extends HttpServlet {
             int orderSEQ = 0;
             String foodID = "";
             for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq(), "null");
                 listOrder.get(i).setFoodDetails(list);
             }
             int seqStaff = 0;
@@ -56,7 +56,7 @@ public class ChooseFoodController extends HttpServlet {
                     foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
                     String choice = orderSEQ + foodID;
                     try {
-                        if (!request.getParameter(choice).equals(null)) {
+                        if (request.getParameter(choice) != null) {
                             seqStaff = dao.getSEQStaffById(chefID);
                             dao.insertChefID(orderSEQ, foodID, seqStaff);
                         }     

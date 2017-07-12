@@ -54,14 +54,10 @@ public class SubmitCookingFoodController extends HttpServlet {
                     orderSEQ = listFoodChoice.get(i).getSeq();
                     foodID = listFoodChoice.get(i).getFoodChoice().get(j).getFoodID();
                     String choice = orderSEQ + foodID;
-//                    System.out.println("asdas: " + choice);
                     try {
-                        if (!request.getParameter(choice).equals(null)) {
+                        if (request.getParameter(choice) != null) {
                             dao.checkFoodDone(orderSEQ, foodID);
-//                            System.out.println("aaaaa");
-                        } else {
-//                            System.out.println("hehehehehhe");
-                        }
+                        } 
                     } catch (Exception e) {
                     }
                 }

@@ -33,7 +33,7 @@ public class MinhRestaurantDAO {
         }
     }
 
-    public String findNameByPk(String pk){
+    public String findNameByPk(String pk) {
         String name = "";
         try {
             conn = MyConnection.getConnection();
@@ -41,7 +41,7 @@ public class MinhRestaurantDAO {
             pre = conn.prepareStatement(sql);
             pre.setString(1, pk);
             rs = pre.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 name = rs.getString("LastName");
             }
         } catch (Exception e) {
@@ -51,9 +51,9 @@ public class MinhRestaurantDAO {
         }
         return name;
     }
-    
+
     //Table 
-    public boolean insertTable(String tableID,int statusId) {
+    public boolean insertTable(String tableID, int statusId) {
         boolean result = false;
         try {
             conn = MyConnection.getConnection();
@@ -104,11 +104,13 @@ public class MinhRestaurantDAO {
             pre = conn.prepareStatement(sql);
             pre.setString(1, tableId);
             rs = pre.executeQuery();
+            String id;
+            String status;
             if (rs.next()) {
-                String id = rs.getString("TableID");
-                String status = rs.getString("Status");
+                id = rs.getString("TableID");
+                status = rs.getString("Status");
                 result = new TableDTO(id, status);
-                
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,9 +131,11 @@ public class MinhRestaurantDAO {
             pre.setString(1, search);
             rs = pre.executeQuery();
             result = new ArrayList<TableDTO>();
+            String id;
+            String status;
             while (rs.next()) {
-                String id = rs.getString("TableID");
-                String status = rs.getString("Status");
+                id = rs.getString("TableID");
+                status = rs.getString("Status");
                 TableDTO dto = new TableDTO(id, status);
                 result.add(dto);
             }
@@ -152,9 +156,11 @@ public class MinhRestaurantDAO {
                     + "JOIN TableStatus ON [Table].TableStatusID=TableStatus.SEQ";
             pre = conn.prepareStatement(sql);
             rs = pre.executeQuery();
+            String tableID;
+            String tableStatus;
             while (rs.next()) {
-                String tableID = rs.getString("TableID");
-                String tableStatus = rs.getString("Status");
+                tableID = rs.getString("TableID");
+                tableStatus = rs.getString("Status");
                 TableDTO dto = new TableDTO(tableID, tableStatus);
                 result.add(dto);
             }
@@ -226,11 +232,15 @@ public class MinhRestaurantDAO {
             pre = conn.prepareStatement(sql);
             pre.setString(1, foodId);
             rs = pre.executeQuery();
+            String name;
+            int cost;
+            boolean available;
+            String type;
             if (rs.next()) {
-                String name = rs.getString("Name");
-                int cost = rs.getInt("Cost");
-                boolean available = rs.getBoolean("Available");
-                String type = rs.getString("Type");
+                name = rs.getString("Name");
+                cost = rs.getInt("Cost");
+                available = rs.getBoolean("Available");
+                type = rs.getString("Type");
                 result = new FoodDTO(foodId, name, type, cost, available);
             }
         } catch (Exception e) {
@@ -251,13 +261,18 @@ public class MinhRestaurantDAO {
             pre = conn.prepareStatement(sql);
             pre.setString(1, "%" + search + "%");
             rs = pre.executeQuery();
+            String id;
+            String name;
+            int cost;
+            boolean available;
+            String type;
             result = new ArrayList<FoodDTO>();
             while (rs.next()) {
-                String id = rs.getString("Id");
-                String name = rs.getString("Name");
-                int cost = rs.getInt("Cost");
-                boolean available = rs.getBoolean("Available");
-                String type = rs.getString("Type");
+                id = rs.getString("Id");
+                name = rs.getString("Name");
+                cost = rs.getInt("Cost");
+                available = rs.getBoolean("Available");
+                type = rs.getString("Type");
                 FoodDTO dto = new FoodDTO(id, name, type, cost, available);
                 result.add(dto);
             }
@@ -281,10 +296,13 @@ public class MinhRestaurantDAO {
                     + "order by SUM(OrderDetail.Quantity) desc";
             pre = conn.prepareStatement(sql);
             rs = pre.executeQuery();
+            String foodName;
+            String foofType;
+            int quantity;
             while (rs.next()) {
-                String foodName = rs.getString("Name");
-                String foofType = rs.getString("Type");
-                int quantity = rs.getInt("TotalQuantity");
+                foodName = rs.getString("Name");
+                foofType = rs.getString("Type");
+                quantity = rs.getInt("TotalQuantity");
                 FoodDTO dto = new FoodDTO(foodName, foofType, quantity);
                 result.add(dto);
             }
@@ -390,15 +408,23 @@ public class MinhRestaurantDAO {
             pre = conn.prepareStatement(sql);
             pre.setString(1, staffId);
             rs = pre.executeQuery();
+            String password;
+            String firstName;
+            String lastName;
+            Timestamp DOB;
+            String addr;
+            String sex;
+            int salary;
+            String role;
             if (rs.next()) {
-                String password = rs.getString("Password");
-                String firstName = rs.getString("FristName");
-                String lastName = rs.getString("LastName");
-                Timestamp DOB = rs.getTimestamp("DOB");
-                String addr = rs.getString("Addr");
-                String sex = rs.getString("Sex");
-                int salary = rs.getInt("Salary");
-                String role = rs.getString("Role");
+                password = rs.getString("Password");
+                firstName = rs.getString("FristName");
+                lastName = rs.getString("LastName");
+                DOB = rs.getTimestamp("DOB");
+                addr = rs.getString("Addr");
+                sex = rs.getString("Sex");
+                salary = rs.getInt("Salary");
+                role = rs.getString("Role");
                 result = new StaffDTO(staffId, password, firstName, lastName, DOB, sex, addr, salary, role, true);
             }
         } catch (Exception e) {
@@ -420,15 +446,22 @@ public class MinhRestaurantDAO {
             pre.setString(1, "%" + search + "%");
             pre.setString(2, "%" + search + "%");
             rs = pre.executeQuery();
+            String staffId;
+            String firstName;
+            String lastName;
+            String addr;
+            String sex;
+            int salary;
+            String role;
             result = new ArrayList<StaffDTO>();
             while (rs.next()) {
-                String staffId = rs.getString("Id");
-                String firstName = rs.getString("FristName");
-                String lastName = rs.getString("LastName");
-                String addr = rs.getString("Addr");
-                String sex = rs.getString("Sex");
-                int salary = rs.getInt("Salary");
-                String role = rs.getString("Role");
+                staffId = rs.getString("Id");
+                firstName = rs.getString("FristName");
+                lastName = rs.getString("LastName");
+                addr = rs.getString("Addr");
+                sex = rs.getString("Sex");
+                salary = rs.getInt("Salary");
+                role = rs.getString("Role");
                 StaffDTO dto = new StaffDTO(staffId, firstName, lastName, sex, addr, salary, role, true);
                 result.add(dto);
             }
@@ -450,11 +483,14 @@ public class MinhRestaurantDAO {
                     + "where Available = 'true'";
             pre = conn.prepareStatement(sql);
             rs = pre.executeQuery();
+            String firstName;
+            String lastName;
+            String role;
             result = new ArrayList<StaffDTO>();
             while (rs.next()) {
-                String firstName = rs.getString("FristName");
-                String lastName = rs.getString("LastName");
-                String role = rs.getString("Role");
+                firstName = rs.getString("FristName");
+                lastName = rs.getString("LastName");
+                role = rs.getString("Role");
                 StaffDTO dto = new StaffDTO(firstName, lastName, role, true);
                 result.add(dto);
             }
