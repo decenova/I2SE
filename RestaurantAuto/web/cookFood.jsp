@@ -55,11 +55,14 @@
                 </c:if>
             </c:forEach>
         </form>
+<<<<<<< HEAD
         <script>
 //            function reload() {
 //                location.reload();
 //            }
 //            setTimeout(reload, 1000);
         </script>
+=======
+>>>>>>> 13c113d924b073ce40686e194ff8656a809097e5
     </body>
 </html>

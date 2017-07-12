@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import minhnh.dto.FoodDTO;
+import minhnh.dto.OrderDTO;
+import minhnh.dto.OrderDetailDTO;
 import minhnh.dto.StaffDTO;
 import minhnh.dto.TableDTO;
 
@@ -32,6 +34,75 @@ public class MinhRestaurantDAO {
             e.printStackTrace();
         }
     }
+    
+    public boolean printBill(Timestamp endTime,int orderId){
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "update [Order] set EndTime=? where SEQ = ?";
+            pre = conn.prepareStatement(sql);
+            pre.setTimestamp(1, endTime);
+            pre.setInt(2, orderId);
+            int n = pre.executeUpdate();
+            if (n > 0){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
+    
+    public List<OrderDetailDTO> viewDetailBill(int orderId){
+        List<OrderDetailDTO> result = null;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select Food.[Name], Quantity, Food.Cost " 
+                    + "from OrderDetail JOIN Food on Food.SEQ = OrderDetail.FoodId " 
+                    + "where OrderDetail.OrderID = (select SEQ from [Order] where [Order].SEQ = ?)";
+            pre = conn.prepareStatement(sql);
+            pre.setInt(1, orderId);
+            rs = pre.executeQuery();
+            result = new ArrayList<OrderDetailDTO>();
+            while (rs.next()){
+                String name = rs.getString("Name");
+                int quan = rs.getInt("Quantity");
+                int cost = rs.getInt("Cost");
+                OrderDetailDTO dto = new OrderDetailDTO(name, quan, cost);
+                result.add(dto);
+            }
+        } catch (Exception e) {
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
+    
+    public List<OrderDTO> viewAllBill(){
+        List<OrderDTO> result = null;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select [Order].SEQ, TableId, Staff.LastName, Cost " 
+                    + "from [Order] join Staff on Staff.SEQ = [Order].WaiterID " 
+                    + "where EndTime IS NULL";
+            pre = conn.prepareStatement(sql);
+            rs = pre.executeQuery();
+            result = new ArrayList<OrderDTO>();
+            while (rs.next()){
+                String id = rs.getString("SEQ");
+                int tableId = rs.getInt("TableId");
+                String waiName = rs.getString("LastName");
+                int cost = rs.getInt("Cost");
+                OrderDTO dto = new OrderDTO(id, tableId, waiName, cost);
+                result.add(dto);
+            }
+        } catch (Exception e) {
+        } finally {
+            closeConnection();
+        }
+        return result;
+    } 
 
     public String findNameByPk(String pk) {
         String name = "";

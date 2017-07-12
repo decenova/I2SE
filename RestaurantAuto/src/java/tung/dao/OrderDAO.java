@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.MyConnection;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import tung.dto.OrderDTO;
 
 /**
@@ -81,6 +82,25 @@ public class OrderDAO {
             closeConnection();
         }
         return seq;
+    }
+    
+    public String getIdTableBySEQ(int seq) {
+        String id = "";
+        try {
+            String sql = "select Id from [Table] where SEQ = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, id);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                id = rs.getString("Id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return id;
     }
 
     public int getSEQStaffById(String id) {
@@ -187,15 +207,19 @@ public class OrderDAO {
     public List<OrderDTO> loadOrders() { //lay tat ca order dang hoat dong
         List<OrderDTO> result = null;
         try {
-            String sql = "select SEQ, TableID from [Order] where EndTime is null and BeginEatTime is null";
+            String sql = "select SEQ, TableID, BeginEatTime from [Order] where EndTime is null";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             rs = preStm.executeQuery();
             result = new ArrayList<OrderDTO>();
+            String seq;
+            String tableID;
+            Timestamp beginEatTime;
             while (rs.next()) {
-                String seq = rs.getString("SEQ");
-                String tableID = rs.getString("TableID");
-                result.add(new OrderDTO(Integer.parseInt(seq), tableID));
+                seq = rs.getString("SEQ");
+                tableID = rs.getString("TableID");
+                beginEatTime = rs.getTimestamp("BeginEatTime");
+                result.add(new OrderDTO(Integer.parseInt(seq), tableID, beginEatTime));
             }
 
         } catch (Exception e) {
@@ -368,6 +392,9 @@ public class OrderDAO {
             if (preStm.executeUpdate() > 0) {
                 check = true;
             }
+            
+            sql = "Select BeginEatTime From [Order] Where OrderID = ?";
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -410,5 +437,21 @@ public class OrderDAO {
             closeConnection();
         }
         return check;
+    }
+    
+    public void setBeginEatTime(int orderSEQ) {
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "UPDATE [Order] SET BeginEatTime = ? Where SEQ = ?";
+            preStm = conn.prepareStatement(sql);
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            preStm.setTimestamp(1, ts);
+            preStm.setInt(2, orderSEQ);
+            preStm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
     }
 }

@@ -5,19 +5,21 @@
  */
 package controllers;
 
-import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import minhnh.dao.MinhRestaurantDAO;
+import minhnh.dto.OrderDetailDTO;
 
 /**
  *
- * @author Duc Trung
+ * @author kubin
  */
-public class LoginController extends HttpServlet {
+public class BillDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,55 +34,20 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "index.jsp";
+        String url = "error.jsp";
         try {
-            String id = request.getParameter("txtId");
-            String password = request.getParameter("txtPassword");
-            TrungBean bean = new TrungBean();
-            String role = bean.getRole(id, password);
-            
-//            if (role.equals("Manager")) {
-//                url = "ManagerController";
-//            } else if(role.equals("Casher")){
-//                url = "Casher";
-//            }else if (!bean.getRole(id, password).equals("false")) {
-//                url = "ShowTableStatusController";
-//                
-//                //lưu role vs staffId trong session cho dễ sử dụng sau này
-//                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-//                request.getSession().setAttribute("STAFFID", id);
-//            } else if (!role.equals("false")) {
-//                url = "tableStatus.jsp";
-//                if (!bean.getRole(id, password).equals("false")) {
-//                    url = "ShowTableStatusController";
-//
-//                    //lưu role vs staffId trong session cho dễ sử dụng sau này
-//                    request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-//                    request.getSession().setAttribute("STAFFID", id);
-
-            if (!role.equals("false")) {
-                if (role.equals("Cook")) {
-                    url = "LoadFoodsController";
-                } else if (role.equals("Manager")) {
-                    url = "ManagerController";                    
-                } else if (role.equals("Casher")){
-                    url = "BillController";
-                } else {
-                    url = "ShowTableStatusController";
-                }
-
-                //lưu role vs staffId trong session cho dễ sử dụng sau này
-                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-                request.getSession().setAttribute("STAFFID", id);
-
-            } else {
-                request.setAttribute("ERROR", "WRONG PASSWORD OR USERNAME");
-            }
-//                }
-//            }
-
+            String orderID = request.getParameter("orderId");
+            int id = Integer.parseInt(orderID);
+            String total = request.getParameter("cost");
+            MinhRestaurantDAO dao = new MinhRestaurantDAO();
+            List<OrderDetailDTO> dto = dao.viewDetailBill(id);
+            request.setAttribute("DetaiBill", dto);
+            System.out.println(dto);
+            request.setAttribute("Total", total);
+            request.setAttribute("OrderId", orderID);
+            url = "detailBill.jsp";
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at ManagerController" + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
