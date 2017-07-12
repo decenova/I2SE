@@ -23,7 +23,6 @@
         <p>Order No: ${orderSeq}</p>
         <p>Date: ${DATE}</p>
         <div class="col-lg-6">
-            <c:if test="${(ACTION eq 'Create order as Waiter') or (ACTION eq 'Add') or (not ACTION eq 'Submit order')}">
                 <table class="table table-hover">
                     <caption>Menu</caption>
                     <thead>
@@ -37,7 +36,7 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${MENU}" var="dto" varStatus="counter">
-                        <form action="MainController" method="POST"  accept-charset="ISO-8859-1">
+                        <form action="MainController" method="POST" accept-charset="ISO-8859-1">
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>${dto.foodID}</td>
@@ -53,11 +52,38 @@
                             </tr>
                         </form>
                     </c:forEach>
-
                     </tbody>
                 </table>
 
             </div>
+        <c:if test="${not empty FOODS}">
+        <div class="col-lg-6">
+                        <table class="table table-hover">
+                            <caption>Order Submited</caption>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Food ID</th>
+                                    <th>Food Name</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${ORDER}" var="dto" varStatus="counter">
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td>${dto.foodID}</td>
+                                        <td>${dto.foodName}</td>
+                                        <td>${dto.quantity}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>                   
+                        </table>                
+            </div>
+        <hr>
+        <font color="blue">Add more food</font>
+        </c:if>
             <div class="col-lg-6">
                 <form action="MainController" method="POST" accept-charset="ISO-8859-1">
                     <c:if test="${not empty ORDER}">
@@ -90,8 +116,6 @@
                         <input type="submit" name="action" value="Submit order" />                   
                     </c:if>
                 </form>
-            </div>
-        </c:if>                      
-        </form>
+            </div>                 
     </body>
 </html>

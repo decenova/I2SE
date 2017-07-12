@@ -53,11 +53,11 @@
                 </c:if>
             </c:forEach>
         </form>
-        <script>
+<!--        <script>
             function reload() {
                 location.reload();
             }
             setTimeout(reload, 1000);
-        </script>
+        </script>-->
     </body>
 </html>

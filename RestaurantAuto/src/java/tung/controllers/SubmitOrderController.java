@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tung.bean.OrderBean;
+import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
 /**
@@ -80,10 +81,11 @@ public class SubmitOrderController extends HttpServlet {
                 session.setAttribute("ORDER", result);
                 url = orderP;
             } else if (action.equals("Submit order")) {
+                OrderDAO dao = new OrderDAO();
                 OrderBean bean = new OrderBean();
                 String txtSeqOrder = request.getParameter("txtSEQOrder");
-                System.out.println(txtSeqOrder);
                 int seqOrder = Integer.parseInt(txtSeqOrder);
+                dao.deleteOrderDetail(seqOrder);
                 bean.setSeqOrder(seqOrder);
                 for (int i = 0; i < result.size(); i++) {
                     bean.setFoodID(result.get(i).getFoodID());
