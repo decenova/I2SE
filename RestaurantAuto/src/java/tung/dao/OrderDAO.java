@@ -380,5 +380,39 @@ public class OrderDAO {
         return check;
         
     }
-
+    
+    public int checkTableUsing(int seqTable) {
+        int seqOrder = 0;
+        try {
+            String sql = "select SEQ from [Order] where tableID = ? and EndTime is null";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, seqTable);
+            rs = preStm.executeQuery();
+            if (rs.next())
+                seqOrder = rs.getInt("SEQ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return seqOrder;
+    }
+    
+    public boolean deleteOrderDetail(int seqOrder) {
+        boolean check = false;
+        try {
+            String sql = "delete from OrderDetail where OrderID = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, seqOrder);
+            if (preStm.executeUpdate() > 0)
+                check = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
 }

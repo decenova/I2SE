@@ -56,11 +56,10 @@
     </head>
     <body>
         <h1>Table status</h1>
-        <p>Role: ${ROLE}</p>
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Staff ID: ${STAFFID}</h4>
-                <p class="card-text">
+                <div class="card-text">
                     Role: ${ROLE}
                     <c:if test="${ROLE eq 'Waiter'}">
                         <a href="LoadWaitingFoodController">View waiting food</a>
@@ -68,7 +67,7 @@
                 <form action="MainController" method="GET">
                     <input class="btn btn-default" type="submit" name="action" value="Logout"/>
                 </form>
-                </p>
+                </div>
             </div>
         </div>
         <div class="card-deck col-lg-12">
@@ -132,8 +131,11 @@
                 </div>
             </c:forEach>
         </div>
-
-
-
+<!--        <script>
+            function reload() {
+                window.location.href = 'ShowTableStatusController';
+            }
+            setTimeout(reload, 1000);
+        </script>-->
     </body>
 </html>

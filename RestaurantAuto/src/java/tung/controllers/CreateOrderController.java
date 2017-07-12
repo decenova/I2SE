@@ -46,36 +46,47 @@ public class CreateOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = errorP;
         try {
-            String action = request.getParameter("action");
             HttpSession session = request.getSession();
+            OrderDAO dao = new OrderDAO();
+            String action = request.getParameter("action");
             String tableID = request.getParameter("tableId");
-            TrungBean bean = new TrungBean();
-            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
-            session.setAttribute("tableID", tableID);
             String staffId = request.getParameter("staffId");
-            Date time = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
-            String now = sdf.format(time);
-            session.setAttribute("DATE", now);
-            OrderBean orderBean = new OrderBean();
-            orderBean.setStaffID(staffId);
-            orderBean.setTableID(tableID);
-            int seqStaff = orderBean.getSeqStaff();
-            int seqTable = orderBean.getSeqTable();
-            orderBean.setSeqTable(seqTable);
-            orderBean.setSeqWaiter(seqStaff);
-            Timestamp date = new Timestamp(time.getTime());
-            orderBean.setBeginTime(date);
-            if (orderBean.addOrderFirst()) {
-                request.setAttribute("ACTION", action);
-                int seqOrder = orderBean.getSEQOrder();
+            List<OrderDTO> dto = dao.loadMenu();
+            session.setAttribute("MENU", dto);
+//            TrungBean bean = new TrungBean();
+//            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
+            int seqStaff = dao.getSEQStaffById(staffId);
+            int seqTable = dao.getSEQTableById(tableID);
+            int seqOrder = dao.checkTableUsing(seqTable);
+            if (seqOrder != 0) {
+                OrderDTO info = dao.loadOrderInfo(seqOrder);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+                String now = sdf.format(info.getBeginTime());
                 session.setAttribute("orderSeq", seqOrder);
-                OrderDAO dao = new OrderDAO();
-                List<OrderDTO> dto = dao.loadMenu();
-                session.setAttribute("MENU", dto);
+                session.setAttribute("staffID", info.getWaiterID());
+                session.setAttribute("tableID", info.getTableID());
+                session.setAttribute("DATE", now);
+                List<OrderDTO> listFood = dao.showOrderDetail(seqOrder);
+                session.setAttribute("ORDER", listFood);
                 url = orderP;
-            } else 
-                url = errorP;
+            } else {
+                session.setAttribute("tableID", tableID);
+                Date time = new Date(System.currentTimeMillis());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+                String now = sdf.format(time);
+                session.setAttribute("DATE", now);
+                Timestamp date = new Timestamp(time.getTime());
+                boolean check = dao.addOrderFirst(seqTable, seqStaff, date);
+                if (check) {
+                    request.setAttribute("ACTION", action);
+                    seqOrder = dao.getMaxSEQOrder();
+                    session.setAttribute("orderSeq", seqOrder);
+                    url = orderP;
+                } else {
+                    url = errorP;
+                }
+            }
+
         } catch (Exception e) {
             log("ERROR at CreateOrderController: " + e.getMessage());
         } finally {

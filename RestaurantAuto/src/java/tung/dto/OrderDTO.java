@@ -33,6 +33,7 @@ public class OrderDTO implements Serializable {
         this.waiterID = waiterID;
         this.beginTime = beginTime;
     }
+    
 
     public OrderDTO(int seq, String tableID) {
         this.seq = seq;
