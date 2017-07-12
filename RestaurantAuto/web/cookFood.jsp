@@ -55,11 +55,5 @@
                 </c:if>
             </c:forEach>
         </form>
-        <script>
-            function reload() {
-                location.reload();
-            }
-            setTimeout(reload, 1000);
-        </script>
     </body>
 </html>

@@ -21,6 +21,7 @@ public class OrderDTO implements Serializable {
     private int seq, seqWaiter, seqTable;
     private String tableID, waiterID;
     Timestamp beginTime;
+    Timestamp beginEatTime;
     private List<OrderDTO> foodDetails;
     private List<OrderDTO> foodChoice;
     private List<OrderDTO> foodWaiting;
@@ -35,9 +36,18 @@ public class OrderDTO implements Serializable {
     }
     
 
-    public OrderDTO(int seq, String tableID) {
+    public OrderDTO(int seq, String tableID, Timestamp beginEatTime) {
         this.seq = seq;
         this.tableID = tableID;
+        this.beginEatTime = beginEatTime;
+    }
+
+    public Timestamp getBeginEatTime() {
+        return beginEatTime;
+    }
+
+    public void setBeginEatTime(Timestamp beginEatTime) {
+        this.beginEatTime = beginEatTime;
     }
 
     public List<OrderDTO> getFoodWaiting() {
