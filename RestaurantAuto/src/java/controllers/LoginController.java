@@ -38,32 +38,13 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             TrungBean bean = new TrungBean();
             String role = bean.getRole(id, password);
-            
-//            if (role.equals("Manager")) {
-//                url = "ManagerController";
-//            } else if(role.equals("Casher")){
-//                url = "Casher";
-//            }else if (!bean.getRole(id, password).equals("false")) {
-//                url = "ShowTableStatusController";
-//                
-//                //lưu role vs staffId trong session cho dễ sử dụng sau này
-//                request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-//                request.getSession().setAttribute("STAFFID", id);
-//            } else if (!role.equals("false")) {
-//                url = "tableStatus.jsp";
-//                if (!bean.getRole(id, password).equals("false")) {
-//                    url = "ShowTableStatusController";
-//
-//                    //lưu role vs staffId trong session cho dễ sử dụng sau này
-//                    request.getSession(true).setAttribute("ROLE", bean.getRole(id, password));
-//                    request.getSession().setAttribute("STAFFID", id);
 
             if (!role.equals("false")) {
                 if (role.equals("Cook")) {
                     url = "LoadFoodsController";
                 } else if (role.equals("Manager")) {
-                    url = "ManagerController";                    
-                } else if (role.equals("Casher")){
+                    url = "ManagerController";
+                } else if (role.equals("Casher")) {
                     url = "BillController";
                 } else {
                     url = "ShowTableStatusController";

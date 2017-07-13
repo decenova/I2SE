@@ -113,13 +113,7 @@
                                     <input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>
                                 </form>
                             </c:when>
-                            <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Eating'}">
-                                <form action="ChangeTableStatusController" method="post">
-                                    <input type="hidden" name="tableId" value="${table.id}"/>
-                                    <input type="hidden" name="tableStatusId" value="3"/>
-                                    <input class="btn btn-success"  type="submit" name="action" value="Change as Waiter"/>
-                                </form>
-                            </c:when>
+                            
                             <c:otherwise>
                                 <form action="TableStatus" method="post">
                                     <input class="btn btn-block"  type="submit" name="action" value="Just for seen" disabled="true"/>
@@ -131,11 +125,11 @@
                 </div>
             </c:forEach>
         </div>
-        <script>
-            function reload() {
+        <script>function reload() {
                 window.location.href = 'ShowTableStatusController';
             }
             setTimeout(reload, 1000);
+            
         </script>
     </body>
 </html>

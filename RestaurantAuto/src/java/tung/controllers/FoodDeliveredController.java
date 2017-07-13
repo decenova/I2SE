@@ -5,6 +5,7 @@
  */
 package tung.controllers;
 
+import beans.TrungBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -54,8 +56,27 @@ public class FoodDeliveredController extends HttpServlet {
                     System.out.println(choice);
                     System.out.println(listOrder.get(i).getFoodWaiting().size());
                     try {
-                        if (!request.getParameter(choice).equals(null)) {
-                            dao.insertDelivered(orderSEQ, foodID);
+                        if (request.getParameter(choice) != null) {
+                            dao.insertDelivered(orderSEQ, foodID); //set true nghia la gui r
+                            
+                            System.out.println("id: " + listOrder.get(i));
+                            System.out.println("value: " + request.getParameter(listOrder.get(i).getSeq()+""));
+                            System.out.println("seq: " + listOrder.get(i).getSeq());
+                            if (request.getParameter(listOrder.get(i).getSeq()+"").length() == 0) {
+                                dao.setBeginEatTime(listOrder.get(i).getSeq());
+                                TrungBean bean = new TrungBean();
+                                int tableId = Integer.parseInt(request.getParameter(listOrder.get(i).getSeq() + "tableId"));
+                                HttpSession session = request.getSession();
+                                
+                                System.out.println("table SEQ: " + tableId);
+//                                System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
+                                System.out.println("------Chuan bi change--------");
+                                
+                                System.out.println("table id: " + dao.getIdTableBySEQ(tableId));
+                                System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
+                                
+                                bean.changeTableStatus(dao.getIdTableBySEQ(tableId), 2, (String)session.getAttribute("STAFFID"));
+                            }
                         }
                     } catch (Exception e) {
                     }

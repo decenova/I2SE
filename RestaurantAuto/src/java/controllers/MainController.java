@@ -32,6 +32,7 @@ public class MainController extends HttpServlet {
     private final String manager = "ManagerController";
     private final String billDetail = "BillDetailController";
     private final String printBill = "PrintBillController";
+    private final String allBill = "BillController";
 
     private final String showOrder = "ShowOrderController";
 
@@ -86,6 +87,8 @@ public class MainController extends HttpServlet {
                 url = manager;
             } else if (action.equals("Print Bill")){
                 url = printBill;
+            } else if (action.equals("Back")){
+                url = allBill;
             } else if (action.endsWith("Logout")) {
                 url = logout;
             }

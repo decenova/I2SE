@@ -23,99 +23,97 @@
         <p>Order No: ${orderSeq}</p>
         <p>Date: ${DATE}</p>
         <div class="col-lg-6">
+            <table class="table table-hover">
+                <caption>Menu</caption>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID</th>
+                        <th>Food Name</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${MENU}" var="dto" varStatus="counter">
+                    <form action="MainController" method="POST" >
+                        <tr>
+                            <td>${counter.count}</td>
+                            <td>${dto.foodID}</td>
+                            <td>${dto.foodName}</td>
+                            <td>
+                                <input type="number" name="txtQuantity" value="1" min="1" required />
+                            </td>
+                            <td>
+                                <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
+                                <input type="hidden" name="txtFoodName" value="${dto.foodName}" />
+                                <input type="submit" value="Add" name="action" class="btn btn-default" />
+                            </td>
+                        </tr>
+                    </form>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <c:if test="${not empty FoodCooking}">
+            <div class="col-lg-6">
                 <table class="table table-hover">
-                    <caption>Menu</caption>
+                    <caption>Foods is cooking</caption>
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ID</th>
+                            <th>Food ID</th>
                             <th>Food Name</th>
                             <th>Quantity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${MENU}" var="dto" varStatus="counter">
-                        <form action="MainController" method="POST" accept-charset="ISO-8859-1">
+                        <c:forEach items="${FoodCooking}" var="dto" varStatus="counter">
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>${dto.foodID}</td>
                                 <td>${dto.foodName}</td>
-                                <td>
-                                    <input type="number" name="txtQuantity" value="1" min="1" required />
-                                </td>
-                                <td>
-                                    <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
-                                    <input type="hidden" name="txtFoodName" value="${dto.foodName}" />
-                                    <input type="submit" value="Add" name="action"  class="btn btn-default"/>
-                                </td>
+                                <td>${dto.quantity}</td>
+                                <td>Disable</td>
                             </tr>
-                        </form>
-                    </c:forEach>
-                    </tbody>
-                </table>
-
+                        </c:forEach>
+                    </tbody>                   
+                </table>                
             </div>
-        <c:if test="${not empty FOODS}">
-        <div class="col-lg-6">
-                        <table class="table table-hover">
-                            <caption>Order Submited</caption>
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Food ID</th>
-                                    <th>Food Name</th>
-                                    <th>Quantity</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${ORDER}" var="dto" varStatus="counter">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>${dto.foodID}</td>
-                                        <td>${dto.foodName}</td>
-                                        <td>${dto.quantity}</td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>                   
-                        </table>                
-            </div>
-        <hr>
-        <font color="blue">Add more food</font>
         </c:if>
-            <div class="col-lg-6">
-                <form action="MainController" method="POST" accept-charset="ISO-8859-1">
-                    <c:if test="${not empty ORDER}">
-                        <table class="table table-hover">
-                            <caption>Order Submit</caption>
-                            <thead>
+        <div class="col-lg-6">
+            <form action="MainController" method="POST" accept-charset="ISO-8859-1">
+                <c:if test="${not empty ORDER}">
+                    <table class="table table-hover">
+                        <caption>Order Submit</caption>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Food ID</th>
+                                <th>Food Name</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${ORDER}" var="dto" varStatus="counter">
                                 <tr>
-                                    <th>No</th>
-                                    <th>Food ID</th>
-                                    <th>Food Name</th>
-                                    <th>Quantity</th>
-                                    <th>Action</th>
+                                    <td>${counter.count}</td>
+                                    <td>${dto.foodID}</td>
+                                    <td>${dto.foodName}</td>
+                                    <td>${dto.quantity}</td>
+                                    <td>
+                                        <a href="SubmitOrderController?action=Remove&FoodNo=${counter.count}">Remove</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${ORDER}" var="dto" varStatus="counter">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>${dto.foodID}</td>
-                                        <td>${dto.foodName}</td>
-                                        <td>${dto.quantity}</td>
-                                        <td>
-                                            <a href="SubmitOrderController?action=Remove&FoodNo=${counter.count}">Remove</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>                   
-                        </table>
-                        <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
-                        <input type="submit" name="action" value="Submit order" />                   
-                    </c:if>
-                </form>
-            </div>                 
+                            </c:forEach>
+                        </tbody>                   
+                    </table>
+                    <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
+                    <input type="submit" name="action" value="Submit order" />                   
+                </c:if>
+            </form>
+        </div>                 
     </body>
 </html>

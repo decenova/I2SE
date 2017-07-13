@@ -16,16 +16,18 @@
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body onclick="stop()">
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
+        <a href="ShowTableStatusController">back to table status</a>
         <form action="FoodDeliveredController" method="POST">
             <input type="submit" value="Submit" />
             <c:forEach items="${foodWaitingList}" var="dto">
                 <c:if test="${not empty dto.foodWaiting}">
                     <table class="table table-hover">
                         <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
-
+                        <input type="hidden" name="${dto.seq}" value="${dto.beginEatTime}"/>
+                        <input type="hidden" name="${dto.seq}tableId" value="${dto.tableID}"/>
                         <thead>
                             <tr>
                                 <th>Food No</th>
@@ -53,11 +55,17 @@
                 </c:if>
             </c:forEach>
         </form>
-<!--        <script>
+        <script>
+            var isStop = false;
+            function stop(){
+                isStop = true;
+            }
             function reload() {
-                location.reload();
+                if(!isStop)
+                window.location.href = 'LoadWaitingFoodController';
             }
             setTimeout(reload, 1000);
-        </script>-->
+
+        </script>
     </body>
 </html>
