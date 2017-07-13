@@ -55,10 +55,6 @@
                 </c:if>
             </c:forEach>
         </form>
-<<<<<<< HEAD
-
-=======
->>>>>>> 321961d7caf2f6375427b73ab6c8026980d75f11
         <script>
             var isStop = false;
             function stop(){
@@ -70,9 +66,5 @@
             }
             setTimeout(reload, 1000);
         </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> 321961d7caf2f6375427b73ab6c8026980d75f11
     </body>
 </html>
