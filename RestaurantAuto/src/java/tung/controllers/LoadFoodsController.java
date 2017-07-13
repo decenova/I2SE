@@ -39,7 +39,7 @@ public class LoadFoodsController extends HttpServlet {
             OrderDAO dao = new OrderDAO();
             List<OrderDTO> listOrder = dao.loadOrders();
             for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq());
+                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq(), "null");
                 listOrder.get(i).setFoodDetails(list);
             }            
             request.setAttribute("orderList", listOrder);

@@ -13,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import minhnh.dao.MinhRestaurantDAO;
+import trung.dao.RestaurantDAO;
 
 /**
  *
@@ -40,7 +42,13 @@ public class PrintBillController extends HttpServlet {
             Date date = new Date();
             Timestamp endDate = new Timestamp(date.getTime());
             int id = Integer.parseInt(request.getParameter("pk"));
+            int tableSEQ = Integer.parseInt(request.getParameter("tableId")); 
             boolean result = dao.printBill(endDate, id);
+            RestaurantDAO change = new RestaurantDAO();
+            HttpSession session = request.getSession();
+            String staffId = (String)session.getAttribute("STAFFID");
+            String tableId = dao.getTableIDByPk(tableSEQ);
+            change.changeTableStatus(tableId, 3, staffId);
             if (result){
                 url = "BillController";
             }

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import tung.bean.OrderBean;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -53,8 +52,6 @@ public class CreateOrderController extends HttpServlet {
             String staffId = request.getParameter("staffId");
             List<OrderDTO> dto = dao.loadMenu();
             session.setAttribute("MENU", dto);
-//            TrungBean bean = new TrungBean();
-//            bean.changeTableStatus(request.getParameter("tableId"), Integer.parseInt(request.getParameter("tableStatusId")), request.getSession().getAttribute("STAFFID").toString());
             int seqStaff = dao.getSEQStaffById(staffId);
             int seqTable = dao.getSEQTableById(tableID);
             int seqOrder = dao.checkTableUsing(seqTable);
@@ -66,8 +63,10 @@ public class CreateOrderController extends HttpServlet {
                 session.setAttribute("staffID", info.getWaiterID());
                 session.setAttribute("tableID", info.getTableID());
                 session.setAttribute("DATE", now);
-                List<OrderDTO> listFood = dao.showOrderDetail(seqOrder);
+                List<OrderDTO> listFood = dao.showOrderDetail(seqOrder, "null");
+                List<OrderDTO> listCookingFood = dao.showOrderDetail(seqOrder, "not null");
                 session.setAttribute("ORDER", listFood);
+                session.setAttribute("FoodCooking", listCookingFood);
                 url = orderP;
             } else {
                 session.setAttribute("tableID", tableID);
@@ -81,6 +80,7 @@ public class CreateOrderController extends HttpServlet {
                     request.setAttribute("ACTION", action);
                     seqOrder = dao.getMaxSEQOrder();
                     session.setAttribute("orderSeq", seqOrder);
+                    session.removeAttribute("ORDER");
                     url = orderP;
                 } else {
                     url = errorP;

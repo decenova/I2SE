@@ -45,6 +45,8 @@ public class BillDetailController extends HttpServlet {
             System.out.println(dto);
             request.setAttribute("Total", total);
             request.setAttribute("OrderId", orderID);
+            String tableID = request.getParameter("tableId");
+            request.setAttribute("TableId", tableID);
             url = "detailBill.jsp";
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());

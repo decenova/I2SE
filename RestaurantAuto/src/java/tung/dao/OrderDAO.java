@@ -180,10 +180,6 @@ public class OrderDAO {
         return check;
     }
 
-    public boolean addOrderSecond(int seqOrder, String id,
-            String cashierID, double cost, Timestamp beginEat, Timestamp end) {
-        return false;
-    }
 
     public boolean addOrderDetailById(int seqOrder, int seqFood, int quantity) {
         boolean check = false;
@@ -258,12 +254,12 @@ public class OrderDAO {
         return dto;
     }
 
-    public List<OrderDTO> showOrderDetail(int seqOrder) { //show order detail cho moi order
+    public List<OrderDTO> showOrderDetail(int seqOrder, String isCookID) { //show order detail cho moi order
         List<OrderDTO> result = null;
         try {
             String sql = "select f.ID, f.Name, o.Quantity"
                     + " from OrderDetail o, Food f"
-                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is null and o.Status = ?";
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is " + isCookID + " and o.Status = ?";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
@@ -429,7 +425,7 @@ public class OrderDAO {
     public boolean deleteOrderDetail(int seqOrder) {
         boolean check = false;
         try {
-            String sql = "delete from OrderDetail where OrderID = ?";
+            String sql = "delete from OrderDetail where OrderID = ? and CookID is null";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
