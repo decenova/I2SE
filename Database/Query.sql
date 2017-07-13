@@ -12,8 +12,10 @@ select * from ChangeStatusTable
 
 --Doanh thu
 select sum(Cost) AS  'Total Cost' from [Order]
-where BeginTime between '2017-06-01 00:00:00.000' and '2017-06-07 23:59:00.000'
+where BeginTime between '2017-06-01 00:00:00.000' and '2017-06-07 23:59:00.000';
 
+select sum(Cost) AS  'Total Cost' from [Order]
+where BeginTime between '2017-06-01 00:00:00.000' and '2017-06-01 23:59:59.999'
 --Món ăn
 --Danh sách món ăn theo giá tiền
 select Food.Name,SUM(OrderDetail.Quantity) as 'Total Quantity', SUM(Food.Cost) as 'Total Cost'
@@ -96,3 +98,7 @@ having count(o.SEQ) >= ALL (select count(o.SEQ)
 								where [Order].SEQ = o.OrderID and o.CookID = s.SEQ
 										and ([Order].BeginTime between '2017-06-01 00:00:00.000' and '2017-06-07 23:59:00.000')
 								group by s.SEQ)
+
+--thoi gian phuc vu
+select BeginTime, BeginEatTime, EndTime from [Order]
+where BeginTime between '2017-06-01 00:00:00.000' and '2017-06-07 23:59:00.000';

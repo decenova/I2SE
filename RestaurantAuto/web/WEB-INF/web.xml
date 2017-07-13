@@ -92,6 +92,14 @@
         <servlet-name>PrintBillController</servlet-name>
         <servlet-class>controllers.PrintBillController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>analyzeRevenueController</servlet-name>
+        <servlet-class>thang.controller.analyzeRevenueController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>analyzeTimeController</servlet-name>
+        <servlet-class>thang.controller.analyzeTimeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -183,6 +191,14 @@
     <servlet-mapping>
         <servlet-name>PrintBillController</servlet-name>
         <url-pattern>/PrintBillController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>analyzeRevenueController</servlet-name>
+        <url-pattern>/analyzeRevenueController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>analyzeTimeController</servlet-name>
+        <url-pattern>/analyzeTimeController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

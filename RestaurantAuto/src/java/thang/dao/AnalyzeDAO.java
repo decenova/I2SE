@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -54,6 +55,44 @@ public class AnalyzeDAO {
             e.printStackTrace();
         }
         return res;
+    }
+    public int revenue(long from, long to) {
+        int res = 0;
+        try {
+            con = MyConnection.getConnection();
+            ps = con.prepareStatement("select sum(Cost) AS  'Total Cost' from [Order] "
+                    + "where BeginTime between ? and ?");
+            ps.setTimestamp(1, new Timestamp(from));
+            ps.setTimestamp(2, new Timestamp(to));
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt("Total Cost");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public ArrayList<ArrayList<Timestamp>> timeAnalyze(long from, long to) {
+        ArrayList<ArrayList<Timestamp>> list = new ArrayList<ArrayList<Timestamp>>();
+        try {
+            con = MyConnection.getConnection();
+            ps = con.prepareStatement("select BeginTime, BeginEatTime, EndTime from [Order] "
+                    + "where BeginTime between ? and ?");
+            ps.setTimestamp(1, new Timestamp(from));
+            ps.setTimestamp(2, new Timestamp(to));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ArrayList<Timestamp> tmp = new ArrayList<Timestamp>();
+                tmp.add(rs.getTimestamp(1));
+                tmp.add(rs.getTimestamp(2));
+                tmp.add(rs.getTimestamp(3));
+                list.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public ArrayList<ArrayList> foodAnalyze(Date from, Date to) {
@@ -178,4 +217,5 @@ public class AnalyzeDAO {
         }
         return list;
     }
+    
 }
