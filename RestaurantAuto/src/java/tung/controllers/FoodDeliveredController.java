@@ -68,8 +68,13 @@ public class FoodDeliveredController extends HttpServlet {
                                 int tableId = Integer.parseInt(request.getParameter(listOrder.get(i).getSeq() + "tableId"));
                                 HttpSession session = request.getSession();
                                 
-                                System.out.println("table id: " + tableId);
+                                System.out.println("table SEQ: " + tableId);
+//                                System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
+                                System.out.println("------Chuan bi change--------");
+                                
+                                System.out.println("table id: " + dao.getIdTableBySEQ(tableId));
                                 System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
+                                
                                 bean.changeTableStatus(dao.getIdTableBySEQ(tableId), 2, (String)session.getAttribute("STAFFID"));
                             }
                         }
