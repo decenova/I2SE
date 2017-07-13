@@ -19,6 +19,7 @@
     <body onclick="stop()">
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
+        <a href="ShowTableStatusController">back to table status</a>
         <form action="FoodDeliveredController" method="POST">
             <input type="submit" value="Submit" />
             <c:forEach items="${foodWaitingList}" var="dto">

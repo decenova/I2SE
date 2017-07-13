@@ -90,7 +90,7 @@ public class OrderDAO {
             String sql = "select Id from [Table] where SEQ = ?";
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
-            preStm.setString(1, id);
+            preStm.setInt(1, seq);
             rs = preStm.executeQuery();
             if (rs.next()) {
                 id = rs.getString("Id");

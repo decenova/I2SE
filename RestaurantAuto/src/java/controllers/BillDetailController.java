@@ -38,9 +38,12 @@ public class BillDetailController extends HttpServlet {
         try {
             String orderID = request.getParameter("orderId");
             int id = Integer.parseInt(orderID);
-            String total = request.getParameter("cost");
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
             List<OrderDetailDTO> dto = dao.viewDetailBill(id);
+            int total = 0;
+            for (int i = 0; i < dto.size(); i++) {
+                total += dto.get(i).getPrice();
+            }
             request.setAttribute("DetaiBill", dto);
             System.out.println(dto);
             request.setAttribute("Total", total);

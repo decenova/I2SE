@@ -20,7 +20,7 @@
         <h1>Cooking Foods</h1>
         <a href="LoadFoodsController">Back to Foods by Order</a>
         <h4>Hi, ${STAFFID}</h4>
-        <form action="SubmitCookingFoodController" method="POST">
+        <form action="SubmitCookingFoodController" method="POST"">
             <input type="hidden" name="staffID" value="${STAFFID}" />
             <input type="submit" value="Submit Food" /> <br/> <br/>
             <c:forEach items="${listChooseFood}" var="dto">
@@ -55,14 +55,5 @@
                 </c:if>
             </c:forEach>
         </form>
-<<<<<<< HEAD
-        <script>
-//            function reload() {
-//                location.reload();
-//            }
-//            setTimeout(reload, 1000);
-        </script>
-=======
->>>>>>> 13c113d924b073ce40686e194ff8656a809097e5
     </body>
 </html>

@@ -78,7 +78,6 @@ public class MainController extends HttpServlet {
                 url = createOrder;
             } else if (action.equals("Add") || action.equals("Submit order")) {
                 url = submitOrder;
-
             } else if (action.equals("Show Order")) {
                 url = showOrder;         
             } else if (action.equals("View Detail")){
