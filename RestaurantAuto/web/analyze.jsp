@@ -19,7 +19,7 @@
     <body>
         <h1>Analyze</h1>
 
-        <form action="analyzeRevenueController" method="post">
+        <form action="analyzeStaffController" method="post">
             <input id="from" type="date" name="fromDate" required="true" 
                    <c:if test="${not empty requestScope.FROM}"> value="${requestScope.FROM}" </c:if> value = "2017-05-30"/>
                    <input id="to" type="date" name="toDate" required="true"
