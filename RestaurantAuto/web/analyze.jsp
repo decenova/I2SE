@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Analyze</h1>
-
+        <a href="ManagerController">Back to manager page</a>
         <form action="analyzeStaffController" method="post">
             <input id="from" type="date" name="fromDate" required="true" 
                    <c:if test="${not empty requestScope.FROM}"> value="${requestScope.FROM}" </c:if> value = "2017-05-30"/>
@@ -138,7 +138,7 @@
                                 <td>Staff Id</td>
                                 <td>First name</td>
                                 <td>Last name</td>
-                                <td>Total table clean</td>
+                                <td>Total welcome time</td>
                             </tr>
                         </thead>
                         <tbody>

@@ -26,7 +26,8 @@
     </script>
     <body>
         <h1>Analyze</h1>
-
+        
+        <a href="ManagerController">Back to manager page</a>
         <form action="analyzeRevenueController" method="post">
             <input id="from" type="date" name="fromDate" required="true" 
                    <c:if test="${not empty requestScope.FROM}"> value="${requestScope.FROM}" </c:if> value = "2017-05-30"/>
