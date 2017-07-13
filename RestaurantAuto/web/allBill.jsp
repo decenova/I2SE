@@ -37,6 +37,7 @@
                             <td>
                                 <input type="hidden" name="orderId" value="${dto.orderId}"/>
                                 <input type="hidden" name="cost" value="${dto.cost}"/>
+                                <input type="hidden" name="tableId" value="${dto.tableId}"/>
                                 <input type="submit" value="View Detail" name="action"/>
                             </td>
                         </tr>
@@ -46,6 +47,9 @@
             </tbody>
         </table>
     </minh:if>
+        <minh:if test="${empty requestScope.ViewBill}">
+            There are no order!
+        </minh:if>
 </body>
 </html>
 

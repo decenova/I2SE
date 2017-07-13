@@ -35,6 +35,25 @@ public class MinhRestaurantDAO {
         }
     }
     
+    public String getTableIDByPk(int pk){
+        String tableId = "";
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select Id from [Table] where SEQ=?";
+            pre = conn.prepareStatement(sql);
+            pre.setInt(1, pk);
+            rs = pre.executeQuery();
+            if (rs.next()){
+                tableId = rs.getString("Id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return tableId;
+    }
+    
     public boolean printBill(Timestamp endTime,int orderId){
         try {
             conn = MyConnection.getConnection();

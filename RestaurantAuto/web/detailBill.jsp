@@ -38,7 +38,9 @@
             </table>
             <h4>Total: ${requestScope.Total}$</h4>
             <input type="hidden" value="${requestScope.OrderId}" name="pk"/>
+            <input type="hidden" value="${requestScope.TableId}" name="tableId"/>
             <input type="submit" value="Print Bill" name="action"/>
+            <input type="submit" value="Back" name="action"/>
         </form>
     </body>
 </html>
