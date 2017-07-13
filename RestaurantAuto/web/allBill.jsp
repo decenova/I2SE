@@ -21,7 +21,6 @@
                         <th>Table Id</th>
                         <th>Order Id</th>
                         <th>Waiter serve</th>
-                        <th>Total</th>
                         <th>View detail</th>
                     </tr>
                 </thead>
@@ -33,10 +32,8 @@
                             <td>${dto.tableId}</td>
                             <td>${dto.orderId}</td>
                             <td>${dto.waiterName}</td>
-                            <td>${dto.cost}</td>
                             <td>
                                 <input type="hidden" name="orderId" value="${dto.orderId}"/>
-                                <input type="hidden" name="cost" value="${dto.cost}"/>
                                 <input type="hidden" name="tableId" value="${dto.tableId}"/>
                                 <input type="submit" value="View Detail" name="action"/>
                             </td>

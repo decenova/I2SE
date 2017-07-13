@@ -41,9 +41,16 @@ public class PrintBillController extends HttpServlet {
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
             Date date = new Date();
             Timestamp endDate = new Timestamp(date.getTime());
+            int total = Integer.parseInt(request.getParameter("total"));
+            System.out.println(total);
+            int seqOrder = Integer.parseInt(request.getParameter("seqOrder"));
+            System.out.println(seqOrder);
+            dao.insertTotal(total, seqOrder);
             int id = Integer.parseInt(request.getParameter("pk"));
             int tableSEQ = Integer.parseInt(request.getParameter("tableId")); 
             boolean result = dao.printBill(endDate, id);
+            
+            
             RestaurantDAO change = new RestaurantDAO();
             HttpSession session = request.getSession();
             String staffId = (String)session.getAttribute("STAFFID");
