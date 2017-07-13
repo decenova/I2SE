@@ -36,6 +36,25 @@ public class MinhRestaurantDAO {
         }
     }
 
+    public int getCasherIDByPk(String pk) {
+        int staffId = 0;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select SEQ from Staff where Id=?";
+            pre = conn.prepareStatement(sql);
+            pre.setString(1, pk);
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                staffId = rs.getInt("SEQ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return staffId;
+    }
+    
     public String getTableIDByPk(int pk) {
         String tableId = "";
         try {
@@ -55,13 +74,14 @@ public class MinhRestaurantDAO {
         return tableId;
     }
 
-    public boolean printBill(Timestamp endTime, int orderId) {
+    public boolean printBill(Timestamp endTime, int orderId, int casherID) {
         try {
             conn = MyConnection.getConnection();
-            String sql = "update [Order] set EndTime=? where SEQ = ?";
+            String sql = "update [Order] set EndTime=?, CashierID=? where SEQ = ?";
             pre = conn.prepareStatement(sql);
             pre.setTimestamp(1, endTime);
-            pre.setInt(2, orderId);
+            pre.setInt(2, casherID);
+            pre.setInt(3, orderId);
             int n = pre.executeUpdate();
             if (n > 0) {
                 return true;
