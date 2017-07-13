@@ -8,6 +8,8 @@ package thang.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -20,7 +22,7 @@ import thang.dao.AnalyzeDAO;
  *
  * @author Decen
  */
-public class analyzeStaffController extends HttpServlet {
+public class analyzeTimeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,22 +40,29 @@ public class analyzeStaffController extends HttpServlet {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date from = new Date(sdf.parse(request.getParameter("fromDate")).getTime());
             Date to = new Date(sdf.parse(request.getParameter("toDate")).getTime());
+            AnalyzeDAO dao = new AnalyzeDAO();
+            ArrayList<ArrayList<Timestamp>> list = dao.timeAnalyze(from.getTime(), to.getTime());
+            long averageServerLong = 0;
+            long averageSpendLong = 0;
+            for (ArrayList<Timestamp> arrayList : list) {
+                averageServerLong += arrayList.get(1).getTime() -  arrayList.get(0).getTime();
+//                System.out.println((arrayList.get(0).getTime()));
+//                System.out.println((arrayList.get(1).getTime()));
+//                System.out.println(new Time(arrayList.get(0).getTime()));
+//                System.out.println(new Time(arrayList.get(1).getTime()));
+//                System.out.println("--" + new Time(arrayList.get(1).getTime() -  arrayList.get(0).getTime()));
+                averageSpendLong += arrayList.get(2).getTime() -  arrayList.get(0).getTime();
+            }
+//            System.out.println(new Time(averageServerLong/ list.size()));
+            Time averageServerTime = new Time(averageServerLong / list.size() - 7 * 3600000);
+            Time averageSpendTime = new Time(averageSpendLong / list.size() - 7 * 3600000);
             request.setAttribute("FROM", from);
             request.setAttribute("TO", to);
-            AnalyzeDAO dao = new AnalyzeDAO();
-            ArrayList<ArrayList> listFood = dao.foodAnalyze(from, to);
-            request.setAttribute("FOOD", listFood);
-            ArrayList<ArrayList> listWaiter = dao.waiterAnalyze(from, to);
-            request.setAttribute("WAITER", listWaiter);
-            ArrayList<ArrayList> listCook = dao.cookAnalyze(from, to);
-            request.setAttribute("COOK", listCook);
-            ArrayList<ArrayList> listBusboy = dao.busboyAnalyze(from, to);
-            request.setAttribute("BUSBOY", listBusboy);
-            ArrayList<ArrayList> listHost = dao.hostAnalyze(from, to);
-            request.setAttribute("HOST", listHost);
+            request.setAttribute("SERVER", averageServerTime);
+            request.setAttribute("SPEND", averageSpendTime);
         } catch (Exception e) {
         }
-        request.getRequestDispatcher("analyze.jsp").forward(request, response);
+        request.getRequestDispatcher("analyzeTime.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

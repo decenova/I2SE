@@ -20,7 +20,7 @@ import thang.dao.AnalyzeDAO;
  *
  * @author Decen
  */
-public class analyzeStaffController extends HttpServlet {
+public class analyzeRevenueController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,26 +34,62 @@ public class analyzeStaffController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        final long DAYTIME = 3600000 * 24;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date from = new Date(sdf.parse(request.getParameter("fromDate")).getTime());
             Date to = new Date(sdf.parse(request.getParameter("toDate")).getTime());
+            AnalyzeDAO dao = new AnalyzeDAO();
+            int revenue = dao.revenue(from, to);
+            request.setAttribute("REVENUE", revenue);
             request.setAttribute("FROM", from);
             request.setAttribute("TO", to);
-            AnalyzeDAO dao = new AnalyzeDAO();
-            ArrayList<ArrayList> listFood = dao.foodAnalyze(from, to);
-            request.setAttribute("FOOD", listFood);
-            ArrayList<ArrayList> listWaiter = dao.waiterAnalyze(from, to);
-            request.setAttribute("WAITER", listWaiter);
-            ArrayList<ArrayList> listCook = dao.cookAnalyze(from, to);
-            request.setAttribute("COOK", listCook);
-            ArrayList<ArrayList> listBusboy = dao.busboyAnalyze(from, to);
-            request.setAttribute("BUSBOY", listBusboy);
-            ArrayList<ArrayList> listHost = dao.hostAnalyze(from, to);
-            request.setAttribute("HOST", listHost);
+
+            long fromValue = from.getTime();
+            long toValue = to.getTime();
+            long subTime = (toValue - fromValue);
+            ArrayList<Integer> revenueList = new ArrayList<Integer>();
+            int rank;
+            int max = 5;
+            int cur = 0;
+            if (subTime > DAYTIME * 366) {
+                rank = (int) Math.floor(subTime * 1.0 / (DAYTIME * 366));
+                for (int i = 1; i <= rank; i++){
+                    cur = dao.revenue(fromValue, fromValue + DAYTIME * 366 - 1);
+                    revenueList.add(cur);
+                    if (cur > max)
+                        max = cur;
+                    fromValue += DAYTIME * 366;
+                }
+                revenueList.add(dao.revenue(fromValue, toValue));
+            } else if (subTime > DAYTIME) {
+                rank = (int) Math.floor(subTime * 1.0 / DAYTIME);
+                for (int i = 1; i <= rank; i++){
+                    cur =(dao.revenue(fromValue, fromValue + DAYTIME  - 1));
+                    revenueList.add(cur);
+                    if (cur > max)
+                        max = cur;
+                    fromValue += DAYTIME;
+                }
+                revenueList.add(dao.revenue(fromValue, toValue));
+            } else {
+                rank = (int) Math.floor(subTime * 1.0 / (DAYTIME /24));
+                for (int i = 1; i <= rank; i++){
+                    cur =(dao.revenue(fromValue, fromValue + DAYTIME / 24 - 1));
+                    revenueList.add(cur);
+                    if (cur > max)
+                        max = cur;
+                    fromValue += DAYTIME / 24;
+                }
+                revenueList.add(dao.revenue(fromValue, toValue));
+            }
+            request.setAttribute("REVENUELIST", revenueList);
+            request.setAttribute("MAX", max + 10);
+            request.setAttribute("RANK", rank + 1);
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        request.getRequestDispatcher("analyze.jsp").forward(request, response);
+        request.getRequestDispatcher("analyzeRevenue.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

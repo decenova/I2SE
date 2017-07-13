@@ -19,12 +19,13 @@
     <body>
         <h1>Analyze</h1>
 
-        <form action="analyzeStaffController" method="post">
-            <input id="from" type="date" name="fromDate" required="true" value="2010-01-01"/>
-            <input id="to" type="date" name="toDate" required="true" value="2017-08-01"/>
-            <input type="submit" value="Start Analyze"/>
-        </form>
-        <h1>Revenue : ${requestScope.REVENUE} $</h1>
+        <form action="analyzeRevenueController" method="post">
+            <input id="from" type="date" name="fromDate" required="true" 
+                   <c:if test="${not empty requestScope.FROM}"> value="${requestScope.FROM}" </c:if> value = "2017-05-30"/>
+                   <input id="to" type="date" name="toDate" required="true"
+                   <c:if test="${not empty requestScope.TO}"> value="${requestScope.TO}" </c:if> value = "2017-06-10"/>
+                   <input type="submit" value="Start Analyze"/>
+            </form>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#Menu">Menu analyze</a></li>
             <li><a data-toggle="tab" href="#Waiter">Waiter</a></li>

@@ -131,11 +131,11 @@
                 </div>
             </c:forEach>
         </div>
-<!--        <script>
+        <script>
             function reload() {
                 window.location.href = 'ShowTableStatusController';
             }
             setTimeout(reload, 1000);
-        </script>-->
+        </script>
     </body>
 </html>
