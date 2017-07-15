@@ -100,6 +100,10 @@
         <servlet-name>analyzeTimeController</servlet-name>
         <servlet-class>thang.controller.analyzeTimeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FoodController</servlet-name>
+        <servlet-class>thang.controller.FoodController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/OrderController</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>analyzeTimeController</servlet-name>
         <url-pattern>/analyzeTimeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FoodController</servlet-name>
+        <url-pattern>/FoodController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
