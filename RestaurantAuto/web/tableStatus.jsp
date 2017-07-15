@@ -129,7 +129,7 @@
             function reload() {
                 window.location.href = 'ShowTableStatusController';
             }
-            setTimeout(reload, 1000);
+            setTimeout(reload, 3000);
             
         </script>
     </body>
