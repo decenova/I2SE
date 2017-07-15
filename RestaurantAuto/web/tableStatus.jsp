@@ -76,6 +76,7 @@
 
         </div>
         <script>
+
             function gettable() {
                 $.ajax({
                     url: "/RestaurantAuto/ShowTableStatusController",
@@ -142,7 +143,7 @@
 
                     }
                 })
-            }
+
             gettable();
             setInterval(gettable,1000);
         </script>
