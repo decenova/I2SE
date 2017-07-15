@@ -168,6 +168,11 @@ public class OrderDAO {
             preStm.setInt(1, seqTable);
             preStm.setInt(2, seqWaiter);
             preStm.setTimestamp(3, begin);
+            
+            System.out.println("tableId: " + seqTable);
+            System.out.println("WaiterID: " + seqWaiter);
+            System.out.println("beginTIme: " + begin);
+            
             if (preStm.executeUpdate() > 0) {
                 check = true;
             }

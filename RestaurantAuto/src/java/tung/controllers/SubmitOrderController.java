@@ -28,7 +28,7 @@ public class SubmitOrderController extends HttpServlet {
     private static final String errorP = "error.jsp";
     private static final String orderP = "order.jsp";
     private static final String orderListP = "orderList.jsp";
-    private static final String showTableStatus = "ShowTableStatusController";
+    private static final String showTableStatus = "tableStatus.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
