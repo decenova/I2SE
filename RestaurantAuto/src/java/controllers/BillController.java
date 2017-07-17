@@ -40,10 +40,8 @@ public class BillController extends HttpServlet {
             List<OrderDTO> listDto = dao.viewAllBill();
 //            request.setAttribute("ViewBill", listDto);
 
-            System.out.println("list length: " + listDto.size());
 
             String array = new Gson().toJson(listDto);
-            System.out.println("bill: " + array);
             out.print(" " + array);
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());

@@ -21,24 +21,9 @@
     </head>
     <body>
         <h1>Casher Page!</h1>
-        <table border="1">
-            <thead>
-
-            <th>Table Id</th>
-            <th>Order Id</th>
-            <th>Waiter serve</th>
-            <th>View detail</th>
-
-        </thead>
-        <tbody id="tbody">
-
-
-
-        </tbody>
+        <table border="1" id="table">
+            
     </table>
-    <%--<minh:if test="${empty requestScope.ViewBill}">--%>
-    <!--            There are no order!-->
-    <%--</minh:if>--%>
 </body>
 <script>
     function gettable() {
@@ -46,15 +31,18 @@
             url: "/BillController",
             method: "GET",
             success: function (data) {
-                var tbody = $("#tbody");
+                var tbody = $("#table");
                 tbody.empty();
+                var s = '';
+                
+                s+= "<thead><th>Table Id</th><th>Order Id</th><th>Waiter serve</th><th>View detail</th></thead><tbody>";
 
                 var arr = JSON.parse(data);
                 for (index in arr) {
 
                     var item = arr[index];
 
-                    var s = '';
+                    
 
                     s += "<tr>"
 
@@ -64,15 +52,17 @@
                             + "<td>"
                             + "<form action='MainController' method='POST'>"
                             + "<input type='hidden' name='orderId' value='" + item.orderId + "'/>"
-                            + "<input type='hidden' name='tableId' value=" + item.tableId + "/>"
+                            + "<input type='hidden' name='tableId' value='" + item.tableId + "'/>"
                             + "<input type='submit' value='View Detail' name='action'/>"
                             + "</form>"
                             + "</td>"
                             + "</tr>";
 
-                    tbody.append(s);
+                    
 
                 }
+                s+="</tbody>";
+                tbody.append(s);
             }
 
         })

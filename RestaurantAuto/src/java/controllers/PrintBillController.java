@@ -38,26 +38,43 @@ public class PrintBillController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "error.jsp";
         try {
+            
+            
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
             Date date = new Date();
             Timestamp endDate = new Timestamp(date.getTime());
             int total = Integer.parseInt(request.getParameter("total"));
             int seqOrder = Integer.parseInt(request.getParameter("seqOrder"));
+            
+            
+            
             dao.insertTotal(total, seqOrder);
+            
+            
             int id = Integer.parseInt(request.getParameter("pk"));
+            
+            System.out.println("toi day r nha");
+            
             int tableSEQ = Integer.parseInt(request.getParameter("tableId")); 
+            
+            System.out.println("toi day r nha");
             HttpSession session = request.getSession();
+            System.out.println("toi day r nha");
             String staffId = (String)session.getAttribute("STAFFID");
+            System.out.println("toi day r nha");
             int casherID = dao.getCasherIDByPk(staffId);
+            System.out.println("toi day r nha");
             boolean result = dao.printBill(endDate, id, casherID);
+            System.out.println("toi day r nha");
 
+            
             
             RestaurantDAO change = new RestaurantDAO();
             
             String tableId = dao.getTableIDByPk(tableSEQ);
             change.changeTableStatus(tableId, 3, staffId);
             if (result){
-                url = "BillController";
+                url = "allBill.jsp";
             }
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());
