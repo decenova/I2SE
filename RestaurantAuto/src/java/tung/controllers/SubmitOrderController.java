@@ -76,7 +76,6 @@ public class SubmitOrderController extends HttpServlet {
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
-                System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
                 session.setAttribute("ORDER", result);
                 url = orderP;

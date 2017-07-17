@@ -64,7 +64,7 @@
                 <div class="card-text">
                     Role: ${ROLE}
                     <c:if test="${ROLE eq 'Waiter'}">
-                        <a href="LoadWaitingFoodController">View waiting food</a>
+                        <a href="viewWaitingFood.jsp">View waiting food</a>
                     </c:if>
                     <form action="MainController" method="GET">
                         <input class="btn btn-default" type="submit" name="action" value="Logout"/>
@@ -147,6 +147,7 @@
                 })
             }
 
+            
             gettable();
             setInterval(gettable, 1000);
         </script>

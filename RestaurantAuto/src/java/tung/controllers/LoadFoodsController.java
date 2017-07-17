@@ -5,6 +5,7 @@
  */
 package tung.controllers;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -33,6 +34,7 @@ public class LoadFoodsController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
          PrintWriter out = response.getWriter();
          String url = "";
         try {
@@ -41,13 +43,16 @@ public class LoadFoodsController extends HttpServlet {
             for (int i = 0; i < listOrder.size(); i++) {
                 List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq(), "null");
                 listOrder.get(i).setFoodDetails(list);
-            }            
-            request.setAttribute("orderList", listOrder);
-           url = viewFood;
+                System.out.println(listOrder.get(i).getSeqOD());
+            }
+            String array = new Gson().toJson(listOrder);
+            out.print(array);
+//            request.setAttribute("orderList", listOrder);
+//           url = viewFood;
         } catch(Exception e) {
             log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {
-           request.getRequestDispatcher(url).forward(request, response);
+//           request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
