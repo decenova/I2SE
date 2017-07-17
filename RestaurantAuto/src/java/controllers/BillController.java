@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -34,16 +35,20 @@ public class BillController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "error.jsp";
         try {
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
-            List<OrderDTO> dto = dao.viewAllBill();
-            request.setAttribute("ViewBill", dto);
-            url = "allBill.jsp";
+            List<OrderDTO> listDto = dao.viewAllBill();
+//            request.setAttribute("ViewBill", listDto);
+
+            System.out.println("list length: " + listDto.size());
+
+            String array = new Gson().toJson(listDto);
+            System.out.println("bill: " + array);
+            out.print(" " + array);
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            out.close();
         }
     }
 

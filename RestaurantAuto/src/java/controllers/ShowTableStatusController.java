@@ -35,13 +35,11 @@ public class ShowTableStatusController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "tableStatus.jsp";
         TrungBean bean = new TrungBean();
         try {
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
             arr = bean.getTablesStatus();
             String array = new Gson().toJson(arr);
-            System.out.println(array);
             out.print(array);
         } catch (Exception e) {
             e.printStackTrace();

@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet {
                 } else if (role.equals("Manager")) {
                     url = "ManagerController";
                 } else if (role.equals("Casher")) {
-                    url = "BillController";
+                    url = "allBill.jsp";
                 } else {
                     url = "tableStatus.jsp";
                 }
