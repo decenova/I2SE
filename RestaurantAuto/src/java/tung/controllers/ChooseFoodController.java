@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tung.dao.OrderDAO;
 import tung.dto.OrderDTO;
 
@@ -40,30 +41,11 @@ public class ChooseFoodController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = "";
         try {
-            String chefID = request.getParameter("staffID");
+            HttpSession session = request.getSession();
+            int seqOD = Integer.parseInt(request.getParameter("seqOD"));
             OrderDAO dao = new OrderDAO();
-            List<OrderDTO> listOrder = dao.loadOrders();
-            int orderSEQ = 0;
-            String foodID = "";
-            for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.showOrderDetail(listOrder.get(i).getSeq(), "null");
-                listOrder.get(i).setFoodDetails(list);
-            }
-            int seqStaff = 0;
-             for (int i = 0; i < listOrder.size(); i++) {
-                for (int j = 0; j < listOrder.get(i).getFoodDetails().size(); j++) {
-                    orderSEQ = listOrder.get(i).getSeq();
-                    foodID = listOrder.get(i).getFoodDetails().get(j).getFoodID();
-                    String choice = orderSEQ + foodID;
-                    try {
-                        if (request.getParameter(choice) != null) {
-                            seqStaff = dao.getSEQStaffById(chefID);
-                            dao.insertChefID(orderSEQ, foodID, seqStaff);
-                        }     
-                    } catch (Exception e) {
-                    }
-                }
-            }     
+            dao.insertChefID(seqOD ,dao.getSEQStaffById((String) session.getAttribute("STAFFID")));
+
             url = viewCookFood;
         } catch (Exception e) {
             log("ERROR at ChooseFoodController: " + e.getMessage());

@@ -20,37 +20,50 @@
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>View Food</h1>
         <a href="ViewCookFoodController?staffID=${STAFFID}">View Cook Food</a>
-        <form action="ChooseFoodController" method="POST">
-            <input type="hidden" name="staffID" value="${STAFFID}" />
-            <input type="submit" value="Submit Food" /> <br/> <br/>
-        <c:forEach items="${orderList}" var="dto">
-            <c:if test="${not empty dto.foodDetails}">
-                <table class="table table-hover col-md-8 col-lg-6">
-                <caption>Table No: ${dto.tableID} Order: ${dto.seq}</caption>
-                <thead>
-                    <tr>
-                        <th>Food No</th>
-                        <th>Food Name</th>
-                        <th>Quantity</th>
-                        <th>Choice</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${dto.foodDetails}" var="food" varStatus="counter">
-                        <tr>
-                            <td>${counter.count}</td>
-                            <td>${food.foodName}</td>
-                            <td>${food.quantity}</td>
-                            <td>
-                                <input type="checkbox" name="${dto.seq}${food.foodID}" value="" />
-                            </td>
-                        </tr>    
-                    </c:forEach>
-                </tbody>
+        <div id="container">
 
-            </table>
-                </c:if>
-        </c:forEach>
-            </form>
+        </div>
+
+        <script>
+            function getFoods() {
+                $.ajax({
+                    url: "/LoadFoodsController",
+                    method: "POST",
+                    success: function (data) {
+                        var div = $("#container");
+                        var index;
+                        for (index in data) {
+                            var arr = data[index].foodDetails;
+                            if (arr.length > 0) {
+                                var s = '';
+                                s += '<table class="table table-hover col-md-8 col-lg-6">';
+                                s += '<caption>Table No: '+ data[index].tableID + ' Order: ' + data[index].seq + '</caption>';
+                                s += '<thead><tr><th>Food No</th><th>Food Name</th><th>Quantity</th><th>Choice</th></tr></thead>';
+                                s += '<tbody>';
+                                for (var i = 0; i < arr.length; i++) {
+                                    s += '<tr>';
+                                    s += '<td>' + (i + 1) + '</td>';
+                                    s += '<td>' + arr[i].foodName + '</td>';
+                                    s += '<td>' + arr[i].quantity + '</td>';
+                                    s += '<td>';
+                                    s += '<form action="ChooseFoodController" method="POST">';
+                                    s += '<input type="submit" value="Choose" />';
+                                    s += '<input type="hidden" name="seqOD" value="' + arr[i].seqOD + '"/>';
+                                    s += '<input type="hidden" name="seqOrder" value="' + data[index].seq + '"/>';
+                                    s += '<input type="hidden" name="tableId" value="' + data[index].tableID + '"/>';
+                                    s += '</form>';
+                                    s += '</td>';
+                                    s += '</tr>';
+                                }
+                                s += '</tbody>';
+                                s += '</table>';
+                            }
+                            div.append(s);
+                        }
+                    }
+                });
+            }
+            getFoods();
+        </script>
     </body>
 </html>
