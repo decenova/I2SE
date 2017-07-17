@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
                 } else if (role.equals("Casher")) {
                     url = "BillController";
                 } else {
-                    url = "ShowTableStatusController";
+                    url = "tableStatus.jsp";
                 }
 
                 //lưu role vs staffId trong session cho dễ sử dụng sau này

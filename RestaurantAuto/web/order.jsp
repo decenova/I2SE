@@ -18,6 +18,7 @@
     </head>
     <body>
         <h1>Order</h1>
+        <a href="tableStatus.jsp">Back to table status</a>
         <p>Table No: ${tableID}</p>
         <p>Waiter ID: ${STAFFID}</p>
         <p>Order No: ${orderSeq}</p>
