@@ -19,7 +19,7 @@
     <body>
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
-        <a href="ShowTableStatusController">back to table status</a>
+        <a href="tableStatus.jsp">back to table status</a>
         <div id="container"> 
         </div>
         <script>
@@ -29,6 +29,7 @@
                     method: "POST",
                     success: function (data) {
                         var div = $("#container");
+                        div.empty();
 //                        data = JSON.parse(data);
                         var index;
                         for (index in data) {
@@ -64,18 +65,7 @@
                 });
             }
             getWaitingFood();
-//            
-//            function checkBringDone(seqOrder, foodId) {
-//            $.ajax({
-//                url: "/FoodDeliveredController",
-//                method: "POST",
-//                data: 
-//                
-//            });
-//            }
-
-
-
+            setInterval(getWaitingFood, 1000);
         </script>
     </body>
 </html>

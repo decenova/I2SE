@@ -46,7 +46,7 @@ public class ChooseFoodController extends HttpServlet {
             OrderDAO dao = new OrderDAO();
             dao.insertChefID(seqOD ,dao.getSEQStaffById((String) session.getAttribute("STAFFID")));
 
-            url = viewCookFood;
+            url = "viewFoods.jsp";
         } catch (Exception e) {
             log("ERROR at ChooseFoodController: " + e.getMessage());
         } finally {

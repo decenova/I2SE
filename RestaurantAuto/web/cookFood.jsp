@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Cooking Foods</h1>
-        <a href="LoadFoodsController">Back to Foods by Order</a>
+        <a href="viewFoods.jsp">Back to Foods by Order</a>
         <h4>Hi, ${STAFFID}</h4>
         <form action="SubmitCookingFoodController" method="POST"">
             <input type="hidden" name="staffID" value="${STAFFID}" />

@@ -31,6 +31,7 @@
                     method: "POST",
                     success: function (data) {
                         var div = $("#container");
+                        div.empty();
                         var index;
                         for (index in data) {
                             var arr = data[index].foodDetails;
@@ -64,6 +65,7 @@
                 });
             }
             getFoods();
+            setInterval(getFoods, 1000);
         </script>
     </body>
 </html>

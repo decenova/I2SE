@@ -79,7 +79,7 @@
 
             function gettable() {
                 $.ajax({
-                    url: "/RestaurantAuto/ShowTableStatusController",
+                    url: "/ShowTableStatusController",
                     method: "GET",
                     success: function (data) {
                         var cardBody = $("#cardBody");
@@ -142,10 +142,11 @@
                         }
 
                     }
-                })
+                });
 
+            }
             gettable();
-            setInterval(gettable,1000);
+            setInterval(gettable, 1000);
         </script>
     </body>
 </html>
