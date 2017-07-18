@@ -46,14 +46,8 @@ public class analyzeTimeController extends HttpServlet {
             long averageSpendLong = 0;
             for (ArrayList<Timestamp> arrayList : list) {
                 averageServerLong += arrayList.get(1).getTime() -  arrayList.get(0).getTime();
-//                System.out.println((arrayList.get(0).getTime()));
-//                System.out.println((arrayList.get(1).getTime()));
-//                System.out.println(new Time(arrayList.get(0).getTime()));
-//                System.out.println(new Time(arrayList.get(1).getTime()));
-//                System.out.println("--" + new Time(arrayList.get(1).getTime() -  arrayList.get(0).getTime()));
                 averageSpendLong += arrayList.get(2).getTime() -  arrayList.get(0).getTime();
             }
-//            System.out.println(new Time(averageServerLong/ list.size()));
             Time averageServerTime = new Time(averageServerLong / list.size() - 7 * 3600000);
             Time averageSpendTime = new Time(averageSpendLong / list.size() - 7 * 3600000);
             request.setAttribute("FROM", from);
