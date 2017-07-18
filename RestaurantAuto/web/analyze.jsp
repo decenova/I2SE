@@ -24,7 +24,7 @@
                    <c:if test="${not empty requestScope.FROM}"> value="${requestScope.FROM}" </c:if> value = "2017-05-30"/>
                    <input id="to" type="date" name="toDate" required="true"
                    <c:if test="${not empty requestScope.TO}"> value="${requestScope.TO}" </c:if> value = "2017-06-10"/>
-                   <input type="button" value="Start Analyze" onclick/>
+                   <input type="submit" value="Start Analyze"/>
             </form>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#Menu">Menu analyze</a></li>
@@ -35,6 +35,7 @@
             </ul>
             <div class="tab-content">
                 <div id="Menu" class="tab-pane fade in active">
+                    <c:if test="${not empty requestScope.FOOD}">
                     <h1>Menu item</h1>
                     <table class="table table-hover">
                         <thead>
@@ -44,10 +45,17 @@
                                 <td>Total Revenue</td>
                             </tr>
                         </thead>
-                        <tbody id="menubody">
-                                
+                        <tbody>
+                            <c:forEach items="${requestScope.FOOD}" var="dto">
+                                <tr>
+                                    <c:forEach items="${dto}" var="data">
+                                        <td>${data}</td>
+                                    </c:forEach>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
+                </c:if>
             </div>
             <div id="Waiter" class="tab-pane fade">
                 <c:if test="${not empty requestScope.WAITER}">
@@ -164,8 +172,7 @@
                         })
                     }
                 })
-            }
-            getFood("2017-05-01", "2017-06-07");
+            } 
         </script>
     </body>
 </html>

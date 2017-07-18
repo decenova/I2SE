@@ -8,6 +8,8 @@ package thang.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -44,7 +46,7 @@ public class analyzeRevenueController extends HttpServlet {
             request.setAttribute("REVENUE", revenue);
             request.setAttribute("FROM", from);
             request.setAttribute("TO", to);
-
+            
             long fromValue = from.getTime();
             long toValue = to.getTime();
             long subTime = (toValue - fromValue);
@@ -54,31 +56,34 @@ public class analyzeRevenueController extends HttpServlet {
             int cur = 0;
             if (subTime > DAYTIME * 366) {
                 rank = (int) Math.floor(subTime * 1.0 / (DAYTIME * 366));
-                for (int i = 1; i <= rank; i++){
+                for (int i = 1; i <= rank; i++) {
                     cur = dao.revenue(fromValue, fromValue + DAYTIME * 366 - 1);
                     revenueList.add(cur);
-                    if (cur > max)
+                    if (cur > max) {
                         max = cur;
+                    }
                     fromValue += DAYTIME * 366;
                 }
                 revenueList.add(dao.revenue(fromValue, toValue));
             } else if (subTime > DAYTIME) {
                 rank = (int) Math.floor(subTime * 1.0 / DAYTIME);
-                for (int i = 1; i <= rank; i++){
-                    cur =(dao.revenue(fromValue, fromValue + DAYTIME  - 1));
+                for (int i = 1; i <= rank; i++) {
+                    cur = (dao.revenue(fromValue, fromValue + DAYTIME - 1));
                     revenueList.add(cur);
-                    if (cur > max)
+                    if (cur > max) {
                         max = cur;
+                    }
                     fromValue += DAYTIME;
                 }
                 revenueList.add(dao.revenue(fromValue, toValue));
             } else {
-                rank = (int) Math.floor(subTime * 1.0 / (DAYTIME /24));
-                for (int i = 1; i <= rank; i++){
-                    cur =(dao.revenue(fromValue, fromValue + DAYTIME / 24 - 1));
+                rank = (int) Math.floor(subTime * 1.0 / (DAYTIME / 24));
+                for (int i = 1; i <= rank; i++) {
+                    cur = (dao.revenue(fromValue, fromValue + DAYTIME / 24 - 1));
                     revenueList.add(cur);
-                    if (cur > max)
+                    if (cur > max) {
                         max = cur;
+                    }
                     fromValue += DAYTIME / 24;
                 }
                 revenueList.add(dao.revenue(fromValue, toValue));
@@ -86,6 +91,25 @@ public class analyzeRevenueController extends HttpServlet {
             request.setAttribute("REVENUELIST", revenueList);
             request.setAttribute("MAX", max + 10);
             request.setAttribute("RANK", rank + 1);
+            ArrayList<ArrayList> listFood = dao.foodAnalyze(from, to);
+            int sum = 0;
+            for (ArrayList arrayList : listFood) {
+                sum +=(Double) arrayList.get(2);
+            }
+            request.setAttribute("SUM", sum);
+            request.setAttribute("FOOD", listFood);
+            
+            ArrayList<ArrayList<Timestamp>> list = dao.timeAnalyze(from.getTime(), to.getTime());
+            long averageServerLong = 0;
+            long averageSpendLong = 0;
+            for (ArrayList<Timestamp> arrayList : list) {
+                averageServerLong += arrayList.get(1).getTime() -  arrayList.get(0).getTime();
+                averageSpendLong += arrayList.get(2).getTime() -  arrayList.get(0).getTime();
+            }
+            Time averageServerTime = new Time(averageServerLong / list.size() - 7 * 3600000);
+            Time averageSpendTime = new Time(averageSpendLong / list.size() - 7 * 3600000);
+            request.setAttribute("SERVER", averageServerTime);
+            request.setAttribute("SPEND", averageSpendTime);
         } catch (Exception e) {
             e.printStackTrace();
         }
