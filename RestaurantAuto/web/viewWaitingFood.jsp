@@ -20,8 +20,6 @@
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
         <a href="tableStatus.jsp">Back to table status</a>
-        <form action="FoodDeliveredController" method="POST">
-            <input type="submit" value="Submit" />
             <c:forEach items="${foodWaitingList}" var="dto">
                 <c:if test="${not empty dto.foodWaiting}">
                     <table class="table table-hover">
@@ -54,8 +52,6 @@
                     </table>
                 </c:if>
             </c:forEach>
-        </form>
-        <a href="tableStatus.jsp">back to table status</a>
         <div id="container"> 
         </div>
         <script>
