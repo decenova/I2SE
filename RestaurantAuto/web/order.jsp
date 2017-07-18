@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     <c:forEach items="${MENU}" var="dto" varStatus="counter">
-                    <form action="MainController" method="POST" >
+                    <form action="MainController" method="POST"  accept-charset="ISO-8859-1">
                         <tr>
                             <td>${counter.count}</td>
                             <td>${dto.foodID}</td>
