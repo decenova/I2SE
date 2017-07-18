@@ -129,6 +129,13 @@
                                         + '<input type="hidden" name="tableStatusId" value="2"/>'
                                         + '<input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>'
                                         + '</form>';
+                            } else if ('${sessionScope.ROLE}' == "Waiter" && item.tableStatus == "Eating") {
+                                s += '<form action="MainController" method="post">'
+                                        + '<input type="hidden" name="staffId" value="${sessionScope.STAFFID}"/>'
+                                        + '<input type="hidden" name="tableId" value="' + item.id + '"/>'
+                                        + '<input type="hidden" name="tableStatusId" value="3"/>'
+                                        + '<input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>'
+                                        + '</form>';
                             } else {
                                 s += '<form action="TableStatus" method="post">'
                                         + '<input class="btn btn-block"  type="submit" name="action" value="Just for seen" disabled="true"/>'
