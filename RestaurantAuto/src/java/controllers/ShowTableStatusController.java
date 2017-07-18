@@ -6,6 +6,7 @@
 package controllers;
 
 import beans.TrungBean;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,16 +35,16 @@ public class ShowTableStatusController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "tableStatus.jsp";
         TrungBean bean = new TrungBean();
         try {
             ArrayList<TableDTO> arr = new ArrayList<TableDTO>();
             arr = bean.getTablesStatus();
-            request.setAttribute("TABLES", arr); //luu mang table vao request
+            String array = new Gson().toJson(arr);
+            out.print(array);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            out.close();
         }
     }
 

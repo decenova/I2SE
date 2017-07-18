@@ -41,13 +41,13 @@ public class LoginController extends HttpServlet {
 
             if (!role.equals("false")) {
                 if (role.equals("Cook")) {
-                    url = "LoadFoodsController";
+                    url = "viewFoods.jsp";
                 } else if (role.equals("Manager")) {
                     url = "ManagerController";
                 } else if (role.equals("Casher")) {
-                    url = "BillController";
+                    url = "allBill.jsp";
                 } else {
-                    url = "ShowTableStatusController";
+                    url = "tableStatus.jsp";
                 }
 
                 //lưu role vs staffId trong session cho dễ sử dụng sau này

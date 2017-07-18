@@ -14,7 +14,9 @@
         <meta name="viewport" content="width=device-width"/>
         <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
-        <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+
         <style>
             .card-deck {
                 padding: 0px;
@@ -62,75 +64,99 @@
                 <div class="card-text">
                     Role: ${ROLE}
                     <c:if test="${ROLE eq 'Waiter'}">
-                        <a href="LoadWaitingFoodController">View waiting food</a>
+                        <a href="viewWaitingFood.jsp">View waiting food</a>
                     </c:if>
-                <form action="MainController" method="GET">
-                    <input class="btn btn-default" type="submit" name="action" value="Logout"/>
-                </form>
+                    <form action="MainController" method="GET">
+                        <input class="btn btn-default" type="submit" name="action" value="Logout"/>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="card-deck col-lg-12">
-            <c:forEach var="table" items="${TABLES}">
-                <div class="card text-center col-xs-11 col-sm-5 col-md-3 col-lg-2">
-                    <div class="card-block">
-                        <h4 class="card-title">${table.id}</h4>
-                        <p class="card-text">${table.tableStatus}</p>
-                        <c:choose>
-                            <c:when test="${table.tableStatus eq 'Clean'}">
-                                <div class="backgroundDiv backgroundDiv-clean"></div>
-                            </c:when>
-                            <c:when test="${table.tableStatus eq 'Dirty'}">
-                                <div class="backgroundDiv backgroundDiv-dirty"></div>
-                            </c:when>
-                            <c:when test="${table.tableStatus eq 'Waiting'}">
-                                <div class="backgroundDiv backgroundDiv-wating"></div>
-                            </c:when>
-                            <c:when test="${table.tableStatus eq 'Eating'}">
-                                <div class="backgroundDiv backgroundDiv-eating"></div>
-                            </c:when>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${ROLE eq 'Host' && table.tableStatus eq 'Clean'}">
-                                <form action="ChangeTableStatusController" method="post">                               
-                                    <input type="hidden" name="tableId" value="${table.id}"/>
-                                    <input type="hidden" name="tableStatusId" value="1"/>
-                                    <input class="btn btn-success" type="submit" name="action" value="Change as Host"/>
-                                </form>
-                            </c:when>
-                            <c:when test="${ROLE eq 'Busboy' && table.tableStatus eq 'Dirty'}">
-                                <form action="ChangeTableStatusController" method="post">
-                                    <input type="hidden" name="tableId" value="${table.id}"/>
-                                    <input type="hidden" name="tableStatusId" value="4"/>
-                                    <input class="btn btn-success"  type="submit" name="action" value="Change as Busboy"/>
-                                </form>
-                            </c:when>
-                            <c:when test="${ROLE eq 'Waiter' && table.tableStatus eq 'Waiting'}">
-                                <form action="MainController" method="post">
-                                    <input type="hidden" name="staffId" value="${STAFFID}"/>
-                                    <input type="hidden" name="tableId" value="${table.id}"/>
-                                    <input type="hidden" name="tableStatusId" value="2"/>
-                                    <input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>
-                                </form>
-                            </c:when>
-                            
-                            <c:otherwise>
-                                <form action="TableStatus" method="post">
-                                    <input class="btn btn-block"  type="submit" name="action" value="Just for seen" disabled="true"/>
-                                </form>
-                            </c:otherwise>
-                        </c:choose>
-                        <p></p>
-                    </div>
-                </div>
-            </c:forEach>
+
+        <div class="card-deck col-lg-12" id="cardBody">
+
+            
         </div>
         <script>
-            function reload() {
-                window.location.href = 'ShowTableStatusController';
+
+            function gettable() {
+                $.ajax({
+                    url: "/ShowTableStatusController",
+                    method: "GET",
+                    success: function (data) {
+                        var cardBody = $("#cardBody");
+                        cardBody.empty();
+                        var index;
+                        var arr = JSON.parse(data);
+                        for (index in arr) {
+                            var item = arr[index];
+//                            console.log(item.id + " " + item.tableStatus);
+                            var s = '';
+
+                            s += '<div class="card text-center col-xs-11 col-sm-5 col-md-3 col-lg-2">'
+                                    + '<div class="card-block">'
+                                    + '<h4 class="card-title">' + item.id + '</h4>'
+                                    + '<p class="card-text">' + item.tableStatus + '</p>';
+
+
+
+                            if (item.tableStatus == "Clean") {
+                                s += '<div class="backgroundDiv backgroundDiv-clean"></div>';
+                            } else if (item.tableStatus == "Dirty") {
+                                s += '<div class="backgroundDiv backgroundDiv-dirty"></div>';
+                            } else if (item.tableStatus == "Waiting") {
+                                s += '<div class="backgroundDiv backgroundDiv-wating"></div>';
+                            } else if (item.tableStatus == "Eating") {
+                                s += '<div class="backgroundDiv backgroundDiv-eating"></div>';
+                            }
+
+                            if ('${sessionScope.ROLE}' == "Host" && item.tableStatus == "Clean") {
+                                s += '<form action="ChangeTableStatusController" method="post">'
+                                        + '<input type="hidden" name="tableId" value="' + item.id + '"/>'
+                                        + '<input type="hidden" name="tableStatusId" value="1"/>'
+                                        + '<input class="btn btn-success" type="submit" name="action" value="Change as Host"/>'
+                                        + '</form>';
+                            } else if ('${sessionScope.ROLE}' == "Busboy" && item.tableStatus == "Dirty") {
+                                s += '<form action="ChangeTableStatusController" method="post">'
+                                        + '<input type="hidden" name="tableId" value="' + item.id + '"/>'
+                                        + '<input type="hidden" name="tableStatusId" value="4"/>'
+                                        + '<input class="btn btn-success"  type="submit" name="action" value="Change as Busboy"/>'
+                                        + '</form>';
+                            } else if ('${sessionScope.ROLE}' == "Waiter" && item.tableStatus == "Waiting") {
+                                s += '<form action="MainController" method="post">'
+                                        + '<input type="hidden" name="staffId" value="${sessionScope.STAFFID}"/>'
+                                        + '<input type="hidden" name="tableId" value="' + item.id + '"/>'
+                                        + '<input type="hidden" name="tableStatusId" value="2"/>'
+                                        + '<input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>'
+                                        + '</form>';
+                            } else if ('${sessionScope.ROLE}' == "Waiter" && item.tableStatus == "Eating") {
+                                s += '<form action="MainController" method="post">'
+                                        + '<input type="hidden" name="staffId" value="${sessionScope.STAFFID}"/>'
+                                        + '<input type="hidden" name="tableId" value="' + item.id + '"/>'
+                                        + '<input type="hidden" name="tableStatusId" value="3"/>'
+                                        + '<input class="btn btn-success"  type="submit" name="action" value="Create order as Waiter"/>'
+                                        + '</form>';
+                            } else {
+                                s += '<form action="TableStatus" method="post">'
+                                        + '<input class="btn btn-block"  type="submit" name="action" value="Just for seen" disabled="true"/>'
+                                        + '</form>';
+                            }
+
+                            s += '</div>'
+                                    + '</div>';
+
+
+                            cardBody.append(s);
+
+                        }
+
+                    }
+                })
             }
-            setTimeout(reload, 3000);
+
             
+            gettable();
+            setInterval(gettable, 1000);
         </script>
     </body>
 </html>

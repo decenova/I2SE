@@ -28,7 +28,7 @@ public class SubmitOrderController extends HttpServlet {
     private static final String errorP = "error.jsp";
     private static final String orderP = "order.jsp";
     private static final String orderListP = "orderList.jsp";
-    private static final String showTableStatus = "ShowTableStatusController";
+    private static final String showTableStatus = "tableStatus.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -76,7 +76,6 @@ public class SubmitOrderController extends HttpServlet {
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
-                System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
                 session.setAttribute("ORDER", result);
                 url = orderP;

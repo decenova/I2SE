@@ -41,7 +41,7 @@ public class ChangeTableStatusController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher("ShowTableStatusController").forward(request, response);
+            request.getRequestDispatcher("tableStatus.jsp").forward(request, response);
         }
     }
 

@@ -39,55 +39,18 @@ public class FoodDeliveredController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = "";
+        int seqOrderDetail = Integer.parseInt(request.getParameter("seqOD"));
+        int seqOrder = Integer.parseInt(request.getParameter("seqOrder"));
         try {
-            int orderSEQ = 0;
-            String foodID = "";
             OrderDAO dao = new OrderDAO();
-            List<OrderDTO> listOrder = dao.loadOrders();
-            for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
-                listOrder.get(i).setFoodWaiting(list);
-            }
-            for (int i = 0; i < listOrder.size(); i++) {
-                for (int j = 0; j < listOrder.get(i).getFoodWaiting().size(); j++) {
-                    orderSEQ = listOrder.get(i).getSeq();
-                    foodID = listOrder.get(i).getFoodWaiting().get(j).getFoodID();
-                    String choice = orderSEQ + foodID;
-                    System.out.println(choice);
-                    System.out.println(listOrder.get(i).getFoodWaiting().size());
-                    try {
-                        if (request.getParameter(choice) != null) {
-                            dao.insertDelivered(orderSEQ, foodID); //set true nghia la gui r
-                            
-                            System.out.println("id: " + listOrder.get(i));
-                            System.out.println("value: " + request.getParameter(listOrder.get(i).getSeq()+""));
-                            System.out.println("seq: " + listOrder.get(i).getSeq());
-                            if (request.getParameter(listOrder.get(i).getSeq()+"").length() == 0) {
-                                dao.setBeginEatTime(listOrder.get(i).getSeq());
-                                TrungBean bean = new TrungBean();
-                                int tableId = Integer.parseInt(request.getParameter(listOrder.get(i).getSeq() + "tableId"));
-                                HttpSession session = request.getSession();
-                                
-                                System.out.println("table SEQ: " + tableId);
-//                                System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
-                                System.out.println("------Chuan bi change--------");
-                                
-                                System.out.println("table id: " + dao.getIdTableBySEQ(tableId));
-                                System.out.println("staff id: " + (String)session.getAttribute("STAFFID"));
-                                
-                                bean.changeTableStatus(dao.getIdTableBySEQ(tableId), 2, (String)session.getAttribute("STAFFID"));
-                            }
-                        }
-                    } catch (Exception e) {
-                    }
+            dao.insertDelivered(seqOrderDetail);
+                if (request.getParameter(seqOrder + "").length() == 0) {
+                    dao.setBeginEatTime(seqOrder);
+                    TrungBean bean = new TrungBean();
+                    int tableId = Integer.parseInt(request.getParameter("tableId"));
+                    HttpSession session = request.getSession();
+                    bean.changeTableStatus(dao.getIdTableBySEQ(tableId), 2, (String) session.getAttribute("STAFFID"));
                 }
-            }
-            for (int i = 0; i < listOrder.size(); i++) {
-                List<OrderDTO> list = dao.loadWaitingFood(listOrder.get(i).getSeq());
-                listOrder.get(i).setFoodWaiting(list);
-            }
-//            listOrder = dao.loadOrders();
-            request.setAttribute("foodWaitingList", listOrder);
             url = viewWaitingFood;
 
         } catch (Exception e) {

@@ -87,7 +87,7 @@ public class MainController extends HttpServlet {
             } else if (action.equals("Print Bill")){
                 url = printBill;
             } else if (action.equals("Back")){
-                url = allBill;
+                url = "allBill.jsp";
             } else if (action.endsWith("Logout")) {
                 url = logout;
             }

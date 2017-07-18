@@ -16,12 +16,10 @@
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     </head>
-    <body onclick="stop()">
+    <body>
         <h4>Hi, ${STAFFID} [<a href="LogoutController">Logout</a>]</h4>
         <h1>Foods need to bring to customers</h1>
-        <a href="ShowTableStatusController">back to table status</a>
-        <form action="FoodDeliveredController" method="POST">
-            <input type="submit" value="Submit" />
+        <a href="tableStatus.jsp">Back to table status</a>
             <c:forEach items="${foodWaitingList}" var="dto">
                 <c:if test="${not empty dto.foodWaiting}">
                     <table class="table table-hover">
@@ -54,18 +52,52 @@
                     </table>
                 </c:if>
             </c:forEach>
-        </form>
+        <div id="container"> 
+        </div>
         <script>
-            var isStop = false;
-            function stop(){
-                isStop = true;
+            function getWaitingFood() {
+                $.ajax({
+                    url: "/LoadWaitingFoodController",
+                    method: "POST",
+                    success: function (data) {
+                        var div = $("#container");
+                        div.empty();
+//                        data = JSON.parse(data);
+                        var index;
+                        for (index in data) {
+                            var arr = data[index].foodWaiting;
+                            if (arr.length > 0) {
+                                var s = '';
+                                s += '<table class="table table-hover">';
+                                s += '<caption>Table No:' + data[index].tableID + ' | Order: ' + data[index].seq + '</caption>';
+                                s += '<thead><tr><th>Food No</th><th>Food Name</th><th>Quantity</th><th>Action</th></tr></thead>';
+                                s += '<tbody>';
+                                for (var i = 0; i < arr.length; i++) {
+                                    s += '<tr>';
+                                    s += '<td>' + (i + 1) + '</td>';
+                                    s += '<td>' + arr[i].foodName + '</td>';
+                                    s += '<td>' + arr[i].quantity + '</td>';
+                                    s += '<td>';
+                                    s += '<form action="FoodDeliveredController" method="POST">';
+                                    s += '<input type="submit" value="Delivered" />';
+                                    s += '<input type="hidden" name="seqOD" value="' + arr[i].seqOD + '"/>';
+                                    s += '<input type="hidden" name="seqOrder" value="' + data[index].seq + '"/>';
+                                    s += '<input type="hidden" name="' + data[index].seq + '" value="${dto.beginEatTime}"/>';
+                                    s += '<input type="hidden" name="tableId" value="' + data[index].tableID + '"/>';
+                                    s += '</form>';
+                                    s += '</td>';
+                                    s += '</tr>';
+                                }
+                                s += '</tbody>';
+                                s += '</table>';
+                            }
+                            div.append(s);
+                        }
+                    }
+                });
             }
-            function reload() {
-                if(!isStop)
-                window.location.href = 'LoadWaitingFoodController';
-            }
-            setTimeout(reload, 1000);
-
+            getWaitingFood();
+            setInterval(getWaitingFood, 1000);
         </script>
     </body>
 </html>
