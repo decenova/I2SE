@@ -5,6 +5,7 @@
  */
 package tung.controllers;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -42,14 +43,18 @@ public class SubmitOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = errorP;
         try {
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
             List<OrderDTO> result = (List<OrderDTO>) session.getAttribute("ORDER");
-            
-            if (action.equals("Add")) {
+            System.out.println(action);
+            if (action.equals("GetData")) {
+                String OrderArr = new Gson().toJson(result);
+                out.print(OrderArr);
+            } else if (action.equals("Add")) {
                 String id = request.getParameter("txtFoodID");
                 String name = request.getParameter("txtFoodName");
                 String txtQuantity = request.getParameter("txtQuantity");
@@ -70,14 +75,19 @@ public class SubmitOrderController extends HttpServlet {
                         OrderDTO dto = new OrderDTO(id, name, quantity);
                         result.add(dto);
                     }
-                    session.setAttribute("ORDER", result);
-                    request.setAttribute("ACTION", action);
+                    String OrderArr = new Gson().toJson(result);
+//                    session.setAttribute("ORDER", result);
+//                    request.setAttribute("ACTION", action);
+                    out.print(OrderArr);
                     url = orderP;
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
+                System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
-                session.setAttribute("ORDER", result);
+//                session.setAttribute("ORDER", result);
+                String OrderArr = new Gson().toJson(result);
+                out.print(OrderArr);
                 url = orderP;
             } else if (action.equals("Submit order")) {
                 OrderDAO dao = new OrderDAO();
@@ -97,13 +107,13 @@ public class SubmitOrderController extends HttpServlet {
                 session.removeAttribute("orderSeq");
                 session.removeAttribute("DATE");
                 session.removeAttribute("tableID");
-                url = showTableStatus;
+                request.getRequestDispatcher(showTableStatus).forward(request, response);
             }
 
         } catch (Exception e) {
             log("ERROR at SubmitOrderController: " + e.getMessage());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+//            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
