@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order</title>
+        <meta name="viewport" content="width=device-width"/>
         <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
         <script type="text/javascript" src="jquery.js"></script>

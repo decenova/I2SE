@@ -100,7 +100,10 @@ public class RestaurantDAO {
     
     public void changeTableStatus(String tableId, int tableStatusId, String staffId) {
         try {
-//            System.out.println("zoooooooooooooooooo");
+            System.out.println("change table id: " + tableId);
+            System.out.println("change table status: " + tableStatusId);
+            System.out.println("cahgne table status staff: " + staffId);
+            
             String oldTableId = "";
             int oldTableStatusID = -1;
             
@@ -117,15 +120,8 @@ public class RestaurantDAO {
                 oldTableId = rs.getString("Id");
                 oldTableStatusID = Integer.parseInt(rs.getString("TableStatusID"));
             }
-            
-            //neu tra ve request cu thi khong update
-//            System.out.println("oldId: " + oldTableId);
-//            System.out.println("   Id: " + tableId);
-//            System.out.println("oldST: " + oldTableStatusID);
-//            System.out.println("   ST: " + tableStatusId);
+
             if (!tableId.equals(oldTableId) || oldTableStatusID != tableStatusId) {
-//                System.out.println("Update du lieu");
-                //update du lieu
                 sql = "UPDATE [Table] SET TableStatusID=? WHERE Id=?";
                 pre = conn.prepareStatement(sql);
                 pre.setString(1, "" + tableStatusId);
