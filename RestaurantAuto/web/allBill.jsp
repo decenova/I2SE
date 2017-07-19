@@ -21,54 +21,58 @@
     </head>
     <body>
         <h1>Casher Page!</h1>
-        <table border="1" id="table">
-            
-    </table>
-</body>
-<script>
-    function gettable() {
-        $.ajax({
-            url: "/BillController",
-            method: "GET",
-            success: function (data) {
-                var tbody = $("#table");
-                tbody.empty();
-                var s = '';
-                
-                s+= "<thead><th>Table Id</th><th>Order Id</th><th>Waiter serve</th><th>View detail</th></thead><tbody>";
+        <form action="MainController" method="GET">
+            <input class="btn btn-default" type="submit" name="action" value="Logout"/>
+        </form>
+        <a href="allBill.jsp">Reload</a>
+        <table class="table table-hover" id="table">
 
-                var arr = JSON.parse(data);
-                for (index in arr) {
+        </table>
+    </body>
+    <script>
+        function gettable() {
+            $.ajax({
+                url: "/BillController",
+                method: "GET",
+                success: function (data) {
+                    var tbody = $("#table");
+                    tbody.empty();
+                    var s = '';
 
-                    var item = arr[index];
+                    s += "<thead><th>Table Id</th><th>Order Id</th><th>Waiter serve</th><th>View detail</th></thead><tbody>";
 
-                    
+                    var arr = JSON.parse(data);
+                    for (index in arr) {
 
-                    s += "<tr>"
+                        var item = arr[index];
 
-                            + "<td>" + item.tableId + "</td>"
-                            + "<td>" + item.orderId + "</td>"
-                            + "<td>" + item.waiterName + "</td>"
-                            + "<td>"
-                            + "<form action='MainController' method='POST'>"
-                            + "<input type='hidden' name='orderId' value='" + item.orderId + "'/>"
-                            + "<input type='hidden' name='tableId' value='" + item.tableId + "'/>"
-                            + "<input type='submit' value='View Detail' name='action'/>"
-                            + "</form>"
-                            + "</td>"
-                            + "</tr>";
 
-                    
 
+                        s += "<tr>"
+
+                                + "<td>" + item.tableId + "</td>"
+                                + "<td>" + item.orderId + "</td>"
+                                + "<td>" + item.waiterName + "</td>"
+                                + "<td>"
+                                + "<form action='MainController' method='POST'>"
+                                + "<input type='hidden' name='orderId' value='" + item.orderId + "'/>"
+                                + "<input type='hidden' name='tableId' value='" + item.tableId + "'/>"
+                                + "<input type='submit' value='View Detail' name='action'/>"
+                                + "</form>"
+                                + "</td>"
+                                + "</tr>";
+
+
+
+                    }
+                    s += "</tbody>";
+                    tbody.append(s);
                 }
-                s+="</tbody>";
-                tbody.append(s);
-            }
 
-        })
-    }
+            })
+        }
 
-    gettable();
-</script>
+        gettable();
+    </script>
 </html>
 

@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
+        <meta name="viewport" content="width=device-width"/>
         <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
         <script type="text/javascript" href="bootstrap/js/bootstrap.min.js"></script>

@@ -33,6 +33,8 @@ public class ChangeTableStatusController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
+            
             TrungBean bean = new TrungBean();
                 String tableId = request.getParameter("tableId");
                 int tableStatusId = Integer.parseInt(request.getParameter("tableStatusId"));
