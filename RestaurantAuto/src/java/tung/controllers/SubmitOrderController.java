@@ -50,11 +50,8 @@ public class SubmitOrderController extends HttpServlet {
             HttpSession session = request.getSession();
             String action = request.getParameter("action");
             List<OrderDTO> result = (List<OrderDTO>) session.getAttribute("ORDER");
-            System.out.println(action);
-            if (action.equals("GetData")) {
-                String OrderArr = new Gson().toJson(result);
-                out.print(OrderArr);
-            } else if (action.equals("Add")) {
+            
+            if (action.equals("Add")) {
                 String id = request.getParameter("txtFoodID");
                 String name = request.getParameter("txtFoodName");
                 String txtQuantity = request.getParameter("txtQuantity");
@@ -75,19 +72,14 @@ public class SubmitOrderController extends HttpServlet {
                         OrderDTO dto = new OrderDTO(id, name, quantity);
                         result.add(dto);
                     }
-                    String OrderArr = new Gson().toJson(result);
-//                    session.setAttribute("ORDER", result);
-//                    request.setAttribute("ACTION", action);
-                    out.print(OrderArr);
+                    session.setAttribute("ORDER", result);
+                    request.setAttribute("ACTION", action);
                     url = orderP;
                 }
             } else if (action.equals("Remove")) {
                 String foodNo = request.getParameter("FoodNo");
-                System.out.println(foodNo);
                 result.remove(Integer.parseInt(foodNo) - 1);
-//                session.setAttribute("ORDER", result);
-                String OrderArr = new Gson().toJson(result);
-                out.print(OrderArr);
+                session.setAttribute("ORDER", result);
                 url = orderP;
             } else if (action.equals("Submit order")) {
                 OrderDAO dao = new OrderDAO();
@@ -107,13 +99,13 @@ public class SubmitOrderController extends HttpServlet {
                 session.removeAttribute("orderSeq");
                 session.removeAttribute("DATE");
                 session.removeAttribute("tableID");
-                request.getRequestDispatcher(showTableStatus).forward(request, response);
+                url = showTableStatus;
             }
 
         } catch (Exception e) {
             log("ERROR at SubmitOrderController: " + e.getMessage());
         } finally {
-//            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
