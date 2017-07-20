@@ -73,6 +73,25 @@ public class MinhRestaurantDAO {
         }
         return tableId;
     }
+    
+    public int getTableSEQById(String id) {
+        int tableSEQ = 0;
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "select SEQ from [Table] where Id = ?";
+            pre = conn.prepareStatement(sql);
+            pre.setString(1, id);
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                tableSEQ = rs.getInt("SEQ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return tableSEQ;
+    }
 
     public boolean printBill(Timestamp endTime, int orderId, int casherID) {
         try {
@@ -628,6 +647,29 @@ public class MinhRestaurantDAO {
         } finally {
             closeConnection();
         }
+        return result;
+    }
+    
+    public boolean isTableDeliveredAll(String tableId) {
+        boolean result = true;
+        int tableSEQ = getTableSEQById(tableId);
+        System.out.println("table bill seq: " + tableSEQ);
+        
+        try {
+            conn = MyConnection.getConnection();
+            String sql = "SELECT DISTINCT [Order].TableID FROM OrderDetail INNER JOIN [Order] ON OrderDetail.OrderID = [Order].SEQ WHERE OrderDetail.Delivered = 0 AND [Order].TableID = ?";
+            pre = conn.prepareStatement(sql);
+            pre.setInt(1, tableSEQ);
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                result = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally { 
+            closeConnection();
+        }
+        
         return result;
     }
 

@@ -46,33 +46,28 @@ public class PrintBillController extends HttpServlet {
             int total = Integer.parseInt(request.getParameter("total"));
             int seqOrder = Integer.parseInt(request.getParameter("seqOrder"));
             
-            
-            
-            dao.insertTotal(total, seqOrder);
-            
-            
             int id = Integer.parseInt(request.getParameter("pk"));
-            
-            System.out.println("toi day r nha");
-            
-            int tableSEQ = Integer.parseInt(request.getParameter("tableId")); 
-            
-            System.out.println("toi day r nha");
+            int tableSEQ = Integer.parseInt(request.getParameter("tableId"));            
             HttpSession session = request.getSession();
-            System.out.println("toi day r nha");
             String staffId = (String)session.getAttribute("STAFFID");
-            System.out.println("toi day r nha");
             int casherID = dao.getCasherIDByPk(staffId);
-            System.out.println("toi day r nha");
             boolean result = dao.printBill(endDate, id, casherID);
-            System.out.println("toi day r nha");
 
-            
-            
             RestaurantDAO change = new RestaurantDAO();
-            
             String tableId = dao.getTableIDByPk(tableSEQ);
-            change.changeTableStatus(tableId, 3, staffId);
+            
+            
+            
+            
+            if (dao.isTableDeliveredAll(tableId)) {
+                dao.insertTotal(total, seqOrder);
+                change.changeTableStatus(tableId, 3, staffId);
+                dao.printBill(endDate, id, casherID);
+            } else {
+                System.out.println("Table not done yet");
+            }
+            
+            
             if (result){
                 url = "allBill.jsp";
             }
