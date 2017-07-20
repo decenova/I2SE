@@ -17,7 +17,7 @@ public class OrderDTO implements Serializable {
 
     private String foodID;
     private String foodName;
-    private int quantity;
+    private int quantity, cost;
     private int seq, seqWaiter, seqTable, seqOD;
     private String tableID, waiterID;
     Timestamp beginTime;
@@ -43,6 +43,28 @@ public class OrderDTO implements Serializable {
     }
 
         
+    public OrderDTO(String foodID, String foodName, int quantity) {
+        this.foodID = foodID;
+        this.foodName = foodName;
+        this.quantity = quantity;
+    }
+        
+    public OrderDTO(String foodID, String foodName, int quantity, int cost) {
+        this.foodID = foodID;
+        this.foodName = foodName;
+        this.quantity = quantity;
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+    
+        
 
     public OrderDTO(String foodID, String foodName) {
         this.foodID = foodID;
@@ -55,12 +77,15 @@ public class OrderDTO implements Serializable {
         this.foodName = foodName;
         this.quantity = quantity;
     }
-    
-    public OrderDTO(String foodID, String foodName, int quantity) {
+        public OrderDTO(int seqOD, String foodID, String foodName, int quantity, int cost) {
+        this.seqOD = seqOD;
         this.foodID = foodID;
         this.foodName = foodName;
         this.quantity = quantity;
+        this.quantity = quantity;
+        this.cost = cost;
     }
+   
     
     public Timestamp getBeginEatTime() {
         return beginEatTime;

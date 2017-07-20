@@ -65,6 +65,17 @@ public class analyzeRevenueController extends HttpServlet {
                     fromValue += DAYTIME * 366;
                 }
                 revenueList.add(dao.revenue(fromValue, toValue));
+            }else if (subTime > DAYTIME * 30) {
+                rank = (int) Math.floor(subTime * 1.0 / (DAYTIME * 30));
+                for (int i = 1; i <= rank; i++) {
+                    cur = dao.revenue(fromValue, fromValue + DAYTIME * 30 - 1);
+                    revenueList.add(cur);
+                    if (cur > max) {
+                        max = cur;
+                    }
+                    fromValue += DAYTIME * 30;
+                }
+                revenueList.add(dao.revenue(fromValue, toValue));
             } else if (subTime > DAYTIME) {
                 rank = (int) Math.floor(subTime * 1.0 / DAYTIME);
                 for (int i = 1; i <= rank; i++) {

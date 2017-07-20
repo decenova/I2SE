@@ -65,7 +65,7 @@
                 ctx.fillText("${requestScope.FROM}", 50, 500 + 30);
                 ctx.fillText("${requestScope.TO}", 650, 500 + 30);
                 <c:forEach items="${requestScope.REVENUELIST}" var="dto" varStatus="counter">
-                ctx.fillRect(100 + ${counter.count} * (columnwidth + distan), 500, columnwidth, ${-dto} / max * 400);
+                ctx.fillRect(100 + (${counter.count} - 1) * (columnwidth + distan), 500, columnwidth, ${-dto} / max * 400);
                 </c:forEach>
             </script>
         </c:if>

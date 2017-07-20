@@ -1,9 +1,3 @@
-<%-- 
-    Document   : order
-    Created on : Jun 18, 2017, 5:05:39 PM
-    Author     : hoanh
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -44,10 +38,12 @@
                             <td>${dto.foodID}</td>
                             <td>${dto.foodName}</td>
                             <td>
-                                <input type="number" id="${dto.foodID}" name="txtQuantity" value="1" min="1" required />
+                                <input type="number" name="txtQuantity" value="1" min="1" required />
                             </td>
                             <td>
-                                <input type="button" value="Add" onclick="addOrder('${dto.foodID}', '${dto.foodName}')" class="btn btn-primary" />
+                                <input type="hidden" name="txtFoodID" value="${dto.foodID}" />
+                                <input type="hidden" name="txtFoodName" value="${dto.foodName}" />
+                                <input type="submit" value="Add" name="action" class="btn btn-default" />
                             </td>
                         </tr>
                     </form>
@@ -82,71 +78,38 @@
                 </table>                
             </div>
         </c:if>
-        <div class="col-lg-6" id="container">
-
-        </div>     
-        <script>
-            function addOrder(id, name) {
-                $.ajax({
-                    url: "/SubmitOrderController",
-                    method: "POST",
-                    data: "action=Add&txtFoodID=" + id + "&txtFoodName="
-                            + name + "&txtQuantity=" + document.getElementById(id).value,
-                    success: function (data) {
-                        getData(data);
-                    }
-                });
-            }
-            function removeOrder(number) {
-                $.ajax({
-                    url: "/SubmitOrderController",
-                    method: "POST",
-                    data: "action=Remove&FoodNo=" + number,
-                    success: function (data) {
-                        getData(data);
-                    }
-                });
-            }
-
-            function getData() {
-                $.ajax({
-                    url: "/SubmitOrderController",
-                    method: "POST",
-                    data: "action=GetData",
-                    success: function (data) {
-                        var div = $("#container");
-                        div.empty();
-                        var s = '';
-                        s += '<form action="MainController" method="POST" accept-charset="ISO-8859-1">';
-                        if (data.length > 0) {
-                            s += '<table class="table table-hover">';
-                            s += '<caption>Order Submit</caption>';
-                            s += '<thead><tr><th>No</th><th>Food ID</th><th>Food Name</th><th>Quantity</th><th>Action</th></tr></thead>';
-                            s += '<tbody>';
-                            for (var i = 0; i < data.length; i++) {
-                                s += '<tr>';
-                                s += '<td>' + (i + 1) + '</td>';
-                                s += '<td>' + data[i].foodID + '</td>';
-                                s += '<td>' + data[i].foodName + '</td>';
-                                s += '<td>' + data[i].quantity + '</td>';
-//                                s += '<td><a href="SubmitOrderController?action=Remove&FoodNo=' + (i + 1) +'">Remove</a></td>';
-                                s += '<td><input type="button" value="Remove" onclick="removeOrder(' + (i + 1) + ' )" class="btn btn-danger" /></td>';
-                                s += '</tr>';
-                            }
-                            s += '</tbody></table>';
-                            s += '<input type="hidden" name="txtSEQOrder" value="${orderSeq}"/>';
-                            s += '<input type="submit" name="action" value="Submit order" />';
-                            s += '</form>';
-                        }
-                        div.append(s);
-                    }
-
-                });
-
-            }
-
-            getData();
-        </script>
-
+        <div class="col-lg-6">
+            <form action="MainController" method="POST" accept-charset="ISO-8859-1">
+                <c:if test="${not empty ORDER}">
+                    <table class="table table-hover">
+                        <caption>Order Submit</caption>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Food ID</th>
+                                <th>Food Name</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${ORDER}" var="dto" varStatus="counter">
+                                <tr>
+                                    <td>${counter.count}</td>
+                                    <td>${dto.foodID}</td>
+                                    <td>${dto.foodName}</td>
+                                    <td>${dto.quantity}</td>
+                                    <td>
+                                        <a href="SubmitOrderController?action=Remove&FoodNo=${counter.count}">Remove</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>                   
+                    </table>
+                    <input type="hidden" name="txtSEQOrder" value="${orderSeq}" />
+                    <input type="submit" name="action" value="Submit order" />                   
+                </c:if>
+            </form>
+        </div>                 
     </body>
 </html>

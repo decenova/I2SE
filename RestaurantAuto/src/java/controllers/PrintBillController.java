@@ -48,6 +48,13 @@ public class PrintBillController extends HttpServlet {
             
             int id = Integer.parseInt(request.getParameter("pk"));
             int tableSEQ = Integer.parseInt(request.getParameter("tableId"));            
+      
+            
+            
+            dao.insertTotal(total, seqOrder);
+            
+            
+            
             HttpSession session = request.getSession();
             String staffId = (String)session.getAttribute("STAFFID");
             int casherID = dao.getCasherIDByPk(staffId);

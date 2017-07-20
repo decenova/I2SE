@@ -38,18 +38,11 @@
                     var tbody = $("#table");
                     tbody.empty();
                     var s = '';
-
                     s += "<thead><th>Table Id</th><th>Order Id</th><th>Waiter serve</th><th>View detail</th></thead><tbody>";
-
                     var arr = JSON.parse(data);
                     for (index in arr) {
-
                         var item = arr[index];
-
-
-
                         s += "<tr>"
-
                                 + "<td>" + item.tableId + "</td>"
                                 + "<td>" + item.orderId + "</td>"
                                 + "<td>" + item.waiterName + "</td>"
@@ -61,18 +54,15 @@
                                 + "</form>"
                                 + "</td>"
                                 + "</tr>";
-
-
-
                     }
                     s += "</tbody>";
                     tbody.append(s);
                 }
-
-            })
+            });
         }
 
         gettable();
+        setInterval(gettable, 10000);
     </script>
 </html>
 
