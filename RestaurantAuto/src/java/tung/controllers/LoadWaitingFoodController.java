@@ -45,13 +45,10 @@ public class LoadWaitingFoodController extends HttpServlet {
                 listOrder.get(i).setFoodWaiting(list);
             }
             String arrayListOrder = new Gson().toJson(listOrder);
-//            request.setAttribute("foodWaitingList", listOrder);
             out.print(arrayListOrder);
-//            url = "viewWaitingFood.jsp";
         } catch (Exception e) {
             log("ERROR at LoadWaitingFoodController: " + e.getMessage());
         } finally {
-//            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

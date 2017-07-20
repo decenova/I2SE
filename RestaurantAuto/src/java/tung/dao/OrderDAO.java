@@ -256,29 +256,49 @@ public class OrderDAO {
         }
         return dto;
     }
+    public int getCostById(String foodId) {
+        int cost = 0;
+        try {
+            String sql = "select Cost from Food where Id = ?";
+            conn = MyConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, foodId);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                cost =  rs.getInt("Cost");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return cost;
+    }
 
     public List<OrderDTO> showOrderDetail(int seqOrder, String isCookID) { //show order detail cho moi order
         List<OrderDTO> result = null;
         try {
-            String sql = "select o.SEQ, f.ID, f.Name, o.Quantity"
+            String sql = "select o.SEQ, f.ID, f.Name, o.Quantity, (f.Cost * o.Quantity) as Price"
                     + " from OrderDetail o, Food f"
-                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is " + isCookID + " and o.Status = ?";
+                    + " where o.FoodID = f.SEQ and o.OrderID = ? and o.CookID is " + isCookID;
             conn = MyConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, seqOrder);
-            preStm.setBoolean(2, false);
+//            preStm.setBoolean(2, false);
             rs = preStm.executeQuery();
             result = new ArrayList<OrderDTO>();
             String foodID;
             String foodName;
             int quantity;
             int seqOD;
+            int price;
             while (rs.next()) {
                 foodID = rs.getString("ID");
                 foodName = rs.getString("Name");
                 quantity = rs.getInt("Quantity");
                 seqOD = rs.getInt("SEQ");
-                result.add(new OrderDTO(seqOD, foodID, foodName, quantity));
+                price = rs.getInt("Price");
+                result.add(new OrderDTO(seqOD, foodID, foodName, quantity, price));
             }
         } catch (Exception e) {
             e.printStackTrace();

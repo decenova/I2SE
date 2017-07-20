@@ -1,9 +1,3 @@
-<%-- 
-    Document   : order
-    Created on : Jun 18, 2017, 5:05:39 PM
-    Author     : hoanh
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>

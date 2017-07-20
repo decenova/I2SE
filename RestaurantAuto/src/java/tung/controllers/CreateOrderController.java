@@ -45,8 +45,6 @@ public class CreateOrderController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = errorP;
         try {
-            System.out.println("vao create r nha %%%%%%%");
-            
             HttpSession session = request.getSession();
             OrderDAO dao = new OrderDAO();
             String action = request.getParameter("action");
