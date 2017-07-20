@@ -78,7 +78,7 @@ public class AnalyzeDAO {
         try {
             con = MyConnection.getConnection();
             ps = con.prepareStatement("select BeginTime, BeginEatTime, EndTime from [Order] "
-                    + "where BeginTime between ? and ?");
+                    + "where(BeginTime between ? and ?) and (BeginEatTime is not null) and (EndTime is not null)");
             ps.setTimestamp(1, new Timestamp(from));
             ps.setTimestamp(2, new Timestamp(to));
             rs = ps.executeQuery();

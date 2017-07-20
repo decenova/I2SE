@@ -38,11 +38,8 @@ public class BillController extends HttpServlet {
         try {
             MinhRestaurantDAO dao = new MinhRestaurantDAO();
             List<OrderDTO> listDto = dao.viewAllBill();
-//            request.setAttribute("ViewBill", listDto);
-
-
             String array = new Gson().toJson(listDto);
-            out.print(" " + array);
+            out.print(array);
         } catch (Exception e) {
             log("ERROR at ManagerController" + e.getMessage());
         } finally {
