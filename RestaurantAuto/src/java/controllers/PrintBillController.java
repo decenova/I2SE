@@ -58,7 +58,7 @@ public class PrintBillController extends HttpServlet {
             HttpSession session = request.getSession();
             String staffId = (String)session.getAttribute("STAFFID");
             int casherID = dao.getCasherIDByPk(staffId);
-            boolean result = dao.printBill(endDate, id, casherID);
+            boolean result = true;
 
             RestaurantDAO change = new RestaurantDAO();
             String tableId = dao.getTableIDByPk(tableSEQ);
@@ -69,7 +69,7 @@ public class PrintBillController extends HttpServlet {
             if (dao.isTableDeliveredAll(tableId)) {
                 dao.insertTotal(total, seqOrder);
                 change.changeTableStatus(tableId, 3, staffId);
-                dao.printBill(endDate, id, casherID);
+                result = dao.printBill(endDate, id, casherID);
             } else {
                 System.out.println("Table not done yet");
             }

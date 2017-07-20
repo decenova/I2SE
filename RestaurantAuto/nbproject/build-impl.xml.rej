@@ -1,0 +1,11 @@
+diff a/RestaurantAuto/nbproject/build-impl.xml b/RestaurantAuto/nbproject/build-impl.xml	(rejected hunks)
+@@ -1014,6 +1014,9 @@
+         <copyfiles files="${file.reference.gson-2.6.2-javadoc.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+         <copyfiles files="${file.reference.gson-2.6.2-sources.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+         <copyfiles files="${file.reference.gson-2.6.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
++        <copyfiles files="${file.reference.gson-2.6.2-javadoc.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
++        <copyfiles files="${file.reference.gson-2.6.2-sources.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
++        <copyfiles files="${file.reference.gson-2.6.2.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
+     </target>
+     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
+         <delete dir="${build.web.dir}/WEB-INF/lib"/>
